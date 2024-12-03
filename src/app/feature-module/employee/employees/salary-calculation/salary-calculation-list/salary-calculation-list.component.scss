@@ -1,0 +1,37 @@
+.mat-mdc-row:hover {
+    cursor: pointer; /* Change cursor to pointer */
+  }
+  
+  .container {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Space out input and button */
+  }
+
+  .submit-button-container{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
+  }
+
+  .custom-input-container{
+    margin-bottom: 10px;
+  }
+
+  .custom-input{
+    width: 300px;
+  }
+
+  .submit-button{
+    display: flex;
+  }
+
+  .search-filter-container {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    margin-bottom: 20px;
+  }
+
+  .ml-2 {
+    margin-inline-start: 10px; /* Adds space between the input and the button */
+  }

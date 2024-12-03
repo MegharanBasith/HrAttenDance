@@ -1,0 +1,528 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+    <!-- <h2 mat-dialog-title>Map Excel Columns</h2>
+    <mat-dialog-content>
+        <form>
+            <div *ngFor="let header of excelHeaders; let i = index">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{header}}</mat-label>
+                    <mat-select [(ngModel)]="selectedMappings[i]" name="mapping-{{i}}">
+                        <mat-option *ngFor="let label of availableLabels" [value]="label">
+                            {{label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onClose()">Close</button>
+        <button mat-button color="primary" (click)="onSave()">Save</button>
+    </mat-dialog-actions> -->
+
+    <p-sidebar [(visible)]="showSidebar" position="right">
+        <ng-template pTemplate>
+            <div>
+                <h3>Field Mapping</h3>
+                <p style="color: rgb(237, 154, 85);"><b>{{'Note' | translate}}:</b> {{'timesheetLines.sidebarNoteText' | translate}}
+                </p>
+                <div class="field" *ngFor="let field of fields; let i = index">
+                    <p><b>{{ 'timesheetLines.' + field | translate }}</b> <b
+                            [style.color]="i === 0 ? 'red' : 'initial'">{{ i
+                            === 0 ? ' *' : '' }}</b></p>
+                    <p-dropdown class="p-dropdown" [options]="excelHeaders" [(ngModel)]="fieldMappings[field]"
+                        (onChange)="updateField(field, $event.value)" placeholder="{{'Select' | translate}}"
+                        [checkmark]="true" [filter]="true" [showClear]="true"> </p-dropdown>
+                </div>
+                <div class="submit-container">
+                    <button type="button" class="btn btn-primary wide-button" (click)="onSubmit()"
+                        [disabled]="(!isLineNumberSelected || validSubmitCounter <= 1 )">{{'Submit' |
+                        translate}}</button>
+                </div>
+            </div>
+        </ng-template>
+    </p-sidebar>
+
+
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <p-toast/>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Timesheet</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Timesheet</li>
+                </ul>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_todaywork">
+                    <i class="la la-plus-circle"></i>
+                    {{'generate' | translate}}</a>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="card-container">
+        <mat-card class="card"> <!-- Card 1 -->
+            <mat-card-header class="highlight-header">
+                <mat-card-title>{{'timesheetLines.timesheetDetails' | translate}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="timesheetId" class="input-label">{{'timesheetLines.timesheetId' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="timesheetId" [value]="selectedTimesheet.timesheetId" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="timesheetPeriod" class="input-label">{{'timesheetLines.timesheetPeriod' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="timesheetPeriod" [value]="selectedTimesheet.timesheetPeriod" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="status" class="input-label">{{'timesheetLines.status' | translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="status" [value]="selectedTimesheet.timesheetStatus " disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="totalEmployees" class="input-label">{{'timesheetLines.totalEmployees' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalEmployees" [value]="timesheetLinesRecordCount" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="description" class="input-label">{{'description' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="description" [value]="selectedTimesheet.note" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="manualApproval" class="input-label">{{'timesheetLines.manualApproval' |
+                            translate}}</label>
+                        <mat-slide-toggle class="toggle-button" [checked]="selectedTimesheet.isManualApproval"
+                            [disabled]="true" />
+                    </div>
+                    <div class="input-item">
+                        <label for="salaryProcessed" class="input-label">{{'timesheetLines.salaryProcessed' |
+                            translate}}</label>
+                        <mat-slide-toggle class="toggle-button" [checked]="selectedTimesheet.isSalaryProcessed"
+                            [disabled]="true" />
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card"> <!-- Card 2 -->
+            <mat-card-header class="highlight-header">
+                <mat-card-title>{{'timesheetLines.financialDetails' | translate}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="totalNetSalary" class="input-label">{{'timesheetLines.totalNetSalary' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalNetSalary" [value]="timesheetDetails?.totalNetSalary" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="totalMonthlyFees" class="input-label">{{'timesheetLines.totalMonthlyFees' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalMonthlyFees" [value]="timesheetDetails?.totalMonthlyFees" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="totalNetCompanyFees" class="input-label">{{'timesheetLines.totalNetCompanyFees' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalNetCompanyFees" [value]="timesheetDetails?.totalNetCompanyFees"
+                                disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="totalDeservedMonthlyFees"
+                            class="input-label">{{'timesheetLines.totalDeservedMonthlyFees' | translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalDeservedMonthlyFees"
+                                [value]="timesheetDetails?.totalDeservedMonthlyFees" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="totalMwaridOtherDues" class="input-label">{{'timesheetLines.totalMwaridOtherDues' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalMwaridOtherDues" [value]="timesheetDetails?.totalMwaridOtherDues"
+                                disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="totalMwaridOtherDeduction"
+                            class="input-label">{{'timesheetLines.totalMwaridOtherDeduction' | translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalMwaridOtherDeduction"
+                                [value]="timesheetDetails?.totalMwaridOtherDeduction" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="totalGosi" class="input-label">{{'timesheetLines.totalGOSI' | translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalGosi" [value]="timesheetDetails?.totalGosi" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="totalGovFees" class="input-label">{{'timesheetLines.totalGovFees' |
+                            translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalGovFees" [value]="timesheetDetails?.totalGovFees" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="input-item">
+                        <label for="totalDeservedMonthlyFees"
+                            class="input-label">{{'timesheetLines.totalDeservedMonthlyFees' | translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="totalDeservedMonthlyFees"
+                                [value]="timesheetDetails?.totalDeservedMonthlyFees" disabled>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item">
+                        <label for="grandTotal" class="input-label">{{'timesheetLines.grandTotal' | translate}}</label>
+                        <mat-form-field class="input-field" appearance="fill">
+                            <input matInput id="grandTotal" [value]="timesheetDetails?.totalGrand" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table_header">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+
+                    </div>
+                </div>
+            </div>
+            <div class="btn-list btn-card">
+                <button mat-raised-button color="primary"
+                    (click)="templateFileInput.click()" [disabled]="!isEditable()">{{'timesheetLines.importTemplate' | translate}} 
+                    <input type="file" #templateFileInput (change)="onFileSelected($event)" accept=".xls,.xlsx"
+                        style="display: none;">
+                </button>
+
+                <button type="button" class="btn btn-primary" (click)="dynamicFileInput.click()" [disabled]="!isEditable()">
+                    {{'timesheetLines.importTimesheet' | translate}}
+                    <input type="file" #dynamicFileInput (change)="onDynamicFileSelected($event)" accept=".xls,.xlsx"
+                        style="display: none;">
+                </button>
+
+                <button type="button" class="btn btn-success" (click)="exportTimesheet()">
+                    {{'timesheetLines.exportTimesheet' | translate}}
+                </button>
+                <div *ngIf="isEditable()">
+                <button type="button" class="btn btn-info" (click)="getProformaInvoice()">
+                    {{'timesheetLines.proformaInvoice' | translate}}
+                </button>
+                </div>
+                <button *ngIf="isAdmin" class="btn btn-success" (click)="submitTimesheet()" [disabled]="!isEditable()"> {{
+                    'approve' | translate }}
+                </button>
+            </div>
+            <div *ngIf="isEditable()" class="delete-btn-container">
+                <button class="btn btn-danger custom-button" (click)="deleteTimesheetLines()"
+                    [disabled]="timesheetLinesSelection.selected.length === 0">
+                    <mat-icon>delete</mat-icon>
+                    {{ 'delete' | translate }}
+                </button>
+            </div>
+            <div class="table-responsive">
+
+                <!--p-table [value]="timesheetLines" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}"
+                    dataKey="lineNum" editMode="row" [scrollable]="true">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pFrozenColumn style="width:20%"></th>
+                            <th *ngFor="let col of displayedColumns" pResizableColumn>
+                                {{ col }}
+                            </th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="rowData">
+                            <td pFrozenColumn>
+                                <div class="flex align-items-center justify-content-center gap-2">
+                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                        icon="pi pi-pencil" (click)="onRowEditInit(rowData)"
+                                        class="p-button-rounded p-button-text">
+                                    </button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                        icon="pi pi-check" (click)="onRowEditSave(rowData)"
+                                        class="p-button-rounded p-button-text p-button-success mr-2">
+                                    </button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                        icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)"
+                                        class="p-button-rounded p-button-text p-button-danger">
+                                    </button>
+                                </div>
+                            </td>
+
+                            <td *ngFor="let col of displayedColumns">
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText [(ngModel)]="rowData[col]" />
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{ rowData[col] }}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>-->
+
+                <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"
+                    class="table table-striped custom-table mb-0 datatable">
+                    <!-- Checkbox Column -->
+                    <div *ngIf="isEditable()">
+                        <ng-container matColumnDef="select">
+                            <th class="text-center" mat-header-cell *matHeaderCellDef rowspan="2">
+                                <label class="custom_check">
+                                    <input type="checkbox"
+                                        (change)="$event ? masterToggle(dataSource, timesheetLinesSelection) : null"
+                                        [checked]="timesheetLinesSelection.hasValue() && isAllSelected(dataSource, timesheetLinesSelection)"
+                                        [indeterminate]="timesheetLinesSelection.hasValue() && !isAllSelected(dataSource, timesheetLinesSelection)" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </th>
+                            <td class="text-center" mat-cell *matCellDef="let salaryCalculation">
+                                <label class="custom_check">
+                                    <input type="checkbox"
+                                        (change)="$event ? timesheetLinesSelection.toggle(salaryCalculation) : null"
+                                        [checked]="timesheetLinesSelection.isSelected(salaryCalculation)" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                        </ng-container>
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-icon-button data-bs-toggle="modal" data-bs-target="#add_todaywork"
+                                    (click)="onRowEdit(row)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                    </div>
+                    <!-- Define other columns dynamically -->
+                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'timesheetLines.'+ column | translate }} </th>
+                        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                    </ng-container>
+
+                    <!-- Header and Data Rows -->
+                    <tr mat-header-row *matHeaderRowDef="isEditable() ? displayedColumnsWithActions : displayedColumns">
+                    </tr>
+                    <tr mat-row
+                        *matRowDef="let row; columns: isEditable() ? displayedColumnsWithActions : displayedColumns;">
+                    </tr>
+                </table>
+
+
+
+            </div>
+            <mat-paginator [length]="timesheetLinesRecordCount" [pageSize]="10" [showFirstLastButtons]="true"
+                (page)="setPage($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+<!-- Add Today Work Modal -->
+<div id="add_todaywork" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Generate Timesheet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="input-block mb-3 col-sm-6">
+                            <label class="col-form-label" for="">Period <span class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select" placeholder="Office Management">
+                                <mat-option value="office">Office Management</mat-option>
+                                <mat-option value="project">Project Management</mat-option>
+                                <mat-option value="call">Video Calling App</mat-option>
+                                <mat-option value="hospital">Hospital Administration</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+              <div class="input-block mb-3 col-sm-4">
+                <label class="col-form-label" for="">Deadline <span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                  <input class="form-control" type="text" value="5 May 2023" readonly>
+                </div>
+              </div>
+              <div class="input-block mb-3 col-sm-4">
+                <label class="col-form-label" for="">Total Hours <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" value="100" readonly>
+              </div>
+              <div class="input-block mb-3 col-sm-4">
+                <label class="col-form-label" for="">Remaining Hours <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" value="60" readonly>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-block date-input1 mb-3 col-sm-6">
+                <label class="col-form-label" for="">Date <span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                  <input class="form-control datetimepicker" bsDatepicker container=".date-input1" type="text">
+                </div>
+              </div>
+              <div class="input-block mb-3 col-sm-6">
+                <label class="col-form-label" for="">Hours <span class="text-danger">*</span></label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Description <span class="text-danger">*</span></label>
+              <textarea rows="4" class="form-control"></textarea>
+            </div> -->
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add Today Work Modal -->
+
+<!-- Edit Today Work Modal -->
+<div id="edit_todaywork" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Work Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="input-block mb-3 col-sm-6">
+                            <label class="col-form-label" for="">Project <span class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select " placeholder="Office Management">
+                                <mat-option value="office">Office Management</mat-option>
+                                <mat-option value="project">Project Management</mat-option>
+                                <mat-option value="videocall">Video Calling App</mat-option>
+                                <mat-option value="hospital">Hospital Administration</mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-block mb-3 col-sm-4">
+                            <label class="col-form-label" for="">Deadline <span class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                                <input class="form-control" type="text" value="5 May 2023" readonly>
+                            </div>
+                        </div>
+                        <div class="input-block mb-3 col-sm-4">
+                            <label class="col-form-label" for="">Total Hours <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" value="100" readonly>
+                        </div>
+                        <div class="input-block mb-3 col-sm-4">
+                            <label for="">Remaining Hours <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" value="60" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-block date-input2 mb-3 col-sm-6">
+                            <label class="col-form-label" for="">Date <span class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                                <input class="form-control datetimepicker" bsDatepicker container=".date-input2"
+                                    type="text" value="31-12-2022">
+                            </div>
+                        </div>
+                        <div class="input-block mb-3 col-sm-6">
+                            <label class="col-form-label" for="">Hours <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" value="9">
+                        </div>
+                    </div>
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'description' | translate }} <span
+                                class="text-danger">*</span></label>
+                        <textarea rows="4"
+                            class="form-control">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque.</textarea>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Today Work Modal -->
+
+<!-- Delete Today Work Modal -->
+<div class="modal custom-modal fade" id="delete_workdetail" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>Delete Work Details</h3>
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" data-bs-dismiss="modal"
+                                class="btn btn-primary cancel-btn">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Today Work Modal -->

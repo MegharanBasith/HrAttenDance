@@ -1,0 +1,118 @@
+<div class="form-container">
+    <p-toast></p-toast>
+
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <form [formGroup]="form" class="vacation-form">
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{ 'user.addUser' | translate }}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#userDetails"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="userDetails">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.firstName' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="form.get('firstName')?.invalid && form.get('firstName')?.touched"
+                                    formControlName="firstName">
+                                <mat-error
+                                    *ngIf="form.controls['firstName']?.touched && form.controls['firstName']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.firstNameRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error *ngIf="form.controls['firstName']?.errors?.['pattern']">
+                                    <small class="text-danger"> {{ 'employee.alphabitOnly' |translate }}
+                                    </small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.lastName' | translate}}<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="form.get('lastName')?.invalid && form.get('lastName')?.touched"
+                                    formControlName="lastName">
+                                <mat-error
+                                    *ngIf="form.controls['lastName']?.touched && form.controls['lastName']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.lastNameRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error *ngIf="form.controls['lastName']?.errors?.['pattern']">
+                                    <small class="text-danger"> {{ 'employee.alphabitOnly' |translate }}
+                                    </small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.email' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="email"
+                                    [class.invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+                                    formControlName="email" (blur)="checkEmailExists()">
+                                <mat-error
+                                    *ngIf="form.controls['email'].hasError('required') && form.get('email')?.touched">
+                                    <small class="text-danger"> {{'employee.emailRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="form.controls['email'].hasError('email') && form.get('email')?.touched">
+                                    <small class="text-danger"> {{'employee.wrongEmailFormat' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error *ngIf="form.controls['email'].hasError('emailExists')">
+                                    <small class="text-danger"> {{'employee.emailAlreadyExist' | translate
+                                        }}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.role' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('role')?.invalid && form.get('role')?.touched"
+                                    formControlName="role" placeholder="{{ 'select' | translate}}">
+                                    <mat-option *ngFor="let role of roles" [value]="role.id">
+                                        {{ role.name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.get('role')?.invalid && form.get('role')?.touched">
+                                    <small class="text-danger"> {{'employee.roleRequired' | translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 toggle-container">
+                                <label class="col-form-label" for="linkUserToEmployee">{{'user.linkUserToEmployee'|
+                                    translate}}</label>
+                                <mat-slide-toggle class="toggle-button custom-mat-toggle"
+                                    formControlName="linkUserToEmployee" (change)="onToggleChange($event)"/>
+                            </div>
+                        </div>
+                        <div *ngIf="form.get('linkUserToEmployee')?.value === true" class="col-sm-6">
+                            <app-employee-filter [employeeControl]="employeeControl">
+                            </app-employee-filter>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="submit-container">
+        <button class="btn btn-primary submit-button" [disabled]="form.invalid" (click)="createUser()">{{'submit'
+            | translate
+            }}</button>
+    </div>
+</div>

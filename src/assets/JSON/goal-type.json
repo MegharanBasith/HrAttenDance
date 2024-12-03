@@ -1,0 +1,18 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "type": "Invoice Goal",
+          "description": "Lorem ipsum dollar",
+          "status": "Active"
+        },
+        {
+          "id": 2,
+          "type": "Event Goal",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive"
+        }
+       
+      ],
+      "totalData":2
+}

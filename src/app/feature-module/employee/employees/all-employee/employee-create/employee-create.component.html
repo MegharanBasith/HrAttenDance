@@ -1,0 +1,536 @@
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{ 'employee.addEmployee' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="form" class="form">
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{ 'employee.personalDetails' | translate }}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#personalDetails"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="personalDetails">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.firstName' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="form.get('FirstName')?.invalid && form.get('FirstName')?.touched"
+                                    formControlName="FirstName">
+                                <mat-error
+                                    *ngIf="form.controls['FirstName']?.touched && form.controls['FirstName']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.firstNameRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error *ngIf="form.controls['FirstName']?.errors?.['pattern']">
+                                    <small class="text-danger"> {{ 'employee.alphabitOnly' |translate }}
+                                    </small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.lastName' | translate}}<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="form.get('LastName')?.invalid && form.get('LastName')?.touched"
+                                    formControlName="LastName">
+                                <mat-error
+                                    *ngIf="form.controls['LastName']?.touched && form.controls['LastName']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.lastNameRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error *ngIf="form.controls['LastName']?.errors?.['pattern']">
+                                    <small class="text-danger"> {{ 'employee.alphabitOnly' |translate }}
+                                    </small>
+                                </mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.email' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" type="email"
+                                    [class.invalid]="form.get('Email')?.invalid && form.get('Email')?.touched"
+                                    formControlName="Email" (blur)="checkEmailExists()">
+                                <mat-error
+                                    *ngIf="form.controls['Email'].hasError('required') && form.get('Email')?.touched">
+                                    <small class="text-danger"> {{'employee.emailRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                                <mat-error
+                                    *ngIf="form.controls['Email'].hasError('email') && form.get('Email')?.touched">
+                                    <small class="text-danger"> {{'employee.wrongEmailFormat' | translate
+                                        }}</small>
+                                </mat-error>
+                                <!-- @if (form.get('Email')?.invalid && form.get('Email')?.touched) {
+                                <div>
+                                    @if (form.get('Email')?.invalid && form.get('Email')?.touched)
+                                    {
+                                    <small class="text-danger"> {{'employee.emailRequired' | translate }}</small>
+                                    }
+                                </div>
+                                } -->
+                                <mat-error *ngIf="form.controls['Email'].hasError('emailExists')">
+                                    <small class="text-danger"> {{'employee.emailAlreadyExist' | translate
+                                        }}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.Gender' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('Gender')?.invalid && form.get('Gender')?.touched"
+                                    formControlName="Gender" placeholder="Select Gender">
+                                    <mat-option value="Male"> {{'employee.male' | translate}}</mat-option>
+                                    <mat-option value="Female">{{'employee.female' | translate }}</mat-option>
+                                </mat-select>
+                                @if (form.get('Gender')?.invalid && form.get('Gender')?.touched) {
+                                <div>
+                                    @if (form.get('Gender')?.invalid &&
+                                    form.get('Gender')?.touched) {
+                                    <small class="text-danger"> {{'employee.genderRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for="">{{'employee.birthDate' | translate }} <span
+                                        class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        container=".date-input1"
+                                        [class.invalid]="form.get('BirthDate')?.invalid && form.get('BirthDate')?.touched"
+                                        formControlName="BirthDate">
+                                    @if (form.get('BirthDate')?.invalid &&
+                                    form.get('BirthDate')?.touched) {
+                                    <div>
+                                        @if (form.get('BirthDate')?.invalid &&
+                                        form.get('BirthDate')?.touched) {
+                                        <small class="text-danger"> {{'employee.birthDateRequired' | translate
+                                            }}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for=""> {{'employee.maritalStatus' | translate}}
+                                    <span class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('MaritalStatus')?.invalid && form.get('MaritalStatus')?.touched"
+                                    formControlName="MaritalStatus" placeholder="Select Marital Status">
+                                    <mat-option *ngFor="let option of maritalStatusOptions" [value]="option.id">
+                                        {{ option.name }}
+                                    </mat-option>
+                                </mat-select>
+                                @if (form.get('MaritalStatus')?.invalid &&
+                                form.get('MaritalStatus')?.touched) {
+                                <div>
+                                    @if (form.get('MaritalStatus')?.invalid &&
+                                    form.get('MaritalStatus')?.touched) {
+                                    <small class="text-danger"> {{'employee.maritalStatusRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.iqamaNumber' | translate}}
+                                    </label>
+                                <input class="form-control" type="number"
+                                    [class.invalid]="form.get('IqamaNumber')?.invalid && form.get('IqamaNumber')?.touched"
+                                    formControlName="IqamaNumber">
+                                <!-- <mat-error
+                                    *ngIf="form.controls['IqamaNumber']?.touched && form.controls['IqamaNumber']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.iqamaNumberRequired' | translate
+                                        }}</small>
+                                </mat-error> -->
+                                <mat-error
+                                    *ngIf="form.controls['IqamaNumber'].touched && form.controls['IqamaNumber']?.errors?.['pattern']">
+                                    <small class="text-danger"> {{'employee.iqamaNumberLength' |
+                                        translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.nationality' | translate}}
+                                    <span class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('Nationality')?.invalid && form.get('Nationality')?.touched"
+                                    formControlName="Nationality" placeholder="Select Nationality"
+                                    (selectionChange)="onNationalityChange($event)">
+                                    <mat-option *ngFor="let nationality of nationalities" [value]="nationality.code">
+                                        {{ nationality.name }}
+                                    </mat-option>
+                                </mat-select>
+                                @if (form.get('Nationality')?.invalid &&
+                                form.get('Nationality')?.touched) {
+                                <div>
+                                    @if (form.get('Nationality')?.invalid &&
+                                    form.get('Nationality')?.touched)
+                                    {
+                                    <small class="text-danger"> {{'employee.nationalityRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="isNotSaudi" class="row">
+                        <div class="col-3">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.borderNumber' | translate}}
+                                    <span class="text-danger">*</span></label>
+                                <input class="form-control" type="number" formControlName="BorderNumber" required>
+                                @if (form.get('BorderNumber')?.invalid &&
+                                form.get('BorderNumber')?.touched) {
+                                <div>
+                                    @if (form.get('BorderNumber')?.invalid &&
+                                    form.get('BorderNumber')?.touched)
+                                    {
+                                    <small class="text-danger"> {{'employee.borderNumberRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                                <mat-error
+                                    *ngIf="form.controls['BorderNumber'].touched && form.controls['BorderNumber']?.errors?.['pattern']">
+                                    <small class="text-danger"> {{'employee.borderNumberLength' |
+                                        translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.passportNumber' | translate }}
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input class="form-control" type="text" formControlName="PassportNumber">
+                                @if (form.get('PassportNumber')?.invalid &&
+                                form.get('PassportNumber')?.touched) {
+                                <div>
+                                    @if (form.get('PassportNumber')?.invalid &&
+                                    form.get('PassportNumber')?.touched)
+                                    {
+                                    <small class="text-danger"> {{'employee.passportNumberRequired' | translate
+                                        }}
+                                    </small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for="">{{'employee.passportExpiryDate' | translate
+                                    }}
+                                    <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        container=".date-input1"
+                                        [class.invalid]="form.get('PassportExpiryDate')?.invalid && form.get('PassportExpiryDate')?.touched"
+                                        formControlName="PassportExpiryDate">
+                                    @if (form.get('PassportExpiryDate')?.invalid &&
+                                    form.get('PassportExpiryDate')?.touched) {
+                                    <div>
+                                        @if (form.get('PassportExpiryDate')?.invalid &&
+                                        form.get('PassportExpiryDate')?.touched) {
+                                        <small class="text-danger"> {{'employee.passportExpiryDateRequired' |
+                                            translate
+                                            }}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3 toggle-container">
+                                    <label class="col-form-label" for="activeInModadd">{{'employee.activeInModadd'|
+                                        translate}}</label>
+                                    <mat-slide-toggle class="toggle-button custom-mat-toggle"
+                                        formControlName="activeInModadd"/>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{'employee.jobDetails'| translate}}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#jobDetails"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="jobDetails">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for=""> {{'employee.employeeNumber' | translate }}
+                                    <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="form.get('EmployeeNumber')?.invalid && form.get('EmployeeNumber')?.touched"
+                                    formControlName="EmployeeNumber">
+                                @if (form.get('EmployeeNumber')?.invalid &&
+                                form.get('EmployeeNumber')?.touched) {
+                                <div>
+                                    @if (form.get('EmployeeNumber')?.invalid &&
+                                    form.get('EmployeeNumber')?.touched) {
+                                    <small class="text-danger"> {{'employee.employeeNumberRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for="">{{'employee.joiningDate' | translate}}
+                                    <span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                                        [class.invalid]="form.get('JoinDate')?.invalid && form.get('JoinDate')?.touched"
+                                        formControlName="JoinDate">
+                                    @if (form.get('JoinDate')?.invalid &&
+                                    form.get('JoinDate')?.touched) {
+                                    <div>
+                                        @if (form.get('JoinDate')?.invalid &&
+                                        form.get('JoinDate')?.touched) {
+                                        <small class="text-danger"> {{ 'employee.joinDateRequired'|
+                                            translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.role' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('Role')?.invalid && form.get('Role')?.touched"
+                                    formControlName="Role" placeholder="Select Role">
+                                    <mat-option *ngFor="let role of roles" [value]="role.id">
+                                        {{ role.name }}
+                                    </mat-option>
+                                </mat-select>
+                                @if (form.get('Role')?.invalid && form.get('Role')?.touched) {
+                                <div>
+                                    @if (form.get('Role')?.invalid && form.get('Role')?.touched) {
+                                    <small class="text-danger"> {{'employee.roleRequired' | translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.profession' | translate}}<span
+                                        class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('Profession')?.invalid && form.get('Profession')?.touched"
+                                    formControlName="Profession" placeholder="Select Job Title">
+                                    <mat-option *ngFor="let profession of professions"
+                                        [value]="profession.erbProfessionId">
+                                        {{ profession.name }}
+                                    </mat-option>
+                                </mat-select>
+                                @if (form.get('Profession')?.invalid &&
+                                form.get('Profession')?.touched) {
+                                <div>
+                                    @if (form.get('Profession')?.invalid &&
+                                    form.get('Profession')?.touched)
+                                    {
+                                    <small class="text-danger"> {{'employee.professionRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.department' | translate}} <span
+                                        class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('DepartmentName')?.invalid && form.get('DepartmentName')?.touched"
+                                    formControlName="DepartmentName" placeholder="Select Department">
+                                    <mat-option value="select">Select Department</mat-option>
+                                    <mat-option value="development">Web Development</mat-option>
+                                    <mat-option value="it">IT Management</mat-option>
+                                    <mat-option value="marketing">Marketing</mat-option>
+                                </mat-select>
+                                @if (form.get('DepartmentName')?.invalid &&
+                                form.get('DepartmentName')?.touched) {
+                                <div>
+                                    @if (form.get('DepartmentName')?.invalid &&
+                                    form.get('DepartmentName')?.touched) {
+                                    <small class="text-danger"> {{'employee.departmentRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{'employee.contractDetails'| translate}}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#contractDetails"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="contractDetails">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.annualLeave' | translate}}
+                                    <span class="text-danger">*</span></label>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('AnnualLeave')?.invalid && form.get('AnnualLeave')?.touched"
+                                    formControlName="AnnualLeave" placeholder="{{ 'select' |  translate}}">
+                                    <mat-option *ngFor="let annualLeaveType of annualLeaveTypes"
+                                        [value]="annualLeaveType.vacationCode">
+                                        {{ annualLeaveType.name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="form.controls['AnnualLeave']?.touched && form.controls['AnnualLeave']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.annualLeaveRequired' | translate
+                                        }}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.salaryAmount' | translate}}
+                                    <span class="text-danger">*</span></label>
+                                <input class="form-control" type="number" step="0.1" min="0.0"
+                                    [class.invalid]="form.get('SalaryAmount')?.invalid && form.get('SalaryAmount')?.touched"
+                                    formControlName="SalaryAmount" (input)="isTableDisabled()">
+                                @if (form.get('SalaryAmount')?.invalid && form.get('SalaryAmount')?.touched)
+                                {
+                                <div>
+                                    @if (form.get('SalaryAmount')?.invalid &&
+                                    form.get('SalaryAmount')?.touched) {
+                                    <small class="text-danger"> {{'employee.salaryAmountRequired' |
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive m-t-15">
+                        <table class="table table-striped custom-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>{{'employee.contractAllowance' | translate}}</th>
+                                    <th class="text-center">{{'employee.includeSalary' | translate }}</th>
+                                    <th class="text-center">{{'employee.includeGOSI' | translate }}</th>
+                                    <th class="text-center">{{'employee.percentage' | translate }}</th>
+                                    <th class="text-center">{{'employee.allowanceAmount' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let allowance of contractAllowances">
+                                    <td class="text-center">
+                                        <label class="custom_check">
+                                            <input type="checkbox" [(ngModel)]="allowance.selected"
+                                                (change)="onToggle(allowance)" [disabled]="!isAllowancesEnabled"
+                                                [ngModelOptions]="{standalone: true}">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td> {{ allowance.Name }}</td>
+                                    <td class="text-center">
+                                        <label class="custom_check">
+                                            <input type="checkbox" [(ngModel)]="allowance.CalculateWithSalary"
+                                                name="CalculateWithSalary" [ngModelOptions]="{standalone: true}"
+                                                [disabled]="!allowance.Selected"
+                                                [checked]="allowance.CalculateWithSalary">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="custom_check">
+                                            <input type="checkbox" [(ngModel)]="allowance.IncludeGOSI"
+                                                name="IncludeGOSI" [ngModelOptions]="{standalone: true}"
+                                                [disabled]="!allowance.Selected" [checked]="allowance.IncludeGOSI">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="text" class="form-control" [(ngModel)]="allowance.Percentage"
+                                            name="percentage" [ngModelOptions]="{standalone: true}"
+                                            [disabled]="!allowance.Selected" (input)="onPercentageChange(allowance)">
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="number" class="form-control" step="0.01" min="0"
+                                            [(ngModel)]="allowance.AllowanceAmountValue" name="allowanceAmount"
+                                            [ngModelOptions]="{standalone: true}" [disabled]="!allowance.Selected"
+                                            (input)="onAllowanceAmountValueChange(allowance)">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="submit-button-container">
+            <button class="btn btn-primary submit-button" [disabled]="form.invalid"
+                (click)="addEmployeeWithContract()">{{'submit' |
+                translate
+                }}</button>
+        </div>
+    </form>
+</div>

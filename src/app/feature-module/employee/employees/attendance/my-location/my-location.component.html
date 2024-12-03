@@ -1,0 +1,24 @@
+<div class="content container-fluid" style="padding-top: 0px;">
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="card contact-sidebar" *ngFor="let myLocation of myLocations">
+        <h5 class="border-bottom pb-3">My Location</h5>
+        <ul class="other-info">
+          <li><span class="other-title" style="min-width: 140px;" >Latitude & Longitude</span>&nbsp;
+            <span>{{myLocation.latLong}}</span></li>
+          <li>
+            <span class="other-title" style="min-width: 140px;">Distance</span>
+            <span>{{myLocation.distance}} meters</span>
+          </li>
+          <li>
+            <span class="other-title" style="min-width: 140px;">Description</span>
+            <span>{{myLocation.description}}</span>
+          </li>
+        </ul>
+       
+    </div>
+
+  </div>
+  <!---/table data-->
+</div>

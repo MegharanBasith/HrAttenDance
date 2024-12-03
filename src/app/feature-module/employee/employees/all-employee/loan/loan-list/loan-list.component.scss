@@ -1,0 +1,41 @@
+/* Set the modal width to 70% of the viewport */
+.modal-dialog {
+  max-width: 70%; /* Adjust this for a smaller modal */
+  width: 70%; /* Ensure the modal is still wide enough */
+}
+
+/* Customize the modal header background color */
+.modal-header {
+  padding: 20px;
+  background-color: #cecece; /* Light gray background for the header */
+  border-bottom: 1px solid #c7c7c7; /* Optional: Add a subtle border to separate header from body */
+}
+
+/* Customize the modal body */
+.modal-body {
+  padding: 20px;
+  max-height: 80vh; /* Prevent excessive height and add scrolling if necessary */
+  overflow-y: auto; /* Enable vertical scroll if the content overflows */
+}
+
+/* Ensure that the modal content does not overflow horizontally */
+.custom-modal {
+  overflow-x: hidden;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .modal-dialog {
+    width: 85%; /* Make the modal take up more space on smaller screens */
+  }
+}
+
+
+
+.custom-modal .modal.show {
+  display: block;
+  padding-right: 17px;
+}
+.custom-modal .modal-backdrop {
+  display: block;
+}

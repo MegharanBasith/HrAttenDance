@@ -1,0 +1,1167 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <h3 class="page-title">Activities</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a [routerLink]="routes.adminDashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Activities</li>
+        </ul>
+      </div>
+      <div class="col-md-8 float-end ms-auto">
+        <div class="d-flex title-head">
+          <div class="view-icons">
+            <a href="javascript:void(0);" class="grid-view btn btn-link"
+              ><i class="las la-redo-alt"></i
+            ></a>
+            <a
+              href="javascript:void(0);"
+              class="list-view btn btn-link"
+              id="collapse-header"
+              (click)="fullscreen()"
+              ><i class="las la-expand-arrows-alt"></i
+            ></a>
+            <a
+              href="javascript:void(0);"
+              class="list-view btn btn-link"
+              id="filter_search"
+              (click)="openFilter()"
+              ><i class="las la-filter"></i
+            ></a>
+          </div>
+          <div class="form-sort">
+            <a
+              href="javascript:void(0);"
+              class="list-view btn btn-link"
+              data-bs-toggle="modal"
+              data-bs-target="#export"
+              ><i class="las la-file-export"></i>Export</a
+              >
+            </div>
+            <a
+              href="javascript:void(0);"
+              class="btn add-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#add_activity"
+              ><i class="la la-plus-circle"></i>Add Activity</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Header -->
+
+      <!-- Search Filter -->
+      <div
+        class="filter-filelds"
+        id="filter_inputs"
+        [ngClass]="{ 'd-block': filter, 'd-none': !filter }"
+        >
+        <div class="row filter-row">
+          <div class="col-xl-2">
+            <div class="input-block mb-3 form-focus">
+              <mat-form-field class="example-full-width">
+                <mat-label>Activity</mat-label>
+                <input type="text" matInput class="form-control floating" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-xl-2">
+            <div class="input-block mb-3 form-focus">
+              <mat-form-field class="example-full-width">
+                <mat-label>Owner</mat-label>
+                <input type="text" matInput class="form-control floating" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xl-2">
+            <div class="input-block mb-3 form-focus">
+              <div class="cal-icon date-input1">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Due Date</mat-label>
+                  <input type="text" matInput class="form-control floating datetimepicker" bsDatepicker container=".date-input1" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2">
+            <div class="input-block mb-3 form-focus">
+              <div class="cal-icon">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Created at</mat-label>
+                  <input type="text" matInput class="form-control floating datetimepicker" bsDatepicker />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-2">
+            <div class="input-block mb-3 form-focus select-focus">
+              <mat-select
+                class="select custom-mat-select floating-mat-select"
+                placeholder="--Select--"
+                >
+                <mat-option>--Select--</mat-option>
+                <mat-option value="Germany">Meeting</mat-option>
+                <mat-option value="USA">Calls</mat-option>
+                <mat-option value="Canada">Email</mat-option>
+                <mat-option value="India">Task</mat-option>
+              </mat-select>
+              <label class="focus-label">Activity Type</label>
+            </div>
+          </div>
+          <div class="col-xl-2">
+            <a href="javascript:void(0);" class="btn btn-success w-100"> Search </a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <!-- /Search Filter -->
+      <div class="filter-section activity-filter-head">
+        <div class="all-activity-head">
+          <h5>All Activity</h5>
+          <ul class="activity-list">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-tasks"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-user-tie"></i></a>
+            </li>
+          </ul>
+        </div>
+        <ul>
+
+          <li>
+            <div class="form-sort">
+              <i class="las la-sort-alpha-up-alt"></i>
+              <mat-select
+                class="select space-select"
+                placeholder="Sort By Alphabet"
+                >
+                <mat-option value="sortByAlphabet">Sort By Alphabet</mat-option>
+                <mat-option value="ascending">Ascending</mat-option>
+                <mat-option value="descending">Descending</mat-option>
+                <mat-option value="recentlyViewed">Recently Viewed</mat-option>
+                <mat-option value="recentlyAdded">Recently Added</mat-option>
+              </mat-select>
+            </div>
+          </li>
+          <li>
+            <div class="search-set">
+              <div class="search-input">
+                <a href="javascript:void(0);" class="btn btn-searchset"
+                  ><i class="las la-search"></i
+                ></a>
+                <div class="dataTables_filter">
+                  <label>
+                    <input
+                      [(ngModel)]="searchDataValue"
+                      [ngModelOptions]="{ standalone: true }"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="searchData(searchDataValue)"
+                      type="search"
+                      class="form-control"
+                      placeholder="Search..."
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table_header">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length">
+                    <label>
+                      Show
+                      <select
+                        [(ngModel)]="pageSize"
+                        (ngModelChange)="changePageSize()"
+                        class="form-control form-control-sm"
+                        >
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      entries
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table
+                matSort
+                (matSortChange)="sortData($event)"
+                class="table table-striped custom-table datatable contact-table"
+                >
+                <thead>
+                  <tr>
+                    <th mat-sort-header="title">Title</th>
+                    <th mat-sort-header="activity">Activity Type</th>
+                    <th mat-sort-header="due">Due Date</th>
+                    <th mat-sort-header="owner">Owner</th>
+                    <th mat-sort-header="created">Created At</th>
+                    <th class="no-sort text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (data of activities; track data) {
+                    <tr>
+                      <td>
+                        {{ data.title }}
+                      </td>
+                      <td>
+                        <span
+                          class="badge activity-badge"
+                  [ngClass]="{
+                    'badge-bg-violet': data.activityType == 'Meeting',
+                    'badge-bg-success': data.activityType == 'Calls',
+                    'badge-bg-warning': data.activityType == 'Email',
+                    'badge-bg-info': data.activityType == 'Task'
+                }">
+                          <i class="la"
+                    [ngClass]="{
+                        'la-user-tie': data.activityType == 'Meeting',
+                        'la-phone': data.activityType == 'Calls',
+                        'la-envelope': data.activityType == 'Email',
+                        'la-tasks': data.activityType == 'Task'
+                    }"></i>{{ data.activityType }}</span
+                          >
+                        </td>
+                        <td>{{ data.dueDate }}</td>
+                        <td>{{ data.owner }}</td>
+                        <td>
+                          {{ data.createdAt }}
+                        </td>
+                        <td class="text-end">
+                          <div class="dropdown dropdown-action">
+                            <a
+                              href="javascript:void(0);"
+                              class="action-icon dropdown-toggle"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              ><i class="material-icons">more_vert</i></a
+                              >
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a
+                                  class="dropdown-item"
+                                  href="javascript:void(0);"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#edit_activity"
+                                  ><i class="fa-solid fa-pencil m-r-5"></i> Edit</a
+                                  >
+                                  <a
+                                    class="dropdown-item"
+                                    href="javascript:void(0);"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#delete_activity"
+                                    ><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a
+                                    >
+                                    <a class="dropdown-item" [routerLink]="routes.contactDetails"
+                                      ><i class="fa-regular fa-eye"></i> Preview</a
+                                      >
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="table_footer">
+                        <div class="col-sm-12 col-md-5">
+                          <div class="dataTables_info">
+                            Showing {{ serialNumberArray[0] }} to
+                            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                            {{ totalData }} entries
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-7">
+                          <div class="pagination_section">
+                            <ul class="pagination">
+                              <li
+                                class="page-item"
+                [ngClass]="{
+                  disabled: currentPage === 1
+                }"
+                                >
+                                <a
+                                  (click)="getMoreData('previous')"
+                                  class="page-link"
+                                  href="javascript:void(0);"
+                                  tabindex="-1"
+                                  ><i class="fa fa-angle-double-left"></i></a
+                                  >
+                                </li>
+
+                                @for (item of pageNumberArray; track item; let i = $index) {
+                                  <li
+                                    class="page-item"
+                                    [class.active]="item === currentPage"
+                  [ngClass]="
+                    (pageNumberArray[currentPage - 2] > item &&
+                      item !== 1 &&
+                      pageNumberArray.length > 6) ||
+                    (pageNumberArray[currentPage] < item &&
+                      item !== 1 &&
+                      pageNumberArray.length > 6 &&
+                      pageNumberArray.length !== item)
+                      ? 'hide-page-no'
+                      : 'show-page-no'
+                  "
+                                    >
+                                    <a
+                                      (click)="moveToPage(item)"
+                                      class="page-link"
+                                      href="javascript:void(0);"
+                                      >
+                                      {{ item }}
+                                    </a>
+                                  </li>
+                                  @if (
+                                    i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                                    ) {
+                                    <li
+                                      class="page-item"
+                                      [hidden]="currentPage === 1"
+                                      (click)="moveToPage(currentPage - 2)"
+                                      (keydown.enter)="moveToPage(currentPage - 2)"
+                                      tabindex="0"
+                                      >
+                                      <a class="page-link" href="javascript:void(0);"> ... </a>
+                                    </li>
+                                  }
+                                  @if (
+                                    i === pageNumberArray.length - 2 &&
+                                    pageNumberArray.length > 6
+                                    ) {
+                                    <li
+                  [hidden]="
+                    currentPage >=
+                      pageNumberArray[pageNumberArray.length - 2] ||
+                    totalData < serialNumberArray[serialNumberArray.length - 1]
+                  "
+                                      class="page-item"
+                                      (click)="moveToPage(currentPage + 2)"
+                                      (keydown.enter)="moveToPage(currentPage + 2)"
+                                      tabindex="0"
+                                      >
+                                      <a class="page-link" href="javascript:void(0);"> ... </a>
+                                    </li>
+                                  }
+                                }
+
+                                <li
+                                  class="page-item"
+                [ngClass]="{
+                  disabled:
+                    currentPage ===
+                      pageNumberArray[pageNumberArray.length - 1] ||
+                    activities.length === 0
+                }"
+                                  >
+                                  <a
+                                    (click)="getMoreData('next')"
+                                    class="page-link"
+                                    href="javascript:void(0);"
+                                    ><i class=" fa fa-angle-double-right"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Add Activity -->
+                  <div
+                    class="modal custom-modal fade custom-modal-two modal-padding"
+                    id="add_activity"
+                    role="dialog"
+                    >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header header-border justify-content-between p-0">
+                          <h5 class="modal-title">Add New Activity</h5>
+                          <button
+                            type="button"
+                            class="btn-close position-static"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            >
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body p-0">
+                          <form>
+                            <div class="contact-input-set">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="input-block mb-3">
+                                    <label class="col-form-label"
+                                      >Title <span class="text-danger">*</span></label
+                                      >
+                                      <input class="form-control" type="text" />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="input-block mb-3 activity-date-picker">
+                                      <label class="col-form-label">Due Date <span class="text-danger">*</span></label>
+                                      <div class="cal-icon date-input3">
+                                        <input class="form-control floating datetimepicker" type="text" bsDatepicker container=".date-input3">
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="activity-date-picker input-block mb-3">
+                                      <label class="col-form-label"
+                                        >Time <span class="text-danger">*</span></label
+                                        >
+                                        <div class="cal-icon time-icon">
+                                          <input
+                                            type="text"
+                                            class="form-control timepicker"
+                                            (click)="toggleTimePcker('minStartTime')"
+                                            [value]="formatTime(myTime)"
+                                            />
+                                            <timepicker
+                                              [class.d-block]="showTimePicker[0] === 'minStartTime'"
+                                              class="custom-timepicker"
+                                              [ngModelOptions]="{ standalone: true }"
+                                              [(ngModel)]="myTime"
+                                            ></timepicker>
+                                            <span class="cus-icon"></span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="activity-date-picker input-block mb-3">
+                                          <label class="col-form-label"
+                                            >Reminder <span class="text-danger">*</span></label
+                                            >
+                                            <div class="cal-icon reminder">
+                                              <input type="text" class="form-control" />
+                                              <span class="cus-icon"></span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-lg-6 d-flex align-items-end">
+                                          <div class="input-block mb-3 d-flex align-items-center">
+                                            <div class="w-100">
+                                              <mat-select
+                                                class="select custom-mat-select"
+                                                placeholder="Minutes"
+                                                >
+                                                <mat-option value="all">Minutes</mat-option>
+                                                <mat-option value="web">Hours</mat-option>
+                                              </mat-select>
+                                            </div>
+                                            <span class="use-before">Before Use</span>
+                                          </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                          <div class="input-block mb-3">
+                                            <label class="col-form-label"
+                                              >Owner <span class="text-danger">*</span></label
+                                              >
+
+                                              <mat-select
+                                                class="select custom-mat-select"
+                                                placeholder="Select"
+                                                >
+                                                <mat-option value="all">Monty Beer</mat-option>
+                                                <mat-option value="web">Itzel</mat-option>
+                                                <mat-option value="web">Andrew</mat-option>
+                                              </mat-select>
+                                            </div>
+                                          </div>
+
+                                          <div class="col-md-6">
+                                            <div class="input-block tag-with-img mb-3">
+                                              <label class="col-form-label"
+                                                >Guests <span class="text-danger">*</span></label
+                                                >
+                                                <mat-form-field class="example-chip-list">
+                                                  <mat-chip-grid #chipGrid1>
+                                                    @for (fruit of data1; track trackByFn(i, fruit); let i = $index) {
+                                                      <mat-chip-row
+                                                        (removed)="remove(data1, i)" [editable]="true"
+                                                        (edited)="edit(data1, i, $event)"
+                                                        [aria-description]="'press enter to edit ' + fruit.name">
+                                                        {{ fruit.name }}
+                                                        <button matChipRemove
+                                                          [attr.aria-label]="'remove ' + fruit.name">
+                                                          <mat-icon>cancel</mat-icon>
+                                                        </button>
+                                                      </mat-chip-row>
+                                                    }
+                                                    <input [matChipInputFor]="chipGrid1"
+                                                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                      [matChipInputAddOnBlur]="addOnBlur"
+                                                      (matChipInputTokenEnd)="add($event, data1)" />
+                                                    </mat-chip-grid>
+                                                  </mat-form-field>
+                                                  </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                  <div class="input-block mb-3">
+                                                    <label class="col-form-label"
+                                                      >Description <span class="text-danger">*</span></label
+                                                      >
+                                                      <textarea class="form-control" rows="5"></textarea>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-md-12 deals-add-col">
+                                                    <div class="row">
+                                                      <div class="col-md-12">
+                                                        <div class="input-block mb-3">
+                                                          <div
+                                                            class="d-flex justify-content-between align-items-center"
+                                                            >
+                                                            <label class="col-form-label"
+                                                              >Deals <span class="text-danger">*</span></label
+                                                              >
+                                                              <a
+                                                                href="javascript:void(0);"
+                                                                class="add-new add-new-deal"
+                                                                (click)="addContact(0)"
+                                                                ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                >
+                                                              </div>
+
+                                                              <mat-select
+                                                                class="select custom-mat-select"
+                                                                placeholder="Select"
+                                                                >
+                                                                <mat-option value="all">Collins</mat-option>
+                                                                <mat-option value="web">Konopelski</mat-option>
+                                                                <mat-option value="web">Adams</mat-option>
+                                                              </mat-select>
+                                                            </div>
+                                                            @for (contact of contact.slice(1); track contact; let i = $index) {
+                                                              <div
+                                                                class="input-block mb-3"
+                                                                >
+                                                                <div
+                                                                  class="d-flex justify-content-between align-items-center"
+                                                                  >
+                                                                  <label class="col-form-label"
+                                                                    >Deals <span class="text-danger">*</span></label
+                                                                    >
+                                                                  </div>
+                                                                  <mat-select
+                                                                    class="select custom-mat-select"
+                                                                    placeholder="Select"
+                                                                    >
+                                                                    <mat-option value="all">Collins</mat-option>
+                                                                    <mat-option value="web">Konopelski</mat-option>
+                                                                    <mat-option value="web">Adams</mat-option>
+                                                                  </mat-select>
+                                                                </div>
+                                                              }
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-md-12 contact-add-col">
+                                                          <div class="input-block mb-3">
+                                                            <div
+                                                              class="d-flex justify-content-between align-items-center"
+                                                              >
+                                                              <label class="col-form-label"
+                                                                >Contacts <span class="text-danger">*</span></label
+                                                                >
+                                                                <a
+                                                                  href="javascript:void(0);"
+                                                                  class="add-new add-new-contact" (click)="adddeals(0)"
+
+                                                                  ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                  >
+                                                                </div>
+
+                                                                <mat-select
+                                                                  class="select custom-mat-select"
+                                                                  placeholder="Select"
+                                                                  >
+                                                                  <mat-option value="all">Darlee Robertson</mat-option>
+                                                                  <mat-option value="web">Sharon Roy</mat-option>
+                                                                  <mat-option value="web">Vaughan</mat-option>
+                                                                </mat-select>
+                                                              </div>
+                                                              @for (deal of deals.slice(1); track deal; let i = $index) {
+                                                                <div
+                                                                  class="input-block mb-3"
+                                                                  >
+                                                                  <div
+                                                                    class="d-flex justify-content-between align-items-center"
+                                                                    >
+                                                                    <label class="col-form-label"
+                                                                      >Contacts <span class="text-danger">*</span></label
+                                                                      >
+                                                                    </div>
+                                                                    <mat-select
+                                                                      class="select custom-mat-select"
+                                                                      placeholder="Select"
+                                                                      >
+                                                                      <mat-option value="all">Darlee Robertson</mat-option>
+                                                                      <mat-option value="web">Sharon Roy</mat-option>
+                                                                      <mat-option value="web">Vaughan</mat-option>
+                                                                    </mat-select>
+                                                                  </div>
+                                                                }
+                                                              </div>
+                                                              <div class="col-md-12 company-add-col">
+                                                                <div class="input-block mb-3">
+                                                                  <div
+                                                                    class="d-flex justify-content-between align-items-center"
+                                                                    >
+                                                                    <label class="col-form-label"
+                                                                      >Company <span class="text-danger">*</span></label
+                                                                      >
+                                                                      <a
+                                                                        href="javascript:void(0);"
+                                                                        class="add-new add-new-company" (click)="addcompany(0)"
+                                                                        ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                        >
+                                                                      </div>
+
+                                                                      <mat-select
+                                                                        class="select custom-mat-select"
+                                                                        placeholder="Select"
+                                                                        >
+                                                                        <mat-option value="all">NovaWaveLLC</mat-option>
+                                                                        <mat-option value="web">SilverHawk</mat-option>
+                                                                        <mat-option value="web">SummitPeak</mat-option>
+                                                                      </mat-select>
+                                                                    </div>
+                                                                    @for (company of company.slice(1); track company; let i = $index) {
+                                                                      <div
+                                                                        class="input-block mb-3"
+                                                                        >
+                                                                        <div
+                                                                          class="d-flex justify-content-between align-items-center"
+                                                                          >
+                                                                          <label class="col-form-label"
+                                                                            >Contacts <span class="text-danger">*</span></label
+                                                                            >
+                                                                          </div>
+                                                                          <mat-select
+                                                                            class="select custom-mat-select"
+                                                                            placeholder="Select"
+                                                                            >
+                                                                            <mat-option value="all">Darlee Robertson</mat-option>
+                                                                            <mat-option value="web">Sharon Roy</mat-option>
+                                                                            <mat-option value="web">Vaughan</mat-option>
+                                                                          </mat-select>
+                                                                        </div>
+                                                                      }
+                                                                    </div>
+                                                                    <div class="col-lg-12 text-end form-wizard-button">
+                                                                      <button
+                                                                        class="button btn-lights reset-btn"
+                                                                        type="reset"
+                                                                        data-bs-dismiss="modal"
+                                                                        >
+                                                                        Reset
+                                                                      </button>
+                                                                      <button class="btn btn-primary" type="submit">
+                                                                        Save Activity
+                                                                      </button>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </form>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      <!-- /Add Activity -->
+
+                                                      <!-- Edit Activity -->
+                                                      <div
+                                                        class="modal custom-modal fade custom-modal-two modal-padding"
+                                                        id="edit_activity"
+                                                        role="dialog"
+                                                        >
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header header-border justify-content-between p-0">
+                                                              <h5 class="modal-title">Edit Activity</h5>
+                                                              <button
+                                                                type="button"
+                                                                class="btn-close position-static"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close"
+                                                                >
+                                                                <span aria-hidden="true">×</span>
+                                                              </button>
+                                                            </div>
+                                                            <div class="modal-body p-0">
+                                                              <form>
+                                                                <div class="contact-input-set">
+                                                                  <div class="row">
+                                                                    <div class="col-md-12">
+                                                                      <div class="input-block mb-3">
+                                                                        <label class="col-form-label"
+                                                                          >Title <span class="text-danger">*</span></label
+                                                                          >
+                                                                          <input class="form-control" type="text" />
+                                                                        </div>
+                                                                      </div>
+                                                                      <div class="col-md-6">
+                                                                        <div class="input-block mb-3 activity-date-picker">
+                                                                          <label class="col-form-label"
+                                                                            >Due Date <span class="text-danger">*</span></label
+                                                                            >
+                                                                            <div class="cal-icon date-input2">
+                                                                              <input
+                                                                                class="form-control floating datetimepicker"
+                                                                                type="text"
+                                                                                bsDatepicker container=".date-input2"
+                                                                                />
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                          <div class="col-md-6">
+                                                                            <div class="activity-date-picker input-block mb-3">
+                                                                              <label class="col-form-label"
+                                                                                >Time <span class="text-danger">*</span></label
+                                                                                >
+                                                                                <div class="cal-icon time-icon">
+                                                                                  <input
+                                                                                    type="text"
+                                                                                    class="form-control timepicker"
+                                                                                    (click)="toggleTimePcker('minStartTime')"
+                                                                                    [value]="formatTime(myTime)"
+                                                                                    />
+                                                                                    <timepicker
+                                                                                      [class.d-block]="showTimePicker[0] === 'minStartTime'"
+                                                                                      class="custom-timepicker"
+                                                                                      [ngModelOptions]="{ standalone: true }"
+                                                                                      [(ngModel)]="myTime"
+                                                                                    ></timepicker>
+                                                                                    <span class="cus-icon"></span>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                              <div class="col-md-6">
+                                                                                <div class="activity-date-picker input-block mb-3">
+                                                                                  <label class="col-form-label"
+                                                                                    >Reminder <span class="text-danger">*</span></label
+                                                                                    >
+                                                                                    <div class="cal-icon reminder">
+                                                                                      <input type="text" class="form-control" />
+                                                                                      <span class="cus-icon"></span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="col-lg-6 d-flex align-items-end">
+                                                                                  <div class="input-block mb-3 d-flex align-items-center">
+                                                                                    <div class="w-100">
+                                                                                      <mat-select
+                                                                                        class="select custom-mat-select"
+                                                                                        placeholder="Minutes"
+                                                                                        >
+                                                                                        <mat-option value="all">Minutes</mat-option>
+                                                                                        <mat-option value="web">Hours</mat-option>
+                                                                                      </mat-select>
+                                                                                    </div>
+                                                                                    <span class="use-before">Before Use</span>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <div class="col-lg-6">
+                                                                                  <div class="input-block mb-3">
+                                                                                    <label class="col-form-label"
+                                                                                      >Owner <span class="text-danger">*</span></label
+                                                                                      >
+
+                                                                                      <mat-select
+                                                                                        class="select custom-mat-select"
+                                                                                        placeholder="Select"
+                                                                                        >
+                                                                                        <mat-option value="all">Monty Beer</mat-option>
+                                                                                        <mat-option value="web">Itzel</mat-option>
+                                                                                        <mat-option value="web">Andrew</mat-option>
+                                                                                      </mat-select>
+                                                                                    </div>
+                                                                                  </div>
+
+                                                                                  <div class="col-md-6">
+                                                                                    <div class="input-block tag-with-img mb-3">
+                                                                                      <label class="col-form-label"
+                                                                                        >Guests <span class="text-danger">*</span></label
+                                                                                        >
+                                                                                        <mat-form-field class="example-chip-list">
+                                                                                          <mat-chip-grid #chipGrid5>
+                                                                                            @for (fruit of data5; track trackByFn(i, fruit); let i = $index) {
+                                                                                              <mat-chip-row
+                                                                                                (removed)="remove(data5, i)" [editable]="true"
+                                                                                                (edited)="edit(data5, i, $event)"
+                                                                                                [aria-description]="'press enter to edit ' + fruit.name">
+                                                                                                <img src="assets/img/icons/tag-user-icon.svg" alt="{{ fruit.name }}"
+                                                                                                  class="chip-image" />
+                                                                                                  {{ fruit.name }}
+                                                                                                  <button matChipRemove [attr.aria-label]="'remove ' + fruit.name">
+                                                                                                    <mat-icon>cancel</mat-icon>
+                                                                                                  </button>
+                                                                                                </mat-chip-row>
+                                                                                              }
+                                                                                              <input [matChipInputFor]="chipGrid5"
+                                                                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                                                                (matChipInputTokenEnd)="add($event, data5)" />
+                                                                                              </mat-chip-grid>
+                                                                                            </mat-form-field>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-12">
+                                                                                          <div class="input-block mb-3">
+                                                                                            <label class="col-form-label"
+                                                                                              >Description <span class="text-danger">*</span></label
+                                                                                              >
+                                                                                              <textarea class="form-control" rows="5"></textarea>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                          <div class="col-md-12 deals-add-col">
+                                                                                            <div class="row">
+                                                                                              <div class="col-md-12">
+                                                                                                <div class="input-block mb-3">
+                                                                                                  <div
+                                                                                                    class="d-flex justify-content-between align-items-center"
+                                                                                                    >
+                                                                                                    <label class="col-form-label"
+                                                                                                      >Deals <span class="text-danger">*</span></label
+                                                                                                      >
+                                                                                                      <a
+                                                                                                        href="javascript:void(0);"
+                                                                                                        class="add-new add-new-deal"
+                                                                                                        (click)="addPipeline(0)"
+                                                                                                        ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                                                        >
+                                                                                                      </div>
+
+                                                                                                      <mat-select
+                                                                                                        class="select custom-mat-select"
+                                                                                                        placeholder="Select"
+                                                                                                        >
+                                                                                                        <mat-option value="all">Collins</mat-option>
+                                                                                                        <mat-option value="web">Konopelski</mat-option>
+                                                                                                        <mat-option value="web">Adams</mat-option>
+                                                                                                      </mat-select>
+                                                                                                    </div>
+                                                                                                    @for (pipeline of pipelines.slice(0); track pipeline; let i = $index) {
+                                                                                                      <div
+                                                                                                        class="input-block mb-3"
+                                                                                                        >
+                                                                                                        <div
+                                                                                                          class="d-flex justify-content-between align-items-center"
+                                                                                                          >
+                                                                                                          <label class="col-form-label"
+                                                                                                            >Deals <span class="text-danger">*</span></label
+                                                                                                            >
+                                                                                                          </div>
+                                                                                                          <mat-select
+                                                                                                            class="select custom-mat-select"
+                                                                                                            placeholder="Select"
+                                                                                                            >
+                                                                                                            <mat-option value="all">Collins</mat-option>
+                                                                                                            <mat-option value="web">Konopelski</mat-option>
+                                                                                                            <mat-option value="web">Adams</mat-option>
+                                                                                                          </mat-select>
+                                                                                                        </div>
+                                                                                                      }
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <div class="col-md-12 contact-add-col">
+                                                                                                  <div class="input-block mb-3">
+                                                                                                    <div
+                                                                                                      class="d-flex justify-content-between align-items-center"
+                                                                                                      >
+                                                                                                      <label class="col-form-label"
+                                                                                                        >Contacts <span class="text-danger">*</span></label
+                                                                                                        >
+                                                                                                        <a
+                                                                                                          href="javascript:void(0);"
+                                                                                                          class="add-new add-new-contact" (click)="addGrid(0)"
+
+                                                                                                          ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                                                          >
+                                                                                                        </div>
+
+                                                                                                        <mat-select
+                                                                                                          class="select custom-mat-select"
+                                                                                                          placeholder="Select"
+                                                                                                          >
+                                                                                                          <mat-option value="all">Darlee Robertson</mat-option>
+                                                                                                          <mat-option value="web">Sharon Roy</mat-option>
+                                                                                                          <mat-option value="web">Vaughan</mat-option>
+                                                                                                        </mat-select>
+                                                                                                      </div>
+                                                                                                      @for (grid of grid.slice(1); track grid; let i = $index) {
+                                                                                                        <div
+                                                                                                          class="input-block mb-3"
+                                                                                                          >
+                                                                                                          <div
+                                                                                                            class="d-flex justify-content-between align-items-center"
+                                                                                                            >
+                                                                                                            <label class="col-form-label"
+                                                                                                              >Contacts <span class="text-danger">*</span></label
+                                                                                                              >
+                                                                                                            </div>
+                                                                                                            <mat-select
+                                                                                                              class="select custom-mat-select"
+                                                                                                              placeholder="Select"
+                                                                                                              >
+                                                                                                              <mat-option value="all">Darlee Robertson</mat-option>
+                                                                                                              <mat-option value="web">Sharon Roy</mat-option>
+                                                                                                              <mat-option value="web">Vaughan</mat-option>
+                                                                                                            </mat-select>
+                                                                                                          </div>
+                                                                                                        }
+                                                                                                      </div>
+                                                                                                      <div class="col-md-12 company-add-col">
+                                                                                                        <div class="input-block mb-3">
+                                                                                                          <div
+                                                                                                            class="d-flex justify-content-between align-items-center"
+                                                                                                            >
+                                                                                                            <label class="col-form-label"
+                                                                                                              >Company <span class="text-danger">*</span></label
+                                                                                                              >
+                                                                                                              <a
+                                                                                                                href="javascript:void(0);"
+                                                                                                                class="add-new add-new-company" (click)="addList(0)"
+                                                                                                                ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                                                                >
+                                                                                                              </div>
+
+                                                                                                              <mat-select
+                                                                                                                class="select custom-mat-select"
+                                                                                                                placeholder="Select"
+                                                                                                                >
+                                                                                                                <mat-option value="all">NovaWaveLLC</mat-option>
+                                                                                                                <mat-option value="web">SilverHawk</mat-option>
+                                                                                                                <mat-option value="web">SummitPeak</mat-option>
+                                                                                                              </mat-select>
+                                                                                                            </div>
+                                                                                                            @for (list of list.slice(1); track list; let i = $index) {
+                                                                                                              <div
+                                                                                                                class="input-block mb-3">
+                                                                                                                <div
+                                                                                                                  class="d-flex justify-content-between align-items-center"
+                                                                                                                  >
+                                                                                                                  <label class="col-form-label"
+                                                                                                                    >Company <span class="text-danger">*</span></label
+                                                                                                                    >
+                                                                                                                    <a
+                                                                                                                      href="javascript:void(0);"
+                                                                                                                      class="add-new add-new-company"
+                                                                                                                      ><i class="la la-plus-circle me-2"></i>Add New</a
+                                                                                                                      >
+                                                                                                                    </div>
+                                                                                                                    <mat-select
+                                                                                                                      class="select custom-mat-select"
+                                                                                                                      placeholder="Select"
+                                                                                                                      >
+                                                                                                                      <mat-option value="all">NovaWaveLLC</mat-option>
+                                                                                                                      <mat-option value="web">SilverHawk</mat-option>
+                                                                                                                      <mat-option value="web">SummitPeak</mat-option>
+                                                                                                                    </mat-select>
+                                                                                                                  </div>
+                                                                                                                }
+
+                                                                                                              </div>
+                                                                                                              <div class="col-lg-12 text-end form-wizard-button">
+                                                                                                                <button
+                                                                                                                  class="button btn-lights reset-btn"
+                                                                                                                  type="reset"
+                                                                                                                  data-bs-dismiss="modal"
+                                                                                                                  >
+                                                                                                                  Reset
+                                                                                                                </button>
+                                                                                                                <button class="btn btn-primary" type="submit">
+                                                                                                                  Save Activity
+                                                                                                                </button>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </form>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <!-- /Edit Activity -->
+
+                                                                                                <!-- Delete Activity -->
+                                                                                                <div class="modal custom-modal fade" id="delete_activity" role="dialog">
+                                                                                                  <div class="modal-dialog modal-dialog-centered">
+                                                                                                    <div class="modal-content">
+                                                                                                      <div class="modal-body">
+                                                                                                        <div class="success-message text-center">
+                                                                                                          <div class="success-popup-icon bg-danger">
+                                                                                                            <i class="la la-trash-restore"></i>
+                                                                                                          </div>
+                                                                                                          <h3>Are you sure, You want to delete</h3>
+                                                                                                          <p>Selected Activity from your Account</p>
+                                                                                                          <div class="col-lg-12 text-center form-wizard-button">
+                                                                                                            <a href="javascript:void(0);" class="button btn-lights" data-bs-dismiss="modal"
+                                                                                                              >Not Now</a
+                                                                                                              >
+                                                                                                              <a [routerLink]="routes.pipeline" class="btn btn-primary" data-bs-dismiss="modal">Okay</a>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                  <!-- /Delete Activity -->
+
+                                                                                                  <!-- Delete Pipeline -->
+                                                                                                  <div class="modal custom-modal fade" id="delete_stage" role="dialog">
+                                                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                                                      <div class="modal-content">
+                                                                                                        <div class="modal-body">
+                                                                                                          <div class="success-message text-center">
+                                                                                                            <div class="success-popup-icon bg-danger">
+                                                                                                              <i class="la la-trash-restore"></i>
+                                                                                                            </div>
+                                                                                                            <h3>Are you sure, You want to delete</h3>
+                                                                                                            <p>Stage ”Inpipeline” from your Account</p>
+                                                                                                            <div class="col-lg-12 text-center form-wizard-button">
+                                                                                                              <a href="javascript:void(0);" class="button btn-lights" data-bs-dismiss="modal"
+                                                                                                                >Not Now</a
+                                                                                                                >
+                                                                                                                <a [routerLink]="routes.activities" class="btn btn-primary" data-bs-dismiss="modal">Okay</a>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                    <!-- /Delete Pipeline -->
+
+                                                                                                    <!-- Export -->
+                                                                                                    <div class="modal custom-modal fade modal-padding" id="export" role="dialog">
+                                                                                                      <div class="modal-dialog modal-dialog-centered">
+                                                                                                        <div class="modal-content">
+                                                                                                          <div class="modal-header header-border justify-content-between p-0">
+                                                                                                            <h5 class="modal-title">Export</h5>
+                                                                                                            <button
+                                                                                                              type="button"
+                                                                                                              class="btn-close position-static"
+                                                                                                              data-bs-dismiss="modal"
+                                                                                                              aria-label="Close"
+                                                                                                              >
+                                                                                                              <span aria-hidden="true">×</span>
+                                                                                                            </button>
+                                                                                                          </div>
+                                                                                                          <div class="modal-body p-0">
+                                                                                                            <form>
+                                                                                                              <div class="row">
+                                                                                                                <div class="col-md-12">
+                                                                                                                  <div class="input-block mb-3">
+                                                                                                                    <h5 class="mb-3">Export</h5>
+                                                                                                                    <div class="status-radio-btns d-flex">
+                                                                                                                      <div class="people-status-radio">
+                                                                                                                        <input
+                                                                                                                          type="radio"
+                                                                                                                          class="status-radio"
+                                                                                                                          id="pdf"
+                                                                                                                          name="export-type"
+                                                                                                                          checked
+                                                                                                                          />
+                                                                                                                          <label for="pdf">Person</label>
+                                                                                                                        </div>
+                                                                                                                        <div class="people-status-radio">
+                                                                                                                          <input
+                                                                                                                            type="radio"
+                                                                                                                            class="status-radio"
+                                                                                                                            id="excel"
+                                                                                                                            name="export-type"
+                                                                                                                            />
+                                                                                                                            <label for="excel">Organization</label>
+                                                                                                                          </div>
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-md-12">
+                                                                                                                      <h4 class="mb-3">Filters</h4>
+                                                                                                                      <div class="input-block mb-3">
+                                                                                                                        <label class="col-form-label"
+                                                                                                                          >Fields <span class="text-danger">*</span></label
+                                                                                                                          >
+                                                                                                                          <mat-select
+                                                                                                                            class="select custom-mat-select"
+                                                                                                                            placeholder="All Fields"
+                                                                                                                            >
+                                                                                                                            <mat-option value="All Fields">All Fields</mat-option>
+                                                                                                                            <mat-option value="contact">Contact</mat-option>
+                                                                                                                            <mat-option value="Company">Company</mat-option>
+                                                                                                                          </mat-select>
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                      <div class="col-md-6">
+                                                                                                                        <div class="input-block mb-3">
+                                                                                                                          <label class="col-form-label"
+                                                                                                                            >From Date <span class="text-danger">*</span></label
+                                                                                                                            >
+                                                                                                                            <div class="cal-icon">
+                                                                                                                              <input
+                                                                                                                                class="form-control floating datetimepicker"
+                                                                                                                                bsDatepicker
+                                                                                                                                type="text"
+                                                                                                                                />
+                                                                                                                              </div>
+                                                                                                                            </div>
+                                                                                                                          </div>
+                                                                                                                          <div class="col-md-6">
+                                                                                                                            <div class="input-block mb-3">
+                                                                                                                              <label class="col-form-label"
+                                                                                                                                >To Date <span class="text-danger">*</span></label
+                                                                                                                                >
+                                                                                                                                <div class="cal-icon">
+                                                                                                                                  <input
+                                                                                                                                    class="form-control floating datetimepicker"
+                                                                                                                                    bsDatepicker
+                                                                                                                                    type="text"
+                                                                                                                                    />
+                                                                                                                                  </div>
+                                                                                                                                </div>
+                                                                                                                              </div>
+                                                                                                                              <div class="col-lg-12 text-end form-wizard-button">
+                                                                                                                                <button
+                                                                                                                                  class="button btn-lights reset-btn"
+                                                                                                                                  type="reset"
+                                                                                                                                  data-bs-dismiss="modal"
+                                                                                                                                  >
+                                                                                                                                  Reset
+                                                                                                                                </button>
+                                                                                                                                <button class="btn btn-primary" type="submit">Export Now</button>
+                                                                                                                              </div>
+                                                                                                                            </div>
+                                                                                                                          </form>
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                  <!-- /Export -->

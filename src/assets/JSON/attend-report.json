@@ -1,0 +1,20 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "name":"Justin Lee" ,
+          "subname":"#0001",
+          "img":"assets/img/profiles/avatar-03.jpg",
+          "date": "20 Dec 2023",
+          "workingdays": "28",
+          "workingemployee": "26",
+          "late":"15 Min",
+          "work":"No Work Missing",
+          "night":"3 hrs",
+          "time":"2 hrs",
+          "leave":"02"
+        }
+      
+      ],
+      "totalData":1
+}

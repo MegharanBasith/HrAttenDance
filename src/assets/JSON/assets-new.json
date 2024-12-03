@@ -1,0 +1,92 @@
+{
+    "data": [
+        {
+            "id": "1",
+            "name": "Laptop",
+            "img1": "assets/img/laptop.png",
+            "img2": "assets/img/profiles/avatar-02.jpg",
+            "assetId": "AST - 001",
+            "category": "Laptop",
+            "department": "UI",
+            "allocatedTo": "John Paul Raj",
+            "emailId": "john@dreamguystech.com",
+            "status": "Assigned",
+            "status1": "Pending",
+            "status2": "Approved",
+            "status3": "Returned"
+        },
+        {
+            "id": "2",
+            "name": "Laptop",
+            "img1": "assets/img/laptop.png",
+            "img2": "assets/img/profiles/avatar-05.jpg",
+            "assetId": "AST - 002",
+            "category": "Computer",
+            "department": "PHP",
+            "allocatedTo": "Vinod Selvaraj",
+            "emailId": "vinod.s@dreamguystech.com",
+            "status": "Assign"
+        },
+        {
+            "id": "3",
+            "name": "Dell Keyboard",
+            "img1": "assets/img/keyboard.png",
+            "img2": "assets/img/profiles/avatar-03.jpg",
+            "assetId": "AST - 003",
+            "category": "Keyboard",
+            "department": "SEO",
+            "allocatedTo": "Harika",
+            "emailId": "harika.v@dreamguystech.com",
+            "status": "Assigned",
+            "status1": "Pending",
+            "status2": "Approved",
+            "status3": "Returned"
+        },
+        {
+            "id": "4",
+            "name": "Logitech Mouse",
+            "img1": "assets/img/mouse.png",
+            "img2": "assets/img/profiles/avatar-03.jpg",
+            "assetId": "AST - 0024",
+            "category": "Mouse",
+            "department": "Android",
+            "allocatedTo": "Mythili",
+            "emailId": "mythili@dreamguystech.com",
+            "status": "Assigned",
+            "status1": "Pending",
+            "status2": "Approved",
+            "status3": "Returned"
+        },
+        {
+            "id": "5",
+            "name": "Laptop",
+            "img1": "assets/img/laptop.png",
+            "img2": "assets/img/profiles/avatar-02.jpg",
+            "assetId": "AST - 005",
+            "category": "Laptop",
+            "department": "UI",
+            "allocatedTo": "John Paul Raj",
+            "emailId": "john@dreamguystech.com",
+            "status": "Assigned",
+            "status1": "Pending",
+            "status2": "Approved",
+            "status3": "Returned"
+        },
+        {
+            "id": "6",
+            "name": "Laptop",
+            "img1": "assets/img/laptop.png",
+            "img2": "assets/img/profiles/avatar-05.jpg",
+            "assetId": "AST - 006",
+            "category": "Computer",
+            "department": "PHP",
+            "allocatedTo": "Vinod Selvaraj",
+            "emailId": "vinod.s@dreamguystech.com",
+            "status": "Assigned",
+            "status1": "Pending",
+            "status2": "Approved",
+            "status3": "Returned"
+        }
+    ],
+    "totalData": 6
+}

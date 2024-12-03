@@ -1,0 +1,314 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="page-title">Salary Settings</h3>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Header -->
+
+      <form  [formGroup]="salarySettings">
+
+        <!-- DA and HRA Settings -->
+        <div class="settings-widget">
+          <div class="h3 card-title with-switch">
+            DA and HRA
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_hra"
+                checked>
+                <label class="onoffswitch-label" for="switch_hra">
+                  <span class="onoffswitch-inner"></span>
+                  <span class="onoffswitch-switch"></span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="input-block mb-3">
+                  <label class="col-form-label" for="">DA (%)</label>
+                  <input type="text" class="form-control" [class.invalid]="salarySettings.get('da')?.invalid && salarySettings.get('da')?.touched"
+                    formControlName="da">
+                    @if (salarySettings.get('da')?.invalid && salarySettings.get('da')?.touched) {
+                      <div
+                        >
+                        @if (salarySettings.get('da')?.invalid && salarySettings.get('da')?.touched) {
+                          <small
+                          class="text-danger"> *DA is required</small>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">HRA (%)</label>
+                    <input class="form-control" type="text" [class.invalid]="salarySettings.get('hra')?.invalid && salarySettings.get('hra')?.touched"
+                      formControlName="hra">
+                      @if (salarySettings.get('hra')?.invalid && salarySettings.get('hra')?.touched) {
+                        <div
+                          >
+                          @if (salarySettings.get('hra')?.invalid && salarySettings.get('hra')?.touched) {
+                            <small
+                            class="text-danger"> *HRA is required</small>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /DA and HRA Settings -->
+
+              <!-- Provident Fund Settings -->
+              <div class="settings-widget">
+                <div class="h3 card-title with-switch">
+                  Provident Fund Settings
+                  <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_pf"
+                      checked>
+                      <label class="onoffswitch-label" for="switch_pf">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Employee Share (%)</label>
+                        <input class="form-control" type="text" [class.invalid]="salarySettings.get('employeeShare')?.invalid && salarySettings.get('employeeShare')?.touched"
+                          formControlName="employeeShare">
+                          @if (salarySettings.get('employeeShare')?.invalid && salarySettings.get('employeeShare')?.touched) {
+                            <div
+                              >
+                              @if (salarySettings.get('employeeShare')?.invalid && salarySettings.get('employeeShare')?.touched) {
+                                <small
+                                class="text-danger"> *Employee share is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Organization Share (%)</label>
+                          <input class="form-control" type="text" [class.invalid]="salarySettings.get('organisationShare')?.invalid && salarySettings.get('organisationShare')?.touched"
+                            formControlName="organisationShare">
+                            @if (salarySettings.get('organisationShare')?.invalid && salarySettings.get('organisationShare')?.touched) {
+                              <div
+                                >
+                                @if (salarySettings.get('organisationShare')?.invalid && salarySettings.get('organisationShare')?.touched) {
+                                  <small
+                                  class="text-danger"> *Organisation share is required</small>
+                                }
+                              </div>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /Provident Fund Settings -->
+
+                    <!-- ESI Settings -->
+                    <div class="settings-widget">
+                      <div class="h3 card-title with-switch">
+                        ESI Settings
+                        <div class="onoffswitch">
+                          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_esi">
+                          <label class="onoffswitch-label" for="switch_esi">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Employee Share (%)</label>
+                            <input class="form-control" type="text" [class.invalid]="salarySettings.get('esiEmployeeShare')?.invalid && salarySettings.get('esiEmployeeShare')?.touched"
+                              formControlName="esiEmployeeShare">
+                              @if (salarySettings.get('esiEmployeeShare')?.invalid && salarySettings.get('esiEmployeeShare')?.touched) {
+                                <div
+                                  >
+                                  @if (salarySettings.get('esiEmployeeShare')?.invalid && salarySettings.get('esiEmployeeShare')?.touched) {
+                                    <small
+                                    class="text-danger"> *Employee share is required</small>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Organization Share (%)</label>
+                              <input class="form-control" type="text" [class.invalid]="salarySettings.get('esiOrganisationShare')?.invalid && salarySettings.get('esiOrganisationShare')?.touched"
+                                formControlName="esiOrganisationShare">
+                                @if (salarySettings.get('esiOrganisationShare')?.invalid && salarySettings.get('esiOrganisationShare')?.touched) {
+                                  <div
+                                    >
+                                    @if (salarySettings.get('esiOrganisationShare')?.invalid && salarySettings.get('esiOrganisationShare')?.touched) {
+                                      <small
+                                      class="text-danger"> *Organisation share is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- /ESI Settings -->
+
+                        <!-- TDS Settings -->
+                        <div class="settings-widget">
+                          <div class="h3 card-title with-switch">
+                            TDS&nbsp; <small class="form-text text-muted">Annual Salary</small>
+                            <div class="onoffswitch">
+                              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_tds">
+                              <label class="onoffswitch-label" for="switch_tds">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                              </label>
+                            </div>
+                          </div>
+                          <div class="row row-sm">
+                            <div class="col-sm-4">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Salary From</label>
+                                <input class="form-control" type="text" [class.invalid]="salarySettings.get('annualSalaryFrom1')?.invalid && salarySettings.get('annualSalaryFrom1')?.touched"
+                                  formControlName="annualSalaryFrom1">
+                                  @if (salarySettings.get('annualSalaryFrom1')?.invalid && salarySettings.get('annualSalaryFrom1')?.touched) {
+                                    <div
+                                      >
+                                      @if (salarySettings.get('annualSalaryFrom1')?.invalid && salarySettings.get('annualSalaryFrom1')?.touched) {
+                                        <small
+                                        class="text-danger"> *Salary is required</small>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="input-block mb-3">
+                                  <label class="col-form-label" for="">Salary To</label>
+                                  <input class="form-control" type="text"[class.invalid]="salarySettings.get('annualSalaryTo1')?.invalid && salarySettings.get('annualSalaryTo1')?.touched"
+                                    formControlName="annualSalaryTo1">
+                                    @if (salarySettings.get('annualSalaryTo1')?.invalid && salarySettings.get('annualSalaryTo1')?.touched) {
+                                      <div
+                                        >
+                                        @if (salarySettings.get('annualSalaryTo1')?.invalid && salarySettings.get('annualSalaryTo1')?.touched) {
+                                          <small
+                                          class="text-danger"> *Salary is required</small>
+                                        }
+                                      </div>
+                                    }
+                                  </div>
+                                </div>
+                                <div class="col-sm-2">
+                                  <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">%</label>
+                                    <input class="form-control" type="text" [class.invalid]="salarySettings.get('annualpercentage1')?.invalid && salarySettings.get('annualpercentage1')?.touched"
+                                      formControlName="annualpercentage1">
+                                      @if (salarySettings.get('annualpercentage1')?.invalid && salarySettings.get('annualpercentage1')?.touched) {
+                                        <div
+                                          >
+                                          @if (salarySettings.get('annualpercentage1')?.invalid && salarySettings.get('annualpercentage1')?.touched) {
+                                            <small
+                                            class="text-danger"> *Salary percentage is required</small>
+                                          }
+                                        </div>
+                                      }
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <div class="input-block mb-3">
+                                      <label class="d-none d-sm-block" for="">&nbsp;</label>
+                                      <button class="btn btn-danger w-100 set-btn" type="button"><i
+                                      class="fa-regular fa-trash-can"></i></button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row row-sm">
+                                  <div class="col-sm-4">
+                                    <div class="input-block mb-3">
+                                      <label class="col-form-label" for="">Salary From</label>
+                                      <input class="form-control" type="text"[class.invalid]="salarySettings.get('annualSalaryFrom2')?.invalid && salarySettings.get('annualSalaryFrom2')?.touched"
+                                        formControlName="annualSalaryFrom2">
+                                        @if (salarySettings.get('annualSalaryFrom2')?.invalid && salarySettings.get('annualSalaryFrom2')?.touched) {
+                                          <div
+                                            >
+                                            @if (salarySettings.get('annualSalaryFrom2')?.invalid && salarySettings.get('annualSalaryFrom2')?.touched) {
+                                              <small
+                                              class="text-danger"> *Salary is required</small>
+                                            }
+                                          </div>
+                                        }
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                      <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">Salary To</label>
+                                        <input class="form-control" type="text" [class.invalid]="salarySettings.get('annualSalaryTo2')?.invalid && salarySettings.get('annualSalaryTo2')?.touched"
+                                          formControlName="annualSalaryTo2">
+                                          @if (salarySettings.get('annualSalaryTo2')?.invalid && salarySettings.get('annualSalaryTo2')?.touched) {
+                                            <div
+                                              >
+                                              @if (salarySettings.get('annualSalaryTo2')?.invalid && salarySettings.get('annualSalaryTo2')?.touched) {
+                                                <small
+                                                class="text-danger"> *Salary is required</small>
+                                              }
+                                            </div>
+                                          }
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2">
+                                        <div class="input-block mb-3">
+                                          <label class="col-form-label" for="">%</label>
+                                          <input class="form-control" type="text" [class.invalid]="salarySettings.get('annualpercentage2')?.invalid && salarySettings.get('annualpercentage2')?.touched"
+                                            formControlName="annualpercentage2">
+                                            @if (salarySettings.get('annualpercentage2')?.invalid && salarySettings.get('annualpercentage2')?.touched) {
+                                              <div
+                                                >
+                                                @if (salarySettings.get('annualpercentage2')?.invalid && salarySettings.get('annualpercentage2')?.touched) {
+                                                  <small
+                                                  class="text-danger"> *Salary percentage is required</small>
+                                                }
+                                              </div>
+                                            }
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                          <div class="input-block mb-3">
+                                            <label class="d-none d-sm-block" for="">&nbsp;</label>
+                                            <button class="btn btn-danger w-100 set-btn" type="button"><i
+                                            class="fa-regular fa-trash-can"></i></button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row row-sm">
+                                        <div class="col-sm-2 ms-auto">
+                                          <div class="input-block mb-3">
+                                            <button class="btn btn-primary w-100" type="button"><i
+                                            class="la la-plus-circle"></i></button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- /TDS Settings -->
+
+                                    <!-- Submit Button -->
+                                    <div class="submit-section">
+                                      <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                                    </div>
+                                    <!-- /Submit Button -->
+
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- /Page Content -->

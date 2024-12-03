@@ -1,0 +1,239 @@
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-inner slimscroll">
+    <div id="sidebar-menu" class="sidebar-menu">
+      <nav class="greedys">
+        <ul class="list-inline-item list-unstyled links sidebar-horizantal">
+          @for (
+            mainTittle of side_bar_data2; track
+            mainTittle; let mainTittleIndex = $index) {
+            <li class="menu-title">
+              <span>{{ mainTittle.tittle }} 1</span>
+            </li>
+            @for (menu of mainTittle?.menu; track menu; let menuIndex = $index) {
+              @if (
+                menu?.hasSubRoute === false &&
+                (
+                menu.menuValue === 'Tickets')
+                ) {
+                <li
+                  [class.active]="base === menu.base"
+                  >
+                  <a [routerLink]="menu?.route"
+                    ><i [class]="'la la-' + menu.icon"></i>
+                   
+                  </a>
+                </li>
+              }
+              @if (
+                (menu.hasSubRoute === true || menu.hasSubRouteTwo === true) &&
+                (menu.menuValue === 'Dashboard' ||
+                menu.menuValue === 'Employees' ||
+                menu.menuValue === 'Crm' ||
+                menu.menuValue === 'Projects' ||
+                menu.menuValue === 'Sales' ||
+                menu.menuValue === 'Tickets' 
+               
+               
+               )
+                ) {
+                <li
+                  class="submenu"
+                  [class.active]="base === menu.base"
+                  (click)="expandSubMenus(menu)"
+                  (keydown.enter)="expandSubMenus(menu)" tabindex="0"
+                  >
+                  <a
+                    href="javascript:void(0)"
+                    [ngClass]="{ subdrop: menu.showSubRoute === true }"
+                    >
+                    <i [class]="'la la-' + menu.icon"></i>
+                    <span>{{ menu.menuValue }}</span>
+                    <span class="menu-arrow"></span>
+                  </a>
+                  <ul
+                  [ngClass]="
+                    menu.showSubRoute === true
+                      ? 'show-sub-menu'
+                      : 'hide-sub-menu'
+                  "
+                    >
+                    @for (subMenus of menu.subMenus; track subMenus) {
+                      <li>
+                        <a
+                          [routerLink]="subMenus.route"
+                          [class.active]="page === subMenus.base || page === subMenus.base2 || page === subMenus.base3 || page === subMenus.base4 || page === subMenus.base5 || page === subMenus.base6 || page === subMenus.base7 || page === subMenus.base8"
+                          >{{ subMenus.menuValue }}</a
+                          >
+                        </li>
+                      }
+                    </ul>
+                  </li>
+                }
+                @if (menu.hasSubRouteTwo === true) {
+                  <li class="submenu">
+                    <a href="javascript:void(0);" (click)="openMenu(menu)" [ngClass]="{'subdrop' : openMenuItem === menu}">
+                      <i class="la la-cube"></i>
+                      <span>{{ menu.menuValue }}</span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <ul [ngClass]="openMenuItem === menu ? 'd-block' : 'd-none'">
+                      @for (subMenus of menu.subMenus; track subMenus) {
+                        @if (subMenus.customSubmenuTwo === false) {
+                          <li>
+                            <a [routerLink]="subMenus.route" routerLinkActive="active">{{ subMenus.menuValue }}</a>
+                          </li>
+                        }
+    
+                        @if (subMenus.customSubmenuTwo === true) {
+                          <li class="submenu">
+                            <a href="javascript:void(0);"
+                              [class.active]="page === subMenus.page1 || page === subMenus.page2  "
+                              (click)="openSubmenuOne(subMenus)" [ngClass]="{'subdrop' : openSubmenuOneItem === subMenus}">
+                              {{ subMenus.menuValue }}
+                              <span class="menu-arrow"></span>
+                            </a>
+                            <ul [ngClass]="openSubmenuOneItem === subMenus ? 'd-block' : 'd-none'">
+                              @for (subMenuTwo of subMenus.subMenusTwo; track subMenuTwo) {
+                                <li>
+                                  <a [routerLink]="subMenuTwo.route" routerLinkActive="active">{{ subMenuTwo.menuValue
+                                  }}</a>
+                                </li>
+                              }
+                            </ul>
+                          </li>
+                        }
+    
+                      }
+                    </ul>
+                  </li>
+                }
+              }
+            }
+          </ul>
+          <button (click)="openMoreMenus()" class="viewmoremenu">
+            More Menu
+          </button>
+          <ul class="hidden-links" [class.hidden]="showMoreMenu === false">
+            @for (
+              mainTittle of side_bar_data2; track
+              mainTittle; let mainTittleIndex = $index) {
+              <li class="menu-title">
+                <span>{{ mainTittle.tittle }}</span>
+              </li>
+              @for (menu of mainTittle.menu; track menu) {
+                @if (menu?.hasSubRoute === false) {
+                  <li
+                    [class.active]="base === menu.base"
+                [hidden]="
+                  menu.menuValue === 'Clients' ||
+                  menu.menuValue === 'Leads' ||
+               menu.menuValue === 'Tickets'  ||
+               menu.menuValue === 'Contacts' ||
+               menu.menuValue === 'Companies' ||
+               menu.menuValue === 'Deals' ||
+               menu.menuValue === 'Activities'||
+               menu.menuValue === 'Analytics'||
+               menu.menuValue === 'Pipeline' "
+                    >
+                    <a [routerLink]="menu?.route"
+                      ><i [class]="'la la-' + menu.icon"></i>
+                      <span>{{ menu?.menuValue }}</span>
+                      @if (menu.changeLogVersion === true) {
+                        <span
+                        class="badge badge-primary ms-2 me-2">v4.0</span>
+                      }
+                    </a>
+                  </li>
+                }
+                @if (menu.hasSubRoute === true) {
+                  <li
+                    class="submenu"
+                [hidden]="
+                  (menu.menuValue === 'Dashboard' ||
+                    menu.menuValue === 'Apps' ||
+                    menu.menuValue === 'Employees' ||
+                    menu.menuValue === 'Projects' ||
+                  menu.menuValue === 'Sales' ||
+                  menu.menuValue === 'Tickets' 
+                  )   "
+                    [class.active]="base === menu.base"
+                    (click)="expandSubMenus(menu)"
+                    (keydown.enter)="expandSubMenus(menu)" tabindex="0"
+                    >
+                    <a
+                      href="javascript:void(0)"
+                      [ngClass]="{ subdrop: menu.showSubRoute === true }"
+                      >
+                      <i [class]="'la la-' + menu.icon"></i>
+                      <span>{{ menu.menuValue }}</span>
+                      <span class="menu-arrow"></span>
+                    </a>
+                    <ul
+                  [ngClass]="
+                    menu.showSubRoute === true
+                      ? 'show-sub-menu'
+                      : 'hide-sub-menu'
+                  "
+                      >
+                      @for (subMenus of menu.subMenus; track subMenus) {
+                        <li>
+                          <a
+                            [routerLink]="subMenus.route"
+                            [class.active]="page === subMenus.base || page === subMenus.base2 || page === subMenus.base3 || page === subMenus.base4 || page === subMenus.base5 || page === subMenus.base6 || page === subMenus.base7 || page === subMenus.base8"
+                            >{{ subMenus.menuValue }}</a
+                            >
+                          </li>
+                        }
+                        
+                      </ul>
+                    </li>
+                  }
+                }
+              }
+              <li class="submenu">
+                <a [ngClass]="{ subdrop: multilevel[0] }" (click)="multilevel[0] = !multilevel[0]"
+                  href="javascript:void(0);"><i class="la la-level-up-alt"></i> <span>Multi Level</span> <span
+                class="menu-arrow"></span></a>
+                              <ul [ngClass]="
+                          multilevel[0] === true
+                          ? 'd-block'
+                          : 'd-none'
+                      ">
+                  <li class="submenu">
+                    <a [ngClass]="{ subdrop: multilevel[1] }" (click)="multilevel[1] = !multilevel[1]"
+                      href="javascript:void(0);"><span>Level 1</span> <span class="menu-arrow"></span></a>
+                                      <ul [ngClass]="
+                              multilevel[1] === true
+                              ? 'd-block'
+                              : 'd-none'
+                          ">
+                        <li><a href="javascript:void(0);"><span>Level 2</span></a></li>
+                        <li class="submenu">
+                          <a [ngClass]="{ subdrop: multilevel[2] }"
+                            (click)="multilevel[2] = !multilevel[2]" href="javascript:void(0);"> <span>
+                            Level 2</span> <span class="menu-arrow"></span></a>
+                                              <ul [ngClass]="
+                                  multilevel[2] === true
+                                  ? 'd-block'
+                                  : 'd-none'
+                              ">
+                              <li><a href="javascript:void(0);">Level 3</a></li>
+                              <li><a href="javascript:void(0);">Level 3</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="javascript:void(0);"><span>Level 2</span></a></li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);"><span>Level 1</span></a>
+                      </li>
+                    </ul>
+                  </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- /Sidebar -->

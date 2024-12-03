@@ -1,0 +1,300 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Saved Jobs</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item ">Jobs</li>
+          <li class="breadcrumb-item">User Dashboard</li>
+          <li class="breadcrumb-item active">Saved Jobs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <!-- Content Starts -->
+  <div class="card">
+    <div class="card-body">
+      <!-- <h4 class="card-title">Solid justified</h4> -->
+      <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+        <li class="nav-item"><a class="nav-link" [routerLink]="routes.userDashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link " [routerLink]="routes.userAllJobs">All </a></li>
+        <li class="nav-item"><a class="nav-link active" [routerLink]="routes.savedJobs">Saved</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="routes.appliedJobs">Applied</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="routes.interviewJobs">Interviewing</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="routes.offeredJobs">Offered</a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="routes.visitedJobs">Visitied </a></li>
+        <li class="nav-item"><a class="nav-link" [routerLink]="routes.archivedJobs">Archived </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="row filter-row">
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus select-focus select">
+
+        <mat-select class="select custom-mat-select floating-mat-select" placeholder="Select Department">
+          <mat-option>Development</mat-option>
+          <mat-option value="Germany">Designing</mat-option>
+          <mat-option value="USA">Android</mat-option>
+        </mat-select>
+        <label class="focus-label">Department</label>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus select-focus select">
+
+        <mat-select class="select custom-mat-select floating-mat-select" placeholder="Job Type">
+          <mat-option>Select Type</mat-option>
+          <mat-option value="Germany">Full Time</mat-option>
+          <mat-option value="USA">Part Time</mat-option>
+        </mat-select>
+        <label class="focus-label">Internship</label>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus select-focus select">
+
+
+        <mat-select class="select custom-mat-select floating-mat-select" placeholder="Select Designation">
+          <mat-option>Select Designation</mat-option>
+          <mat-option value="Germany">Web Development</mat-option>
+          <mat-option value="USA">Web Designing</mat-option>
+          <mat-option value="USA">Android Developer</mat-option>
+        </mat-select>
+        <label class="focus-label">Designation</label>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <a href="javascript:void(0);" class="btn btn-success w-100"> Search </a>
+    </div>
+  </div>
+  <!-- Search Filter -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_header">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="dataTables_length">
+              <label>
+                Show
+                <select
+                  [(ngModel)]="pageSize"
+                  (ngModelChange)="changePageSize()"
+                  class="form-control form-control-sm"
+                  >
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table matSort
+          (matSortChange)="sortData($event)"
+          class="table table-striped custom-table datatable mb-0">
+          <thead>
+            <tr>
+              <th mat-sort-header="id">#</th>
+              <th mat-sort-header="jobtitle">Job Title</th>
+              <th mat-sort-header="department">Department</th>
+              <th mat-sort-header="startdate">Start Date</th>
+              <th mat-sort-header="expiredate">Expire Date</th>
+              <th mat-sort-header="jobtype" class="text-center">Job Type</th>
+              <th mat-sort-header="status" class="text-center">Status</th>
+              <th class="text-center">Actions</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of lstSavedjobs; track item) {
+              <tr>
+                <td>{{item.id}}</td>
+                <td><a routerLink="'/jobs/jobs-details'">{{item.jobtitle}}</a></td>
+                <td>{{item.department}}</td>
+                <td>{{item.startdate}}</td>
+                <td>{{item.expiredate}}</td>
+                <td class="text-center">
+                  <div class="action-label">
+                    <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="fa-regular fa-circle-dot"[ngClass]="{'text-success': item.jobtype === 'Part Time','text-danger': item.jobtype === 'Internship'|| item.jobtype ==='Full Time'}"></i> {{item.jobtype}}
+                    </a>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="action-label">
+                    <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="fa-regular fa-circle-dot" [ngClass]="{'text-danger': item.status === 'Open' || item.status ==='Cancelled','text-success':item.status  === 'Closed'}"></i> {{item.status}}
+                    </a>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="dropdown dropdown-action">
+                    <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                          data-bs-target="#delete_savedjobslist" ><i
+                        class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              }
+              @if (lstSavedjobs.length === 0) {
+                <tr>
+                  <td colspan="10">
+                    <h5 style="text-align: center;">No data found</h5>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="table_footer">
+          <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info">
+              Showing {{ serialNumberArray[0] }} to
+              {{ serialNumberArray[serialNumberArray.length - 1] }} of
+              {{ totalData }} entries
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-7">
+            <div class="pagination_section">
+              <ul class="pagination">
+                <li
+                  class="page-item"
+                        [ngClass]="{
+                          disabled: currentPage === 1
+                        }"
+                  >
+                  <a
+                    (click)="getMoreData('previous')"
+                    class="page-link"
+                    href="javascript:void(0);"
+                    tabindex="-1"
+                    ><i class="fa fa-angle-double-left"></i></a
+                    >
+                  </li>
+
+                  @for (item of pageNumberArray; track item; let i = $index) {
+                    <li
+                      class="page-item"
+                      [class.active]="item === currentPage"
+                          [ngClass]="
+                            (pageNumberArray[currentPage - 2] > item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6) ||
+                            (pageNumberArray[currentPage] < item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6 &&
+                              pageNumberArray.length !== item)
+                              ? 'hide-page-no'
+                              : 'show-page-no'
+                          "
+                      >
+                      <a
+                        (click)="moveToPage(item)"
+                        class="page-link"
+                        href="javascript:void(0);"
+                        >
+                        {{ item }}
+                      </a>
+                    </li>
+                    @if (
+                      i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                      ) {
+                      <li
+                        class="page-item"
+                        [hidden]="currentPage === 1"
+                        (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0"
+                        >
+                        <a class="page-link" href="javascript:void(0);"> ... </a>
+                      </li>
+                    }
+                    @if (
+                      i === pageNumberArray.length - 2 &&
+                      pageNumberArray.length > 6
+                      ) {
+                      <li
+                          [hidden]="
+                            currentPage >=
+                              pageNumberArray[pageNumberArray.length - 2] ||
+                            totalData < serialNumberArray[serialNumberArray.length - 1]
+                          "
+                        class="page-item"
+                        (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0"
+                        >
+                        <a class="page-link" href="javascript:void(0);"> ... </a>
+                      </li>
+                    }
+                  }
+
+                  <li
+                    class="page-item"
+                        [ngClass]="{
+                          disabled:
+                            currentPage ===
+                              pageNumberArray[pageNumberArray.length - 1] ||
+                            lstSavedjobs.length === 0
+                        }"
+                    >
+                    <a
+                      (click)="getMoreData('next')"
+                      class="page-link"
+                      href="javascript:void(0);"
+                      ><i class=" fa fa-angle-double-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /Content End -->
+
+    </div>
+    <!-- /Page Content -->
+    <!-- Delete Employee Modal -->
+    <div class="modal custom-modal fade" id="delete_savedjobslist" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="form-header">
+              <h3>Delete</h3>
+              <p>Are you sure want to delete?</p>
+            </div>
+            <div class="modal-btn delete-action">
+              <div class="row">
+                <div class="col-6">
+                  <a href="javascript:void(0);" class="btn btn-primary continue-btn"
+                  >Delete</a>
+                </div>
+                <div class="col-6">
+                  <a href="javascript:void(0);" data-bs-dismiss="modal"
+                  class="btn btn-primary cancel-btn">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Delete Employee Modal -->

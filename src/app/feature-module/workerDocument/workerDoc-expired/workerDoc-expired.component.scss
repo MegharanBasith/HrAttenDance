@@ -1,0 +1,61 @@
+.form {
+  padding: 10px;
+  max-width: 125%;
+}
+
+.submit-button-container{
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 1rem;
+}
+
+.submit-button{
+  width: 15%;
+}
+
+.col-3 {
+  width: 33%;
+}
+
+@media (max-width: 768px) {
+  .col-3 {
+      width: 50%;
+  }
+}
+
+// Styling for the modal container
+#generate_expiredworker {
+  .modal-dialog {
+    z-index: 1050; // Ensures modal is on top
+    box-shadow: rgba(190, 191, 193, 0.4); // Adds subtle shadow for depth
+  }
+
+  .modal-content {
+    border-radius: 8px;
+    background-color: #fff;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .btn-close {
+    background: #fdbe3d;
+    border: none;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .submit-section {
+    display: flex;
+    justify-content: flex-end; // Aligns the button to the right
+    padding-top: 15px;
+
+    .submit-btn {
+      border-radius: 4px; // Adjusts the border radius of the button
+      padding: 8px 16px;
+    }
+  }
+}
+

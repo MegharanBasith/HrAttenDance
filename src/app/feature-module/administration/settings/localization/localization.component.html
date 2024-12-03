@@ -1,0 +1,94 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="page-title">Basic Settings</h3>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Header -->
+
+      <form  [formGroup]="localisation">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Default Country</label>
+              <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class=" custom-mat-select select"  placeholder="USA">
+                @for (data of selectedList1; track data) {
+                  <mat-option [value]="data.value">
+                    {{data.value}}
+                  </mat-option>
+                }
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Date Format</label>
+              <mat-select [(ngModel)]="selectedValue2" [ngModelOptions]="{standalone: true}" class="custom-mat-select select"  placeholder="15/05/2016">
+                @for (data of selectedList2; track data) {
+                  <mat-option [value]="data.value">
+                    {{data.value}}
+                  </mat-option>
+                }
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label  class="col-form-label" for="">Timezone</label>
+              <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}" class="custom-mat-select select"  placeholder="(UTC +5:30) Antarctica/Palmer">
+                @for (data of selectedList3; track data) {
+                  <mat-option [value]="data.value">
+                    {{data.value}}
+                  </mat-option>
+                }
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Default Language</label>
+              <mat-select [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}" class="custom-mat-select select"  placeholder="English">
+                @for (data of selectedList4; track data) {
+                  <mat-option [value]="data.value">
+                    {{data.value}}
+                  </mat-option>
+                }
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Currency Code</label>
+              <mat-select [(ngModel)]="selectedValue5" [ngModelOptions]="{standalone: true}" class="custom-mat-select select"  placeholder="USD">
+                @for (data of selectedList5; track data) {
+                  <mat-option [value]="data.value">
+                    {{data.value}}
+                  </mat-option>
+                }
+              </mat-select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Currency Symbol</label>
+              <input class="form-control" readonly value="$" type="text">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="submit-section">
+              <button class="btn btn-primary submit-btn">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->

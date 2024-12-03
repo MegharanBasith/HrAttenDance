@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "questions": "IS management has decided to rewrite a legacy",
+      "questions1": "customer relations system using fourth generation",
+      "questions2": "languages (4GLs). Which of the following risks is",
+      "questions3": "MOST often associated with system development using 4GLs?",
+      "option1": "design facilities",
+      "option2": "language subsets",
+      "option3": "Lack of portability",
+      "option4": "Inability to perform data",
+      "correctanswer": "A"
+    },
+    {
+      "id": 2,
+      "questions": "Which of the following would be the BEST ",
+      "questions1": "method for ensuring that critical fields in a",
+      "questions2": "master record have been updated properly?",
+      "option1": "design facilities",
+      "option2": "language subsets",
+      "option3": "Lack of portability",
+      "option4": "Inability to perform data",
+      "correctanswer": "A"
+    }
+  ],
+  "totalData": 2
+}

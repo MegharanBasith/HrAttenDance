@@ -1,0 +1,187 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form [formGroup]="emailSettings">
+        <div class="input-block mb-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="phpmail" value="option1"
+              [class.invalid]="emailSettings.get('phpMail')?.invalid && emailSettings.get('phpMail')?.touched"
+              formControlName="phpMail">
+              @if (emailSettings.get('phpMail')?.invalid && emailSettings.get('phpMail')?.touched) {
+                <div>
+                  @if (emailSettings.get('phpMail')?.invalid && emailSettings.get('phpMail')?.touched) {
+                    <small
+                    class="text-danger"> *PHP mail is required</small>
+                  }
+                </div>
+              }
+              <label class="form-check-label" for="phpmail">PHP Mail</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="smtpmail" value="option2"
+                [class.invalid]="emailSettings.get('smtp')?.invalid && emailSettings.get('smtp')?.touched"
+                formControlName="smtp">
+                @if (emailSettings.get('smtp')?.invalid && emailSettings.get('smtp')?.touched) {
+                  <div>
+                    @if (emailSettings.get('smtp')?.invalid && emailSettings.get('smtp')?.touched) {
+                      <small
+                      class="text-danger"> *SMTP is required</small>
+                    }
+                  </div>
+                }
+                <label class="form-check-label" for="smtpmail">SMTP</label>
+              </div>
+            </div>
+            <h4 class="page-title">PHP Email Settings</h4>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="input-block mb-3">
+                  <label class="col-form-label" for="">Email From Address</label>
+                  <input class="form-control"
+                    [class.invalid]="emailSettings.get('emailAddress')?.invalid && emailSettings.get('emailAddress')?.touched"
+                    formControlName="emailAddress">
+                    @if (emailSettings.get('emailAddress')?.invalid && emailSettings.get('emailAddress')?.touched) {
+                      <div
+                        >
+                        @if (emailSettings.get('emailAddress')?.invalid && emailSettings.get('emailAddress')?.touched) {
+                          <small
+                          class="text-danger"> *Email from address is required</small>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Emails From Name</label>
+                    <input class="form-control" type="text"
+                      [class.invalid]="emailSettings.get('emailName')?.invalid && emailSettings.get('emailName')?.touched"
+                      formControlName="emailName">
+                      @if (emailSettings.get('emailName')?.invalid && emailSettings.get('emailName')?.touched) {
+                        <div
+                          >
+                          @if (emailSettings.get('emailName')?.invalid && emailSettings.get('emailName')?.touched) {
+                            <small
+                            class="text-danger"> *Email from name is required</small>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <h4 class="page-title m-t-30">SMTP Email Settings</h4>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">SMTP HOST</label>
+                      <input class="form-control" type="text"
+                        [class.invalid]="emailSettings.get('smtpHost')?.invalid && emailSettings.get('smtpHost')?.touched"
+                        formControlName="smtpHost">
+                        @if (emailSettings.get('smtpHost')?.invalid && emailSettings.get('smtpHost')?.touched) {
+                          <div
+                            >
+                            @if (emailSettings.get('smtpHost')?.invalid && emailSettings.get('smtpHost')?.touched) {
+                              <small
+                              class="text-danger"> *SMTP host is required</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">SMTP USER</label>
+                        <input class="form-control" type="text"
+                          [class.invalid]="emailSettings.get('smtpUser')?.invalid && emailSettings.get('smtpUser')?.touched"
+                          formControlName="smtpUser">
+                          @if (emailSettings.get('smtpUser')?.invalid && emailSettings.get('smtpUser')?.touched) {
+                            <div
+                              >
+                              @if (emailSettings.get('smtpUser')?.invalid && emailSettings.get('smtpUser')?.touched) {
+                                <small
+                                class="text-danger"> *SMTP user is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">SMTP PASSWORD</label>
+                          <input class="form-control" type="password"
+                            [class.invalid]="emailSettings.get('smtpPassword')?.invalid && emailSettings.get('smtpPassword')?.touched"
+                            formControlName="smtpPassword">
+                            @if (emailSettings.get('smtpPassword')?.invalid && emailSettings.get('smtpPassword')?.touched) {
+                              <div
+                                >
+                                @if (emailSettings.get('smtpPassword')?.invalid && emailSettings.get('smtpPassword')?.touched) {
+                                  <small
+                                  class="text-danger"> *SMTP password is required</small>
+                                }
+                              </div>
+                            }
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">SMTP PORT</label>
+                            <input class="form-control" type="text"
+                              [class.invalid]="emailSettings.get('smtpPort')?.invalid && emailSettings.get('smtpPort')?.touched"
+                              formControlName="smtpPort">
+                              @if (emailSettings.get('smtpPort')?.invalid && emailSettings.get('smtpPort')?.touched) {
+                                <div
+                                  >
+                                  @if (emailSettings.get('smtpPort')?.invalid && emailSettings.get('smtpPort')?.touched) {
+                                    <small
+                                    class="text-danger"> *SMTP port is required</small>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">SMTP Security</label>
+                              <mat-select class="custom-mat-select" placeholder="None">
+                                <mat-option>None</mat-option>
+                                <mat-option>SSL</mat-option>
+                                <mat-option>TLS</mat-option>
+                              </mat-select>
+                              @if (emailSettings.get('smtpSecurity')?.invalid && emailSettings.get('smtpSecurity')?.touched) {
+                                <div
+                                  >
+                                  @if (emailSettings.get('smtpSecurity')?.invalid && emailSettings.get('smtpSecurity')?.touched) {
+                                    <small
+                                    class="text-danger"> *SMTP Security is required</small>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">SMTP Authentication Domain</label>
+                              <input class="form-control" type="text"
+                                [class.invalid]="emailSettings.get('smtpAuthentication')?.invalid && emailSettings.get('smtpAuthentication')?.touched"
+                                formControlName="smtpAuthentication">
+                                @if (emailSettings.get('smtpAuthentication')?.invalid && emailSettings.get('smtpAuthentication')?.touched) {
+                                  <div
+                                    >
+                                    @if (emailSettings.get('smtpAuthentication')?.invalid && emailSettings.get('smtpAuthentication')?.touched) {
+                                      <small
+                                      class="text-danger"> *SMTP Authentication is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                          <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Save &amp; update</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /Page Content -->

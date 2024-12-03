@@ -1,0 +1,106 @@
+<div class="account-page">
+  <div class="main-wrapper">
+    <div class="account-content">
+      <div class="container">
+
+        <!-- Account Logo -->
+        <div class="account-logo">
+          <a [routerLink]="['/dashboard']"><img src="assets/img/logo2.png" alt="Dreams Technologies"></a>
+        </div>
+        <!-- /Account Logo -->
+
+        <div class="account-box">
+          <div class="account-wrapper">
+            <h3 class="account-title">Register</h3>
+            <p class="account-subtitle">Access to our dashboard</p>
+
+            <!-- Account Form -->
+            <form [formGroup]="registerForm" (ngSubmit)="signup()">
+              <div class="input-block mb-4">
+                <label class="col-form-label">Name<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="name" type="text">
+                <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('name')?.errors?.['required']">*Name is required.</small>
+                </div>
+              </div>
+
+              <div class="input-block mb-4">
+                <label class="col-form-label">Email<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="email" type="text">
+                <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('email')?.errors?.['required']">*Email is required.</small>
+                  <small class="form-error" *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</small>
+                </div>
+              </div>
+
+              <div class="input-block mb-4">
+                <label class="col-form-label">Password<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="password" type="password">
+                <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('password')?.errors?.['required']">*Password is required.</small>
+                </div>
+              </div>
+
+              <div class="input-block mb-4">
+                <label class="col-form-label">Repeat Password<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="confirmPassword" type="password">
+                <div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">*Confirm Password is required.</small>
+                </div>
+                <div *ngIf="registerForm.errors?.['mismatch']" class="input-block mb-4">
+                  <small class="form-error"> Passwords must match. </small>
+                </div>
+              </div>
+              
+              <div class="input-block mb-4">
+                <label class="col-form-label">Customer Number<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="customerNumber" type="text">
+                <div *ngIf="registerForm.get('customerNumber')?.touched && registerForm.get('customerNumber')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('customerNumber')?.errors?.['required']">*Customer number is required.</small>
+                </div>
+              </div>
+
+              <!-- <div class="input-block mb-4">
+                <label class="col-form-label">Mobile<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="mobile" type="text">
+                <div *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('mobile')?.errors?.['required']">*Mobile number is required.</small>
+                </div>
+              </div> -->
+
+              <!-- <div class="input-block mb-4">
+                <label class="col-form-label">Company Name<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="companyName" type="text">
+                <div *ngIf="registerForm.get('companyName')?.touched && registerForm.get('companyName')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('companyName')?.errors?.['required']">*Company name is required.</small>
+                </div>
+              </div> -->
+
+              <div class="input-block mb-4">
+                <label class="col-form-label">Domain Name<span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="domainName" type="text">
+                <div *ngIf="registerForm.get('domainName')?.touched && registerForm.get('domainName')?.invalid">
+                  <small class="form-error" *ngIf="registerForm.get('domainName')?.errors?.['required']">*Domain name is required.</small>
+                </div>
+              </div>
+                
+              <!-- <div class="input-block mb-4">
+                <label class="col-form-label">Number Of Employees (Optional)</label>
+                <input class="form-control" formControlName="numberOfEmployees" type="number">
+              </div> -->
+
+              <div class="input-block mb-4 text-center">
+                <button class="btn btn-primary account-btn" type="submit">Register</button>
+              </div>
+
+              <div class="account-footer">
+                <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
+              </div>
+            </form>
+            <!-- /Account Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

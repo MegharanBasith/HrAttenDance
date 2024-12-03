@@ -1,0 +1,196 @@
+<div class="content container-fluid">
+    <div class="form-container">
+        <p-toast></p-toast>
+        <div *ngIf="showSpinner">
+            <app-spinner></app-spinner>
+        </div>
+        <!-- <div *ngIf="isAdmin" class="page-header">
+            <div class="row align-items-center">
+                <div class="col-auto float-end ms-auto">
+                    <button class="btn btn-success submit-button" (click)="submitEarningDeductionTrans()"><i
+                            class="check-circle"></i>
+                        {{ 'approve' | translate }}</button>
+                </div>
+            </div>
+        </div> -->
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{ 'earnDeduct.editEarningDeduction' | translate }}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#editEarningDeduction"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="editEarningDeduction">
+                <div class="card-body">
+                    <form [formGroup]="form" class="vacation-form">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee.employee' | translate
+                                        }}<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="workername"
+                                        [class.invalid]="form.get('workername')?.invalid && form.get('workername')?.touched">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'earnDeduct.transType' | translate
+                                        }}<span class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="form.get('transType')?.invalid && form.get('transType')?.touched"
+                                        formControlName="transType" placeholder="{{'select' | translate}}"
+                                        (selectionChange)="onTransTypeChange($event)">
+                                        <mat-option *ngFor="let option of transTypeOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="form.controls['transType']?.touched && form.controls['transType']?.errors?.['required']">
+                                        <small class="text-danger"> {{'earnDeduct.transTypeRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'earnDeduct.earnDeductType' | translate
+                                        }}<span class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="form.get('earningDeductionId')?.invalid && form.get('earningDeductionId')?.touched"
+                                        formControlName="earningDeductionId" placeholder="{{'select' | translate}}">
+                                        <mat-option *ngFor="let option of earnDeductList" [value]="option.id">
+                                            {{ option.description }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="form.controls['earningDeductionId']?.touched && form.controls['earningDeductionId']?.errors?.['required']">
+                                        <small class="text-danger"> {{'earnDeduct.earnDeductTypeRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'earnDeduct.payWith' | translate }}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="form.get('paywith')?.invalid && form.get('paywith')?.touched"
+                                        formControlName="paywith" placeholder="{{'select' | translate}}">
+                                        <mat-option *ngFor="let option of payWithOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="form.controls['paywith']?.touched && form.controls['paywith']?.errors?.['required']">
+                                        <small class="text-danger"> {{'earnDeduct.payWithRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div *ngIf="this.form.get('paywith')?.value === salaryPayWithOPtion" class="col-3">
+                                <div class="input-block mb-3 date-input1">
+                                    <label class="col-form-label" for="">{{'earnDeduct.effectiveDateFrom'|
+                                        translate}}<span class="text-danger">*</span></label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker
+                                            container=".date-input1"
+                                            [class.invalid]="form.get('fromEffectiveDate')?.invalid && form.get('fromEffectiveDate')?.touched"
+                                            formControlName="fromEffectiveDate">
+                                        <mat-error
+                                            *ngIf="form.controls['fromEffectiveDate']?.touched && form.controls['fromEffectiveDate']?.errors?.['required']">
+                                            <small class="text-danger"> {{'earnDeduct.effectiveDateFromRequired'|
+                                                translate}}</small>
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="this.form.get('paywith')?.value === salaryPayWithOPtion" class="col-3">
+                                <div class="input-block mb-3 date-input1">
+                                    <label class="col-form-label" for="">{{'earnDeduct.effectiveDateTo'|
+                                        translate}}<span class="text-danger">*</span></label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                            container=".date-input1"
+                                            [class.invalid]="form.get('toEffectiveDate')?.invalid && form.get('toEffectiveDate')?.touched"
+                                            formControlName="toEffectiveDate">
+                                        <mat-error
+                                            *ngIf="form.controls['toEffectiveDate']?.touched && form.controls['toEffectiveDate']?.errors?.['required'] ">
+                                            <small class="text-danger"> {{'earnDeduct.effectiveDateToRequired'|
+                                                translate}}</small>
+                                        </mat-error>
+                                        <mat-error *ngIf="form.errors?.['invalidDateRange']">
+                                            <small class="text-danger"> {{'earnDeduct.effectiveDateToError'|
+                                                translate}}</small>
+                                        </mat-error>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'earnDeduct.amount' | translate
+                                        }}</label>
+                                    <input class="form-control" type="number" formControlName="amount"
+                                        [class.invalid]="form.get('amount')?.invalid && form.get('amount')?.touched">
+
+                                    <mat-error
+                                        *ngIf="form.controls['amount']?.touched && form.controls['amount']?.errors?.['required']">
+                                        <small class="text-danger">{{ 'earnDeduct.amountRequired' | translate
+                                            }}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'earnDeduct.days' | translate }}</label>
+                                    <input class="form-control" type="number" formControlName="days"
+                                        [class.invalid]="form.get('days')?.invalid && form.get('days')?.touched">
+
+                                    <mat-error
+                                        *ngIf="form.controls['days']?.touched && form.controls['days']?.errors?.['required']">
+                                        <small class="text-danger">{{ 'earnDeduct.daysRequired' | translate
+                                            }}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'earnDeduct.percentage' | translate
+                                        }}</label>
+                                    <input class="form-control" type="number" formControlName="percentage"
+                                        [class.invalid]="form.get('percentage')?.invalid && form.get('percentage')?.touched">
+
+                                    <mat-error
+                                        *ngIf="form.controls['percentage']?.touched && form.controls['percentage']?.errors?.['required']">
+                                        <small class="text-danger">{{ 'earnDeduct.percentageRequired' | translate
+                                            }}</small>
+                                    </mat-error>
+
+                                    <mat-error
+                                        *ngIf="form.errors?.['atLeastOneRequired'] && (form.touched || form.dirty)">
+                                        <small class="text-danger">{{ 'earnDeduct.atLeastOneFieldRequired' |
+                                            translate
+                                            }}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="submit-container">
+        <button *ngIf="selectedEarnDeductTrans.workflowstatus !== approvedWorkflowStatus"
+            class="btn btn-primary submit-button" (click)="updateEarningDeductionTrans()">{{'update'
+            | translate
+            }}</button>
+    </div>
+</div>

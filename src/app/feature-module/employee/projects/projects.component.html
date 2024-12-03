@@ -1,0 +1,8 @@
+<!-- Page Wrapper -->
+@if (page === 'tasks') {
+  <app-task-sidebar></app-task-sidebar>
+}
+<div class="page-wrapper" [ngClass]="{'task-class-custom': page === 'tasks'}">
+  <router-outlet></router-outlet>
+</div>
+<!-- /Page Wrapper -->

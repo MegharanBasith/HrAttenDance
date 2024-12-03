@@ -1,0 +1,1649 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Profile</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Profile</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="card mb-0">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="profile-view">
+            <div class="profile-img-wrap">
+              <div class="profile-img">
+                <a><img alt="" src="assets/img/profiles/avatar-2.jpg"></a>
+              </div>
+            </div>
+            <div class="profile-basic">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="profile-info-left">
+                    <h3 class="user-name m-t-0 mb-0">John Doe</h3>
+                    <h6 class="text-muted">UI/UX Design Team</h6>
+                    <small class="text-muted">Web Designer</small>
+                    <div class="staff-id">Employee ID : FT-0001</div>
+                    <div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+                    <div class="staff-msg"><a class="btn btn-custom" [routerLink]="routes.chat">Send
+                    Message</a></div>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <ul class="personal-info">
+                    <li>
+                      <div class="title">Phone:</div>
+                      <div class="text"><a href="javascript:void(0);">9876543210</a></div>
+                    </li>
+                    <li>
+                      <div class="title">Email:</div>
+                      <div class="text"><a href="javascript:void(0);">johndoe&#64;example.com</a></div>
+                    </li>
+                    <li>
+                      <div class="title">Birthday:</div>
+                      <div class="text">24th July</div>
+                    </li>
+                    <li>
+                      <div class="title">Address:</div>
+                      <div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
+                    </li>
+                    <li>
+                      <div class="title">Gender:</div>
+                      <div class="text">Male</div>
+                    </li>
+                    <li>
+                      <div class="title">Reports to:</div>
+                      <div class="text">
+                        <div class="avatar-box">
+                          <div class="avatar avatar-xs">
+                            <img src="assets/img/profiles/avatar-16.jpg" alt="">
+                          </div>
+                        </div>
+                        <a [routerLink] = "routes.employeeProfile">
+                          Jeffery Lalor
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon"><i
+            class="fa-solid fa-pencil"></i></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card tab-box">
+    <div class="row user-tabs">
+      <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+        <ul class="nav nav-tabs nav-tabs-bottom">
+          <li class="nav-item"><a href="#emp_profile" data-bs-toggle="tab" class="nav-link active">Profile</a>
+        </li>
+        <li class="nav-item"><a href="#emp_projects" data-bs-toggle="tab" class="nav-link">Projects</a></li>
+        <li class="nav-item"><a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank & Statutory
+          <small class="text-danger">(Admin Only)</small></a></li>
+          <li class="nav-item"><a href="#emp_assets" data-bs-toggle="tab" class="nav-link">Assets</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content">
+
+    <!-- Profile Info Tab -->
+    <div id="emp_profile" class="pro-overview tab-pane fade show active">
+      <div class="row">
+        <div class="col-md-6 d-flex">
+          <div class="card profile-box flex-fill">
+            <div class="card-body">
+              <h3 class="card-title">Personal Informations <a class="edit-icon" data-bs-toggle="modal"
+                data-bs-target="#personal_info_modal"><i class="fa-solid fa-pencil"></i></a></h3>
+                <ul class="personal-info">
+                  <li>
+                    <div class="title">Passport No.</div>
+                    <div class="text">9876543210</div>
+                  </li>
+                  <li>
+                    <div class="title">Passport Exp Date.</div>
+                    <div class="text">9876543210</div>
+                  </li>
+                  <li>
+                    <div class="title">Tel</div>
+                    <div class="text"><a href="javascript:void(0);">9876543210</a></div>
+                  </li>
+                  <li>
+                    <div class="title">Nationality</div>
+                    <div class="text">Indian</div>
+                  </li>
+                  <li>
+                    <div class="title">Religion</div>
+                    <div class="text">Christian</div>
+                  </li>
+                  <li>
+                    <div class="title">Marital status</div>
+                    <div class="text">Married</div>
+                  </li>
+                  <li>
+                    <div class="title">Employment of spouse</div>
+                    <div class="text">No</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex">
+            <div class="card profile-box flex-fill">
+              <div class="card-body">
+                <h3 class="card-title">Emergency Contact <a class="edit-icon" data-bs-toggle="modal"
+                  data-bs-target="#emergency_contact_modal"><i class="fa-solid fa-pencil"></i></a></h3>
+                  <h5 class="section-title">Primary</h5>
+                  <ul class="personal-info">
+                    <li>
+                      <div class="title">Name</div>
+                      <div class="text">John Doe</div>
+                    </li>
+                    <li>
+                      <div class="title">Relationship</div>
+                      <div class="text">Father</div>
+                    </li>
+                    <li>
+                      <div class="title">Phone </div>
+                      <div class="text">9876543210, 9876543210</div>
+                    </li>
+                  </ul>
+                  <hr>
+                    <h5 class="section-title">Secondary</h5>
+                    <ul class="personal-info">
+                      <li>
+                        <div class="title">Name</div>
+                        <div class="text">Karen Wills</div>
+                      </li>
+                      <li>
+                        <div class="title">Relationship</div>
+                        <div class="text">Brother</div>
+                      </li>
+                      <li>
+                        <div class="title">Phone </div>
+                        <div class="text">9876543210, 9876543210</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 d-flex">
+                <div class="card profile-box flex-fill">
+                  <div class="card-body">
+                    <h3 class="card-title">Bank information</h3>
+                    <ul class="personal-info">
+                      <li>
+                        <div class="title">Bank name</div>
+                        <div class="text">ICICI Bank</div>
+                      </li>
+                      <li>
+                        <div class="title">Bank account No.</div>
+                        <div class="text">159843014641</div>
+                      </li>
+                      <li>
+                        <div class="title">IFSC Code</div>
+                        <div class="text">ICI24504</div>
+                      </li>
+                      <li>
+                        <div class="title">PAN No</div>
+                        <div class="text">TC000Y56</div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 d-flex">
+                <div class="card profile-box flex-fill">
+                  <div class="card-body">
+                    <h3 class="card-title">Family Informations <a class="edit-icon" data-bs-toggle="modal"
+                      data-bs-target="#family_info_modal"><i class="fa-solid fa-pencil"></i></a></h3>
+                      <div class="table-responsive">
+                        <table class="table table-nowrap">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Relationship</th>
+                              <th>Date of Birth</th>
+                              <th>Phone</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Leo</td>
+                              <td>Brother</td>
+                              <td>Feb 16th, 2023</td>
+                              <td>9876543210</td>
+                              <td class="text-end">
+                                <div class="dropdown dropdown-action">
+                                  <a aria-expanded="false" data-bs-toggle="dropdown"
+                                    class="action-icon dropdown-toggle"><i
+                                  class="material-icons ">more_vert</i></a>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item"><i class="fa-solid fa-pencil m-r-5"></i>
+                                  Edit</a>
+                                  <a class="dropdown-item"><i class="fa-regular fa-trash-can m-r-5"></i>
+                                Delete</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 d-flex">
+              <div class="card profile-box flex-fill">
+                <div class="card-body">
+                  <h3 class="card-title">Education Informations <a class="edit-icon" data-bs-toggle="modal"
+                    data-bs-target="#education_info"><i class="fa-solid fa-pencil"></i></a>
+                  </h3>
+                  <div class="experience-box">
+                    <ul class="experience-list">
+                      <li>
+                        <div class="experience-user">
+                          <div class="before-circle"></div>
+                        </div>
+                        <div class="experience-content">
+                          <div class="timeline-content">
+                            <a href="#/" class="name">International College of Arts and Science
+                            (UG)</a>
+                            <div>Bsc Computer Science</div>
+                            <span class="time">2000 - 2003</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="experience-user">
+                          <div class="before-circle"></div>
+                        </div>
+                        <div class="experience-content">
+                          <div class="timeline-content">
+                            <a href="#/" class="name">International College of Arts and Science
+                            (PG)</a>
+                            <div>Msc Computer Science</div>
+                            <span class="time">2000 - 2003</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex">
+              <div class="card profile-box flex-fill">
+                <div class="card-body">
+                  <h3 class="card-title">Experience <a class="edit-icon" data-bs-toggle="modal"
+                    data-bs-target="#experience_info"><i class="fa-solid fa-pencil"></i></a></h3>
+                    <div class="experience-box">
+                      <ul class="experience-list">
+                        <li>
+                          <div class="experience-user">
+                            <div class="before-circle"></div>
+                          </div>
+                          <div class="experience-content">
+                            <div class="timeline-content">
+                              <a href="#/" class="name">Web Designer at Zen Corporation</a>
+                              <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="experience-user">
+                            <div class="before-circle"></div>
+                          </div>
+                          <div class="experience-content">
+                            <div class="timeline-content">
+                              <a href="#/" class="name">Web Designer at Ron-tech</a>
+                              <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="experience-user">
+                            <div class="before-circle"></div>
+                          </div>
+                          <div class="experience-content">
+                            <div class="timeline-content">
+                              <a href="#/" class="name">Web Designer at Dalt Technology</a>
+                              <span class="time">Jan 2013 - Present (5 years 2 months)</span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Profile Info Tab -->
+
+          <!-- Projects Tab -->
+          <div class="tab-pane fade" id="emp_projects">
+            <div class="row">
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="dropdown profile-action">
+                      <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle"><i
+                      class="material-icons material-color">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a data-bs-target="#edit_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                        <a data-bs-target="#delete_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                      </div>
+                    </div>
+                    <h4 class="project-title"><a [routerLink]="routes.projectView">Office Management</a></h4>
+                    <small class="block text-ellipsis m-b-15">
+                      <span class="text-xs me-1">1</span> <span class="text-muted">open tasks, </span>
+                      <span class="text-xs me-1">9</span> <span class="text-muted">tasks completed</span>
+                    </small>
+                    <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. When an unknown printer took a galley of type and
+                      scrambled it...
+                    </p>
+                    <div class="pro-deadline m-b-15">
+                      <div class="sub-title">
+                        Deadline:
+                      </div>
+                      <div class="text-muted">
+                        17 Apr 2023
+                      </div>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Project Leader :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Danniel david"><img alt=""
+                          src="assets/img/profiles/avatar-19.jpg"></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Team :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Doe"><img alt=""
+                          src="assets/img/profiles/avatar-2.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Richard Miles"><img alt=""
+                          src="assets/img/profiles/avatar-9.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Smith"><img alt=""
+                          src="assets/img/profiles/avatar-10.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Mike Litorus"><img alt=""
+                          src="assets/img/profiles/avatar-5.jpg"></a>
+                        </li>
+                        <li>
+                          <a class="all-users">+15</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="m-b-5">Progress <span class="text-success float-end">40%</span></p>
+                    <div class="progress progress-xs mb-0">
+                      <div style="width: 40%" title="" data-bs-toggle="tooltip" role="progressbar"
+                      class="progress-bar bg-success" data-original-title="40%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="dropdown profile-action">
+                      <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle"><i
+                      class="material-icons material-color">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a data-bs-target="#edit_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                        <a data-bs-target="#delete_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                      </div>
+                    </div>
+                    <h4 class="project-title"><a [routerLink]="routes.projectView">Project Management</a></h4>
+                    <small class="block text-ellipsis m-b-15">
+                      <span class="text-xs me-1">2</span> <span class="text-muted">open tasks, </span>
+                      <span class="text-xs me-1">5</span> <span class="text-muted">tasks completed</span>
+                    </small>
+                    <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. When an unknown printer took a galley of type and
+                      scrambled it...
+                    </p>
+                    <div class="pro-deadline m-b-15">
+                      <div class="sub-title">
+                        Deadline:
+                      </div>
+                      <div class="text-muted">
+                        17 Apr 2023
+                      </div>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Project Leader :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Micard hentry"><img alt=""
+                          src="assets/img/profiles/avatar-8.jpg"></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Team :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Doe"><img alt=""
+                          src="assets/img/profiles/avatar-2.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Richard Miles"><img alt=""
+                          src="assets/img/profiles/avatar-9.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Smith"><img alt=""
+                          src="assets/img/profiles/avatar-10.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Mike Litorus"><img alt=""
+                          src="assets/img/profiles/avatar-5.jpg"></a>
+                        </li>
+                        <li>
+                          <a class="all-users">+15</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="m-b-5">Progress <span class="text-success float-end">40%</span></p>
+                    <div class="progress progress-xs mb-0">
+                      <div style="width: 40%" title="" data-bs-toggle="tooltip" role="progressbar"
+                      class="progress-bar bg-success" data-original-title="40%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="dropdown profile-action">
+                      <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle"><i
+                      class="material-icons material-color">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a data-bs-target="#edit_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                        <a data-bs-target="#delete_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                      </div>
+                    </div>
+                    <h4 class="project-title"><a [routerLink]="routes.projectView">Video Calling App</a></h4>
+                    <small class="block text-ellipsis m-b-15">
+                      <span class="text-xs me-1">3</span> <span class="text-muted">open tasks, </span>
+                      <span class="text-xs me-1">3</span> <span class="text-muted">tasks completed</span>
+                    </small>
+                    <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. When an unknown printer took a galley of type and
+                      scrambled it...
+                    </p>
+                    <div class="pro-deadline m-b-15">
+                      <div class="sub-title">
+                        Deadline:
+                      </div>
+                      <div class="text-muted">
+                        17 Apr 2023
+                      </div>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Project Leader :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Richard hert"><img alt=""
+                          src="assets/img/profiles/avatar-11.jpg"></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Team :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Doe"><img alt=""
+                          src="assets/img/profiles/avatar-2.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Richard Miles"><img alt=""
+                          src="assets/img/profiles/avatar-9.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Smith"><img alt=""
+                          src="assets/img/profiles/avatar-10.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Mike Litorus"><img alt=""
+                          src="assets/img/profiles/avatar-5.jpg"></a>
+                        </li>
+                        <li>
+                          <a class="all-users">+15</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="m-b-5">Progress <span class="text-success float-end">40%</span></p>
+                    <div class="progress progress-xs mb-0">
+                      <div style="width: 40%" title="" data-bs-toggle="tooltip" role="progressbar"
+                      class="progress-bar bg-success" data-original-title="40%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="dropdown profile-action">
+                      <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle"><i
+                      class="material-icons material-color">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a data-bs-target="#edit_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                        <a data-bs-target="#delete_project" data-bs-toggle="modal" class="dropdown-item"><i
+                        class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                      </div>
+                    </div>
+                    <h4 class="project-title"><a [routerLink]="routes.projectView">Hospital Administration</a></h4>
+                    <small class="block text-ellipsis m-b-15">
+                      <span class="text-xs me-1">12</span> <span class="text-muted">open tasks, </span>
+                      <span class="text-xs me-1">4</span> <span class="text-muted">tasks completed</span>
+                    </small>
+                    <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry. When an unknown printer took a galley of type and
+                      scrambled it...
+                    </p>
+                    <div class="pro-deadline m-b-15">
+                      <div class="sub-title">
+                        Deadline:
+                      </div>
+                      <div class="text-muted">
+                        17 Apr 2023
+                      </div>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Project Leader :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Micard hentry"><img alt=""
+                          src="assets/img/profiles/avatar-12.jpg"></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="project-members m-b-15">
+                      <div>Team :</div>
+                      <ul class="team-members">
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Doe"><img alt=""
+                          src="assets/img/profiles/avatar-2.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Richard Miles"><img alt=""
+                          src="assets/img/profiles/avatar-9.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="John Smith"><img alt=""
+                          src="assets/img/profiles/avatar-10.jpg"></a>
+                        </li>
+                        <li>
+                          <a data-bs-toggle="tooltip" title="Mike Litorus"><img alt=""
+                          src="assets/img/profiles/avatar-5.jpg"></a>
+                        </li>
+                        <li>
+                          <a class="all-users">+15</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="m-b-5">Progress <span class="text-success float-end">40%</span></p>
+                    <div class="progress progress-xs mb-0">
+                      <div style="width: 40%" title="" data-bs-toggle="tooltip" role="progressbar"
+                      class="progress-bar bg-success" data-original-title="40%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Projects Tab -->
+
+          <!-- Bank Statutory Tab -->
+          <div class="tab-pane fade" id="bank_statutory">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title"> Basic Salary Information</h3>
+                <form  [formGroup]="addEmployeeForm">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Salary basis <span
+                        class="text-danger">*</span></label>
+                        <mat-select  class="form-control" formControlName="client" placeholder="Select salary basis type">
+                          <mat-option>Select salary basis type</mat-option>
+                          <mat-option>Hourly</mat-option>
+                          <mat-option>Daily</mat-option>
+                          <mat-option>Weekly</mat-option>
+                          <mat-option>Monthly</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Salary amount <small class="text-muted">per
+                        month</small></label>
+                        <div class="input-group">
+                          <span class="input-group-text">$</span>
+                          <input type="text" class="form-control" placeholder="Type your salary amount" value="0.00">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Payment type</label>
+                        <mat-select class="form-control" placeholder="Select payment type">
+                          <mat-option>Select payment type</mat-option>
+                          <mat-option>Bank transfer</mat-option>
+                          <mat-option>Check</mat-option>
+                          <mat-option>Cash</mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                    <h3 class="card-title"> PF Information</h3>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">PF contribution</label>
+                          <mat-select  [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select PF contribution">
+                            @for (data of selectedList1; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">PF No. <span class="text-danger">*</span></label>
+                          <mat-select  [(ngModel)]="selectedValue2" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select PF contribution">
+                            @for (data of selectedList2; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Employee PF rate</label>
+                          <mat-select  [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select PF contribution">
+                            @for (data of selectedList3; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Additional rate <span
+                          class="text-danger">*</span></label>
+                          <mat-select  [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select additional rate">
+                            @for (data of selectedList4; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Total rate</label>
+                          <input type="text" class="form-control" placeholder="N/A" value="11%">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Employee PF rate</label>
+                          <mat-select  [(ngModel)]="selectedValue5" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select PF contribution">
+                            @for (data of selectedList5; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Additional rate <span
+                          class="text-danger">*</span></label>
+                          <mat-select  [(ngModel)]="selectedValue6" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select additional rate">
+                            @for (data of selectedList6; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Total rate</label>
+                          <input type="text" class="form-control" placeholder="N/A" value="11%">
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr>
+                      <h3 class="card-title"> ESI Information</h3>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">ESI contribution</label>
+                            <mat-select  [(ngModel)]="selectedValue7" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select ESI contribution">
+                              @for (data of selectedList7; track data) {
+                                <mat-option [value]="data.value">
+                                  {{data.value}}
+                                </mat-option>
+                              }
+                            </mat-select>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">ESI No. <span class="text-danger">*</span></label>
+                            <mat-select [(ngModel)]="selectedValue8" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select ESI contribution">
+                              @for (data of selectedList8; track data) {
+                                <mat-option [value]="data.value">
+                                  {{data.value}}
+                                </mat-option>
+                              }
+                            </mat-select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Employee ESI rate</label>
+                            <mat-select [(ngModel)]="selectedValue9" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select ESI contribution">
+                              @for (data of selectedList9; track data) {
+                                <mat-option [value]="data.value">
+                                  {{data.value}}
+                                </mat-option>
+                              }
+                            </mat-select>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Additional rate <span
+                            class="text-danger">*</span></label>
+                            <mat-select [(ngModel)]="selectedValue10" [ngModelOptions]="{standalone: true}" class="user-assets select form-control"  placeholder="Select additional rate">
+                              @for (data of selectedList10; track data) {
+                                <mat-option [value]="data.value">
+                                  {{data.value}}
+                                </mat-option>
+                              }
+                            </mat-select>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Total rate</label>
+                            <input type="text" class="form-control" placeholder="N/A" value="11%">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="submit-section">
+                        <button class="btn btn-primary submit-btn" type="submit">Save</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /Bank Statutory Tab -->
+
+              <!-- Assets -->
+              <div class="tab-pane fade" id="emp_assets">
+                <div class="table-responsive table-newdatatable">
+                  <table class="table table-new custom-table mb-0 datatable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Asset ID</th>
+                        <th>Assigned Date</th>
+                        <th>Assignee</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>
+                          <a [routerLink] = "routes.assetsDetails" class="table-imgname">
+                            <img src="assets/img/laptop.png" class="me-2" alt="Laptop Image">
+                            <span>Laptop</span>
+                          </a>
+                        </td>
+                        <td>AST - 001</td>
+                        <td>22 Nov, 2022    10:32AM</td>
+                        <td class="table-namesplit">
+                          <a href="javascript:void(0);" class="table-profileimage">
+                            <img src="assets/img/profiles/avatar-02.jpg" class="me-2" alt="User Image">
+                          </a>
+                          <a href="javascript:void(0);" class="table-name">
+                            <span>John Paul Raj</span>
+                            <p>john&#64;dreamguystech.com</p>
+                          </a>
+                        </td>
+                        <td>
+                          <div class="table-actions d-flex">
+                            <a class="delete-table me-2" [routerLink] = "routes.userAssetsDetails">
+                              <img src="assets/img/icons/eye.svg" alt="Eye Icon">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>
+                          <a [routerLink] = "routes.assetsDetails" class="table-imgname">
+                            <img src="assets/img/laptop.png" class="me-2" alt="Laptop Image">
+                            <span>Laptop</span>
+                          </a>
+                        </td>
+                        <td>AST - 002</td>
+                        <td>22 Nov, 2022    10:32AM</td>
+                        <td class="table-namesplit">
+                          <a href="javascript:void(0);" class="table-profileimage" data-bs-toggle="modal" data-bs-target="#edit-asset">
+                            <img src="assets/img/profiles/avatar-05.jpg" class="me-2" alt="User Image">
+                          </a>
+                          <a href="javascript:void(0);" class="table-name">
+                            <span>Vinod Selvaraj</span>
+                            <p>vinod.s&#64;dreamguystech.com</p>
+                          </a>
+                        </td>
+                        <td>
+                          <div class="table-actions d-flex">
+                            <a class="delete-table me-2" [routerLink] = "routes.userAssetsDetails">
+                              <img src="assets/img/icons/eye.svg" alt="Eye Icon">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>
+                          <a [routerLink] = "routes.assetsDetails" class="table-imgname">
+                            <img src="assets/img/keyboard.png" class="me-2" alt="Keyboard Image">
+                            <span>Dell Keyboard</span>
+                          </a>
+                        </td>
+                        <td>AST - 003</td>
+                        <td>22 Nov, 2022    10:32AM</td>
+                        <td class="table-namesplit">
+                          <a href="javascript:void(0);" class="table-profileimage" data-bs-toggle="modal" data-bs-target="#edit-asset">
+                            <img src="assets/img/profiles/avatar-03.jpg" class="me-2" alt="User Image">
+                          </a>
+                          <a href="javascript:void(0);" class="table-name">
+                            <span>Harika </span>
+                            <p>harika.v&#64;dreamguystech.com</p>
+                          </a>
+                        </td>
+                        <td>
+                          <div class="table-actions d-flex">
+                            <a class="delete-table me-2" [routerLink] = "routes.userAssetsDetails">
+                              <img src="assets/img/icons/eye.svg" alt="Eye Icon">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>
+                          <a href="javascript:void(0);" class="table-imgname">
+                            <img src="assets/img/mouse.png" class="me-2" alt="Mouse Image">
+                            <span>Logitech Mouse</span>
+                          </a>
+                        </td>
+                        <td>AST - 0024</td>
+                        <td>22 Nov, 2022    10:32AM</td>
+                        <td class="table-namesplit">
+                          <a [routerLink] = "routes.assetsDetails" class="table-profileimage" >
+                            <img src="assets/img/profiles/avatar-02.jpg" class="me-2" alt="User Image">
+                          </a>
+                          <a [routerLink] = "routes.assetsDetails" class="table-name">
+                            <span>Mythili</span>
+                            <p>mythili&#64;dreamguystech.com</p>
+                          </a>
+                        </td>
+                        <td>
+                          <div class="table-actions d-flex">
+                            <a class="delete-table me-2" [routerLink] = "routes.userAssetsDetails">
+                              <img src="assets/img/icons/eye.svg" alt="Eye Icon">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>
+                          <a href="javascript:void(0);" class="table-imgname">
+                            <img src="assets/img/laptop.png" class="me-2" alt="Laptop Image">
+                            <span>Laptop</span>
+                          </a>
+                        </td>
+                        <td>AST - 005</td>
+                        <td>22 Nov, 2022    10:32AM</td>
+                        <td class="table-namesplit">
+                          <a [routerLink] = "routes.assetsDetails" class="table-profileimage" >
+                            <img src="assets/img/profiles/avatar-02.jpg" class="me-2" alt="User Image">
+                          </a>
+                          <a [routerLink] = "routes.assetsDetails" class="table-name">
+                            <span>John Paul Raj</span>
+                            <p>john&#64;dreamguystech.com</p>
+                          </a>
+                        </td>
+                        <td>
+                          <div class="table-actions d-flex">
+                            <a class="delete-table me-2" [routerLink] = "routes.userAssetsDetails">
+                              <img src="assets/img/icons/eye.svg" alt="Eye Icon">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>
+                          <a href="javascript:void(0);" class="table-imgname">
+                            <img src="assets/img/laptop.png" class="me-2" alt="Laptop Image">
+                            <span>Laptop</span>
+                          </a>
+                        </td>
+                        <td>AST - 006</td>
+                        <td>22 Nov, 2022    10:32AM</td>
+                        <td class="table-namesplit">
+                          <a href="javascript:void(0);" class="table-profileimage" >
+                            <img src="assets/img/profiles/avatar-05.jpg" class="me-2" alt="User Image">
+                          </a>
+                          <a href="javascript:void(0);" class="table-name">
+                            <span>Vinod Selvaraj</span>
+                            <p>vinod.s&#64;dreamguystech.com</p>
+                          </a>
+                        </td>
+                        <td>
+                          <div class="table-actions d-flex">
+                            <a class="delete-table me-2" [routerLink] = "routes.userAssetsDetails">
+                              <img src="assets/img/icons/eye.svg" alt="Eye Icon">
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /Assets -->
+
+            </div>
+          </div>
+          <!-- /Page Content -->
+          <!-- Profile Modal -->
+          <div id="profile_info" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Profile Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="profile-img-wrap edit-img">
+                          <img class="inline-block" src="assets/img/profiles/avatar-2.jpg" alt="user">
+                          <div class="fileupload btn">
+                            <span class="btn-text">edit</span>
+                            <input class="upload" type="file">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">First Name</label>
+                              <input type="text" class="form-control" value="John">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Last Name</label>
+                              <input type="text" class="form-control" value="Doe">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3 date-input1">
+                              <label class="col-form-label" for="">Birth Date</label>
+                              <div class="cal-icon">
+                                <input class="form-control" type="text" value="05-06-1985" bsDatepicker container=".date-input1">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Gender</label>
+                              <mat-select  [(ngModel)]="selectedValue11" [ngModelOptions]="{standalone: true}" class="user-assets select custom-mat-select"  placeholder="Male">
+                                @for (data of selectedList11; track data) {
+                                  <mat-option [value]="data.value">
+                                    {{data.value}}
+                                  </mat-option>
+                                }
+                              </mat-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Address</label>
+                          <input type="text" class="form-control" value="4487 Snowbird Lane">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">State</label>
+                          <input type="text" class="form-control" value="New York">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Country</label>
+                          <input type="text" class="form-control" value="United States">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Pin Code</label>
+                          <input type="text" class="form-control" value="10523">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Phone Number</label>
+                          <input type="text" class="form-control" value="631-889-3206">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Department <span class="text-danger">*</span></label>
+                          <mat-select [(ngModel)]="selectedValue12" [ngModelOptions]="{standalone: true}" class="user-assets select custom-mat-select"  placeholder="Select Department">
+                            @for (data of selectedList12; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Designation <span class="text-danger">*</span></label>
+                          <mat-select  [(ngModel)]="selectedValue13" [ngModelOptions]="{standalone: true}" class="user-assets select custom-mat-select"  placeholder="Select Designation">
+                            @for (data of selectedList13; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Reports To <span class="text-danger">*</span></label>
+                          <mat-select  [(ngModel)]="selectedValue14" [ngModelOptions]="{standalone: true}" class="user-assets select custom-mat-select"  placeholder="Wilmer Deluna">
+                            @for (data of selectedList14; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Profile Modal -->
+
+          <!-- Personal Info Modal -->
+          <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Personal Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Passport No</label>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3 date-input2">
+                          <label class="col-form-label" for="">Passport Expiry Date</label>
+                          <div class="cal-icon">
+                            <input class="form-control datetimepicker" type="text"  bsDatepicker container=".date-input2">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Tel</label>
+                          <input class="form-control" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Nationality <span class="text-danger">*</span></label>
+                          <input class="form-control" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Religion</label>
+                          <input class="form-control" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Marital status <span class="text-danger">*</span></label>
+                          <mat-select  [(ngModel)]="selectedValue15" [ngModelOptions]="{standalone: true}" class="user-assets select custom-mat-select"  placeholder="-">
+                            @for (data of selectedList15; track data) {
+                              <mat-option [value]="data.value">
+                                {{data.value}}
+                              </mat-option>
+                            }
+                          </mat-select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Employment of spouse</label>
+                          <input class="form-control" type="text">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">No. of children </label>
+                          <input class="form-control" type="text">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Personal Info Modal -->
+
+          <!-- Family Info Modal -->
+          <div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title"> Family Informations</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-scroll">
+                      <div class="card">
+                        <div class="card-body">
+                          <h3 class="card-title">Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa-regular fa-trash-can"></i></a></h3>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Name <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Relationship <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Date of birth <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Phone <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="add-more">
+                            <a href="javascript:void(0);"><i class="fa-solid fa-plus-circle"></i> Add More</a>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Family Info Modal -->
+
+          <!-- Emergency Contact Modal -->
+          <div id="emergency_contact_modal" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Personal Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="card">
+                      <div class="card-body">
+                        <h3 class="card-title">Primary Contact</h3>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Name <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Relationship <span class="text-danger">*</span></label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Phone <span class="text-danger">*</span></label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Phone 2</label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-body">
+                        <h3 class="card-title">Primary Contact</h3>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Name <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Relationship <span class="text-danger">*</span></label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Phone <span class="text-danger">*</span></label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Phone 2</label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Emergency Contact Modal -->
+
+          <!-- Education Modal -->
+          <div id="education_info" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title"> Education Informations</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-scroll">
+                      <div class="card">
+                        <div class="card-body">
+                          <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa-regular fa-trash-can"></i></a></h3>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Institution</mat-label>
+                                  <input type="text" value="Oxford University" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Subject</mat-label>
+                                  <input type="text" value="Computer Science" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input3">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Starting Date</mat-label>
+                                  <input class="form-control floating datetimepicker"  bsDatepicker container=".date-input3" type="text" matInput value="01-06-2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input4">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Complete Date</mat-label>
+                                  <input  class="form-control floating datetimepicker" bsDatepicker container=".date-input4" type="text" matInput value="09-06-2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Degree</mat-label>
+                                  <input type="text" value="BE Computer Science" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Grade</mat-label>
+                                  <input type="text" value="Grade A" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card">
+                        <div class="card-body">
+                          <h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa-regular fa-trash-can"></i></a></h3>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Institution</mat-label>
+                                  <input type="text" value="Oxford University" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Subject</mat-label>
+                                  <input type="text" value="Computer Science" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input5">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Starting Date</mat-label>
+                                  <input class="form-control floating datetimepicker"  bsDatepicker container=".date-input5" type="text" matInput value="01-06-2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input5">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Complete Date</mat-label>
+                                  <input class="form-control floating datetimepicker" bsDatepicker container=".date-input6" type="text" matInput value="09-06-2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Degree</mat-label>
+                                  <input type="text" value="BE Computer Science" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Grade</mat-label>
+                                  <input type="text" value="Grade A" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="add-more">
+                            <a href="javascript:void(0);"><i class="fa-solid fa-plus-circle"></i> Add More</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Education Modal -->
+
+          <!-- Experience Modal -->
+          <div id="experience_info" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Experience Informations</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-scroll">
+                      <div class="card">
+                        <div class="card-body">
+                          <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa-regular fa-trash-can"></i></a></h3>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Company Name</mat-label>
+                                  <input type="text" value="Digital Devlopment Inc" matInput  class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Location</mat-label>
+                                  <input type="text" value="United States" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Job Position</mat-label>
+                                  <input type="text" value="Web Developer" matInput class="form-control floating"   >
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input7">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Period From</mat-label>
+                                  <input class="form-control floating datetimepicker"  bsDatepicker container=".date-input7" type="text" matInput value="09/06/2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input8">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Period To</mat-label>
+                                  <input class="form-control floating datetimepicker"  bsDatepicker container=".date-input8" type="text" matInput value="12/06/2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card">
+                        <div class="card-body">
+                          <h3 class="card-title">Experience Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa-regular fa-trash-can"></i></a></h3>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Company Name</mat-label>
+                                  <input type="text" value="Digital Devlopment Inc" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Location</mat-label>
+                                  <input type="text" value="United States" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs">
+                                <mat-form-field class="example-full-width">
+                                  <mat-label>Job Position</mat-label>
+                                  <input type="text" value="Web Developer" matInput class="form-control floating">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input9">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Period From</mat-label>
+                                  <input class="form-control floating datetimepicker" bsDatepicker container=".date-input9" type="text" matInput value="09/06/2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="input-block mb-3 form-focus inputs date-input10">
+                                <mat-form-field class="example-full-width cal-icon">
+                                  <mat-label>Period To</mat-label>
+                                  <input class="form-control floating datetimepicker" bsDatepicker container=".date-input10" type="text" matInput value="12/06/2022">
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="add-more">
+                            <a href="javascript:void(0);"><i class="fa-solid fa-plus-circle"></i> Add More</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Experience Modal -->

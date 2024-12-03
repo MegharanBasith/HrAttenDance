@@ -1,0 +1,369 @@
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{ 'businessTrip.editBusinessTripRequest' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <div *ngIf="showSpinner">
+            <app-spinner></app-spinner>
+        </div>
+        <form [formGroup]="businessTripForm" class="form">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'employee.employee' | translate }}<span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" type="text" formControlName="personnelNumber"
+                                [attr.disabled]="true"
+                                [class.invalid]="businessTripForm.get('personnelNumber')?.invalid && businessTripForm.get('personnelNumber')?.touched">
+                            @if (businessTripForm.get('personnelNumber')?.invalid &&
+                            businessTripForm.get('personnelNumber')?.touched) {
+                            <div>
+                                @if (businessTripForm.get('personnelNumber')?.invalid &&
+                                businessTripForm.get('personnelNumber')?.touched) {
+                                <small class="text-danger"> {{'businessTrip.employeeRequired'| translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.payWith'| translate}} <span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('payWith')?.invalid && businessTripForm.get('payWith')?.touched"
+                                formControlName="payWith" placeholder="{{'select'| translate}}">
+                                <mat-option *ngFor="let option of payWithOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('payWith')?.invalid &&
+                            businessTripForm.get('payWith')?.touched)
+                            {
+                            <div>
+                                @if (businessTripForm.get('payWith')?.invalid &&
+                                businessTripForm.get('payWith')?.touched) {
+                                <small class="text-danger"> {{'businessTrip.payWithRequired'| translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3 date-input1">
+                            <label class="col-form-label" for="">{{'businessTrip.startDate'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                    container=".date-input1"
+                                    [class.invalid]="businessTripForm.get('startDate')?.invalid && businessTripForm.get('startDate')?.touched"
+                                    formControlName="startDate">
+                                @if (businessTripForm.get('startDate')?.invalid &&
+                                businessTripForm.get('startDate')?.touched) {
+                                <div>
+                                    @if (businessTripForm.get('startDate')?.invalid &&
+                                    businessTripForm.get('startDate')?.touched)
+                                    {
+                                    <small class="text-danger"> {{'businessTrip.startDateRequired'|
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3 date-input1">
+                            <label class="col-form-label" for="">{{'businessTrip.endDate'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                                <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                    container=".date-input1"
+                                    [class.invalid]="businessTripForm.get('endDate')?.invalid && businessTripForm.get('endDate')?.touched"
+                                    formControlName="endDate">
+                                @if (businessTripForm.get('endDate')?.invalid &&
+                                businessTripForm.get('endDate')?.touched) {
+                                <div>
+                                    @if (businessTripForm.get('endDate')?.invalid &&
+                                    businessTripForm.get('endDate')?.touched) {
+                                    <small class="text-danger"> {{'businessTrip.endDateRequired'|
+                                        translate}}</small>
+                                    }
+                                </div>
+                                }
+                                <div *ngIf="businessTripForm.errors?.['invalidDateRange']">
+                                    <small class="text-danger">{{'* ' + ('endDateError' | translate)}}</small>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.destinationType'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('destinationType')?.invalid && businessTripForm.get('destinationType')?.touched"
+                                formControlName="destinationType" placeholder="{{'select'| translate}}" (selectionChange)="onDestinationTypeChange($event.value)">
+                                <mat-option *ngFor="let option of destinationTypeOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('destinationType')?.hasError('required') &&
+                            businessTripForm.get('destinationType')?.touched) {
+                            <div>
+                                @if (businessTripForm.get('destinationType')?.hasError('required') &&
+                                businessTripForm.get('destinationType')?.touched)
+                                {
+                                <small class="text-danger"> {{'businessTrip.destinationTypeRequired'|
+                                    translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3 add-record-button">
+                            <!-- Button to open the dialog -->
+                            <button class="btn btn-primary badge-button" (click)="openDialog()">
+                                <mat-icon>edit</mat-icon>
+                                <span class="badge-text">
+                                    {{ dataSource.length + ' ' + ('businessTrip.addedDestinations' | translate) }}
+                                  </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.transportationBy'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('transportationBy')?.invalid && businessTripForm.get('transportationBy')?.touched"
+                                formControlName="transportationBy" placeholder="{{'select'| translate}}"
+                                (selectionChange)="onTransportationByChange($event.value)">
+                                <mat-option *ngFor="let option of transportationByOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('transportationBy')?.invalid &&
+                            businessTripForm.get('transportationBy')?.touched)
+                            {
+                            <div>
+                                @if (businessTripForm.get('transportationBy')?.invalid &&
+                                businessTripForm.get('transportationBy')?.touched) {
+                                <small class="text-danger"> {{'businessTrip.transportationBy'| translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div *ngIf="showTicketClass" class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.ticketClass'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('ticketClass')?.invalid && businessTripForm.get('ticketClass')?.touched"
+                                formControlName="ticketClass" placeholder="{{'select'| translate}}">
+                                <mat-option *ngFor="let option of ticketClassOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('ticketClass')?.invalid &&
+                            businessTripForm.get('ticketClass')?.touched)
+                            {
+                            <div>
+                                @if (businessTripForm.get('ticketClass')?.invalid &&
+                                businessTripForm.get('ticketClass')?.touched) {
+                                <small class="text-danger"> {{'businessTrip.ticketClassRequired'|
+                                    translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.needFood'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('needFood')?.invalid && businessTripForm.get('needFood')?.touched"
+                                formControlName="needFood" placeholder="{{'select'| translate}}">
+                                <mat-option *ngFor="let option of yesNoOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('needFood')?.hasError('required') &&
+                            businessTripForm.get('needFood')?.touched) {
+                            <div>
+                                @if (businessTripForm.get('needFood')?.hasError('required') &&
+                                businessTripForm.get('needFood')?.touched)
+                                {
+                                <small class="text-danger"> {{'businessTrip.needFoodRequired'| translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.needTransport'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('needTransport')?.invalid && businessTripForm.get('needTransport')?.touched"
+                                formControlName="needTransport" placeholder="{{'select'| translate}}">
+                                <mat-option *ngFor="let option of yesNoOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('needTransport')?.hasError('required') &&
+                            businessTripForm.get('needTransport')?.touched) {
+                            <div>
+                                @if (businessTripForm.get('needTransport')?.hasError('required') &&
+                                businessTripForm.get('needTransport')?.touched)
+                                {
+                                <small class="text-danger"> {{'businessTrip.needTransportRequired'|
+                                    translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.needHotel'| translate}}<span
+                                    class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('needHotel')?.invalid && businessTripForm.get('needHotel')?.touched"
+                                formControlName="needHotel" placeholder="{{'select'| translate}}">
+                                <mat-option *ngFor="let option of yesNoOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('needHotel')?.hasError('required') &&
+                            businessTripForm.get('needHotel')?.touched) {
+                            <div>
+                                @if (businessTripForm.get('needHotel')?.hasError('required') &&
+                                businessTripForm.get('needHotel')?.touched)
+                                {
+                                <small class="text-danger"> {{'businessTrip.needHotelRequired'| translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{'businessTrip.isExitReEntryVisa'|
+                                translate}}<span class="text-danger">*</span></label>
+                            <mat-select class="custom-mat-select"
+                                [class.invalid]="businessTripForm.get('isExitReEntryVisa')?.invalid && businessTripForm.get('isExitReEntryVisa')?.touched"
+                                formControlName="isExitReEntryVisa" placeholder="{{'select'| translate}}">
+                                <mat-option *ngFor="let option of yesNoOptions" [value]="option">
+                                    {{ option }}
+                                </mat-option>
+                            </mat-select>
+                            @if (businessTripForm.get('isExitReEntryVisa')?.hasError('required') &&
+                            businessTripForm.get('isExitReEntryVisa')?.touched) {
+                            <div>
+                                @if (businessTripForm.get('isExitReEntryVisa')?.hasError('required') &&
+                                businessTripForm.get('isExitReEntryVisa')?.touched)
+                                {
+                                <small class="text-danger"> {{'businessTrip.isExitReEntryVisaRequired'|
+                                    translate}}</small>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- Dialog popup using *ngIf (when the dialog is open) -->
+                <ng-container *ngIf="isDialogOpen">
+                    <p-dialog header="Add Destinations" [modal]="true" [(visible)]="isDialogOpen"
+                        [style]="{ width: '45rem' }">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'businessTrip.destination' |
+                                        translate}}<span class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select" [(ngModel)]="selectedDestination"
+                                        placeholder="{{'select' | translate}}" [ngModelOptions]="{standalone: true}">
+                                        <mat-option *ngFor="let option of filteredDestinations"
+                                            [value]="option.destinationId">
+                                            {{ option.englishDescription }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <!-- Validation Message -->
+                                    <div *ngIf="isSubmitted && !selectedDestination" class="text-danger">
+                                        {{'businessTrip.destinationRequired' | translate}}
+                                    </div>
+                                    <div *ngIf="isSubmitted && isDuplicated" class="text-danger">
+                                        {{'businessTrip.duplicateDestination' | translate}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="d-flex justify-content-start add-record-button">
+                                    <button class="btn btn-info d-flex align-items-center" (click)="addRecord()">
+                                        <mat-icon class="mr-1">add</mat-icon>
+                                        {{'add' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table for inline editing -->
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="dataSource" matSort
+                                class="table table-striped custom-table mb-0 datatable">
+                                <thead>
+
+                                    <ng-container matColumnDef="actions">
+                                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <button mat-icon-button (click)="deleteRecord(row)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{
+                                            'businessTrip.' + column | translate }}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                                    </ng-container>
+
+                                </thead>
+                                <tbody>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </p-dialog>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+    <div class="submit-container">
+        <button class="btn btn-primary submit-button" [disabled]="businessTripForm.invalid"
+            (click)="onSubmit()">
+            {{ 'submit' | translate }}
+        </button>
+    </div>
+</div>

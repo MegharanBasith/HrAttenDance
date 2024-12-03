@@ -1,0 +1,302 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Create Invoice</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Create Invoice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="addInvoiceForm">
+        <div class="row">
+          <div class="col-sm-6 col-md-3">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Client <span class="text-danger">*</span></label>
+              <mat-select class="select custom-mat-select" placeholder="Please Select">
+                <mat-option value="select">Please Select</mat-option>
+                <mat-option value="barry">Barry Cuda</mat-option>
+                <mat-option value="tressa">Tressa Wexler</mat-option>
+              </mat-select>
+              @if (addInvoiceForm.get('client')?.invalid && addInvoiceForm.get('client')?.touched) {
+                <div>
+                  @if (addInvoiceForm.get('client')?.invalid && addInvoiceForm.get('client')?.touched) {
+                    <small
+                    class="text-danger"> *Client is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Project <span class="text-danger">*</span></label>
+              <mat-select class="custom-mat-select" placeholder="Select Project">
+                <mat-option value="project">Select Project</mat-option>
+                <mat-option value="management">Office Management</mat-option>
+                <mat-option value="office">Project Management</mat-option>
+              </mat-select>
+              @if (addInvoiceForm.get('project')?.invalid && addInvoiceForm.get('project')?.touched) {
+                <div
+                  >
+                  @if (addInvoiceForm.get('project')?.invalid && addInvoiceForm.get('project')?.touched) {
+                    <small
+                    class="text-danger"> *Project is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-3">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Email</label>
+              <input class="form-control" type="email" name="email"
+                [class.invalid]="addInvoiceForm.get('email')?.invalid && addInvoiceForm.get('email')?.touched"
+                formControlName="email">
+                @if (addInvoiceForm.get('email')?.invalid && addInvoiceForm.get('email')?.touched) {
+                  <div>
+                    @if (addInvoiceForm.get('email')?.invalid && addInvoiceForm.get('email')?.touched) {
+                      <small
+                      class="text-danger"> *Email is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Tax</label>
+                <mat-select class="custom-mat-select" name="tax"
+                  [class.invalid]="addInvoiceForm.get('tax')?.invalid && addInvoiceForm.get('tax')?.touched"
+                  formControlName="tax" placeholder="Select Tax">
+                  <mat-option value="1">Select Tax</mat-option>
+                  <mat-option value="2">VAT</mat-option>
+                  <mat-option value="3">GST</mat-option>
+                  <mat-option value="4">No Tax</mat-option>
+                </mat-select>
+                @if (addInvoiceForm.get('tax')?.invalid && addInvoiceForm.get('tax')?.touched) {
+                  <div>
+                    @if (addInvoiceForm.get('tax')?.invalid && addInvoiceForm.get('tax')?.touched) {
+                      <small
+                      class="text-danger"> *Tax is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Client Address</label>
+                <textarea class="form-control" rows="3" name="client_address"
+                  [class.invalid]="addInvoiceForm.get('client_address')?.invalid && addInvoiceForm.get('client_address')?.touched"
+                formControlName="client_address"></textarea>
+                @if (addInvoiceForm.get('client_address')?.invalid && addInvoiceForm.get('client_address')?.touched) {
+                  <div
+                    >
+                    @if (addInvoiceForm.get('client_address')?.invalid && addInvoiceForm.get('client_address')?.touched) {
+                      <small
+                      class="text-danger"> *Client address is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Billing Address</label>
+                <textarea class="form-control" rows="3" name="billing_address"
+                  [class.invalid]="addInvoiceForm.get('billing_address')?.invalid && addInvoiceForm.get('billing_address')?.touched"
+                formControlName="billing_address"></textarea>
+                @if (addInvoiceForm.get('billing_address')?.invalid && addInvoiceForm.get('billing_address')?.touched) {
+                  <div
+                    >
+                    @if (addInvoiceForm.get('billing_address')?.invalid && addInvoiceForm.get('billing_address')?.touched) {
+                      <small
+                      class="text-danger"> *Billing address is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Invoice date <span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                  <input class="form-control datetimepicker" type="text" name="tax"
+                    [class.invalid]="addInvoiceForm.get('invoice_date')?.invalid && addInvoiceForm.get('invoice_date')?.touched"
+                    bsDatepicker type="text" formControlName="invoice_date">
+                    @if (addInvoiceForm.get('invoice_date')?.invalid && addInvoiceForm.get('invoice_date')?.touched) {
+                      <div
+                        >
+                        @if (addInvoiceForm.get('invoice_date')?.invalid && addInvoiceForm.get('invoice_date')?.touched) {
+                          <small
+                          class="text-danger"> *Invoice date is required</small>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="input-block mb-3">
+                  <label class="col-form-label" for="">Due Date <span class="text-danger">*</span></label>
+                  <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" name="tax"
+                      [class.invalid]="addInvoiceForm.get('due_date')?.invalid && addInvoiceForm.get('due_date')?.touched"
+                      bsDatepicker type="text" formControlName="due_date">
+                      @if (addInvoiceForm.get('due_date')?.invalid && addInvoiceForm.get('due_date')?.touched) {
+                        <div
+                          >
+                          @if (addInvoiceForm.get('due_date')?.invalid && addInvoiceForm.get('due_date')?.touched) {
+                            <small
+                            class="text-danger"> Due* date is required</small>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover table-white">
+                      <thead>
+                        <tr>
+                          <th style="width: 20px">#</th>
+                          <th class="col-sm-2">Item</th>
+                          <th class="col-md-6">Description</th>
+                          <th style="width:100px;">Unit Cost</th>
+                          <th style="width:80px;">Qty</th>
+                          <th>Amount</th>
+                          <th> </th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        @for (Exp of expArray; track Exp; let i = $index) {
+                          <tr>
+                            <td>{{i+1}}</td>
+                            <td>
+                              <input class="form-control" name="item" type="text" style="min-width:150px">
+                            </td>
+                            <td>
+                              <input class="form-control" type="text" style="min-width:150px">
+                            </td>
+                            <td>
+                              <input class="form-control" style="width:100px" type="text">
+                            </td>
+                            <td>
+                              <input class="form-control" style="width:80px" type="text">
+                            </td>
+                            <td>
+                              <input class="form-control" readonly style="width:120px" type="text">
+                            </td>
+                            <td>
+                              <a (click)="addExp()" (keydown.enter)="addExp()" tabindex="0"
+                                class="text-success font-18" title="Add">
+                                <i class="fa-solid fa-plus"></i>
+                              </a>
+                            </td>
+                            @if (Exp.isNew && showRemoveButton) {
+                              <td>
+                                <a (keydown.enter)="deleteExp(i)" (click)="deleteExp(i)" tabindex="0" class="text-danger font-18"
+                                  title="Remove">
+                                  <i class="fa-regular fa-trash-can"></i>
+                                </a>
+                              </td>
+                            }
+                          </tr>
+                        }
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-hover table-white">
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-end">Total</td>
+                          <td class="text-end pe-4">0</td>
+                        </tr>
+                        <tr>
+                          <td colspan="5" class="text-end">Tax</td>
+                          <td class="text-end pr-4">
+                            <input class="form-control text-end" value="0" readonly type="text">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5" class="text-end">
+                            Discount %
+                          </td>
+                          <td style="text-align: right; padding-right: 30px;width: 230px">
+                            <input class="form-control text-end" type="text"
+                              [class.invalid]="addInvoiceForm.get('discount')?.invalid && addInvoiceForm.get('discount')?.touched"
+                              formControlName="discount">
+                              @if (addInvoiceForm.get('discount')?.invalid && addInvoiceForm.get('discount')?.touched) {
+                                <div
+                                  >
+                                  @if (addInvoiceForm.get('discount')?.invalid && addInvoiceForm.get('discount')?.touched) {
+                                    <small
+                                    class="text-danger"> *Discount is required</small>
+                                  }
+                                </div>
+                              }
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="5" class="text-end pe-4">
+                              <b>Grand Total</b>
+                            </td>
+                            <td class="text-end tdata-width pe-4">
+                              <b>$ 0.00</b>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Other Information</label>
+                          <textarea class="form-control"
+                            [class.invalid]="addInvoiceForm.get('other_information')?.invalid && addInvoiceForm.get('other_information')?.touched"
+                          formControlName="other_information"></textarea>
+                          @if (addInvoiceForm.get('other_information')?.invalid && addInvoiceForm.get('other_information')?.touched) {
+                            <div
+                              >
+                              @if (addInvoiceForm.get('other_information')?.invalid && addInvoiceForm.get('other_information')?.touched) {
+                                <small
+                                class="text-danger"> *Other information is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="submit-section">
+                  <button class="btn btn-primary submit-btn m-r- me-2">Save & Send</button>
+                  <button class="btn btn-primary submit-btn">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /Page Content -->

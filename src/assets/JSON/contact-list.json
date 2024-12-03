@@ -1,0 +1,155 @@
+{
+    "data" : [
+        {
+           
+            "name": "Darlee Robertson ",
+            "position":"Facility Manager",
+            "phone": "+1 875455453",
+            "email": "robertson@example.com",
+            "tags": "Promotion",
+            "location": "Germany",
+            "rating": 4.2,
+            "img":"assets/img/avatar/avatar-19.jpg",
+            "owner": "Hendry",
+            "contact": "",
+            "status": "Active",
+            "isRating": true
+          },
+          {
+            
+            "name": "Sharon Roy",
+            "position":"Installer",
+            "phone": "+1 989757485",
+            "email": "sharon@example.com",
+            "tags": "Rated",
+            "location": "USA",
+            "rating": 5.0,
+            "img":"assets/img/avatar/avatar-20.jpg",
+            "owner": "Guillory",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          },
+          {
+           
+            "name": "Vaughan Senior ",
+            "position":"Manager",
+            "phone": "+1 546555455",
+            "email": "vaughan12@example.com",
+            "tags": "Promotion",
+            "location": "Canada",
+            "rating": 3.5,
+            "img":"assets/img/avatar/avatar-21.jpg",
+            "owner": "Jami",
+            "contact": "",
+            "status": "Inactive",
+            "isRating": false
+          },
+          {
+           
+            "name": "Jessica ",
+            "position": "Test Engineer",
+            "phone": "+1 454478787",
+            "email": "jessica13@example.com",
+            "tags": "Rated",
+            "location": "India",
+            "rating": 4.5,
+            "img":"assets/img/avatar/avatar-22.jpg",
+            "owner": "Theresa",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          },
+          {
+           
+            "name": "Carol ThomasUI ",
+            "position": " UX Designer",
+            "phone": "+1 124547845",
+            "email": "carolTho3@example.com",
+            "tags": "Rejected",
+            "location": "China",
+            "rating": 4.7,
+            "img":"assets/img/avatar/avatar-23.jpg",
+            "owner": "Espinosa",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          },
+          {
+            "name": "Dawn Mercha ",
+            "position": " Technicianr",
+            "phone": "+1 478845447",
+            "email": "dawnmercha@example.com",
+            "tags": "Rated",
+            "location": "Japan",
+            "rating": 5.0,
+            "img":"assets/img/avatar/avatar-23.jpg",
+            "owner": "Martin",
+            "contact": "",
+            "status": "Active",
+            "isRating": true
+          },
+          {
+           
+            "name": "Rachel Hampton ",
+            "position": " Software Developer",
+            "phone": "+1 215544845",
+            "email": "rachel@example.com",
+            "tags": "Rejected",
+            "location": "Indonesia",
+            "rating": 3.1,
+            "img":"assets/img/avatar/avatar-23.jpg",
+            "owner": "Newell",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          },
+          {
+           
+            "name": "Jonelle ",
+            "position": " CurtissSupervisor",
+            "phone": "+1 121145471",
+            "email": "jonelle@example.com",
+            "tags": "Rejected",
+            "location": "Cuba",
+            "rating": 5.0,
+            "img":"assets/img/avatar/avatar-24.jpg",
+            "owner": "Janet",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          },
+          {
+            
+            "name": "Jonathan",
+            "position": " Team Lead Dev",
+            "phone": "+1 321454789",
+            "email": "jonathan@example.com",
+            "tags": "Calls",
+            "location": "Isreal",
+            "rating": 2.7,
+            "img":"assets/img/avatar/avatar-25.jpg",
+            "owner": "Craig",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          },
+          {
+           
+            "name": "Brook ",
+            "position": " Team Lead Dev",
+            "phone": "+1 278907145",
+            "email": "brook@example.com",
+            "tags": "Calls",
+            "location": "Colombia",
+            "rating": 3.0,
+            "img":"assets/img/avatar/avatar-26.jpg",
+            "owner": "Daniel",
+            "contact": "",
+            "status": "Active",
+            "isRating": false
+          }
+      
+      ],
+      "totalData":10
+}

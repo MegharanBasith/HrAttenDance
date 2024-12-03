@@ -1,0 +1,105 @@
+// .form-container {
+//     padding: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     background-color: #f9f9f9;
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//     margin: 40px auto;
+//     max-width: 1200px;
+// }
+
+.vacation-form {
+    width: 100%;
+    padding: 10px;
+    max-width: 125%;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    flex: 0 0 48%;
+}
+
+mat-form-field,
+mat-checkbox {
+    width: 100%;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+}
+
+.checkmark {
+    border: 2px solid orange;
+    background-color: inherit;
+}
+
+.checkbox-container {
+    padding: 10px;
+}
+
+.custom-header {
+    margin-bottom: 20px;
+}
+
+.col-3 {
+    width: 33%;
+}
+
+.custom-mat-option {
+    background-color: inherit !important;
+    padding: 10px;
+}
+
+.search-input {
+    padding: 20px;
+    width: 300px;
+}
+
+.alert-container {
+    width: 100%;
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.submit-button {
+    width: 200px;
+}
+
+.flex {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-dialog {
+    margin: 0px !important;
+}
+
+.custom-mat-icon {
+    position: relative;
+    top: 5px;
+}
+
+// :host ::ng-deep .custom-date-picker .bs-datepicker-container, .bs-daterangepicker-container {
+// }
+
+.custom-date-picker {
+    z-index: 2104;
+}
+
+
+:host ::ng-deep bs-datepicker-container {
+    z-index: 2104; /* Set your desired z-index */
+    transform: translate3d(500px, 270px, 0px) !important;
+}

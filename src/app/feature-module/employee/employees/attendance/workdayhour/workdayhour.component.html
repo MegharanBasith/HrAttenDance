@@ -1,0 +1,48 @@
+
+<div class="content container-fluid" style="padding-top: 0px;">
+ 
+   
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="page-title">Work Hours</h3>
+              </div>
+               
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-striped custom-table mb-0">
+                    <thead>
+                        <tr>
+                          <th>IsWorking</th>
+                            <th class="d-none">Employee Number</th>
+                            <th>Day </th>
+                            <th>Hours</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Tolerance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (setting of settings; track $index) {
+                        <tr>
+                            <td>{{setting.isWorking? 'Yes' : 'No' }}</td>
+                            <td class="d-none">{{setting.employee?.employeeNumber ?? 'All'}}</td>
+                            <td>{{setting.day}}</td>
+                            <td>{{setting.hours}}</td>
+                            <td>{{setting.from}}</td>
+                            <td>{{setting.to}}</td>
+                            <th>{{setting.tolerance}}</th>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+  

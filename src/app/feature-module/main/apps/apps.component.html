@@ -1,0 +1,7 @@
+<app-chat-sidebar [ngClass]="{'d-none': page === 'calendar' || page === 'contacts' || page === 'file-manager'}"></app-chat-sidebar>
+@if (page === 'email' || page === 'compose') {
+  <app-email-sidebar></app-email-sidebar>
+}
+<div class="page-wrapper">
+  <router-outlet></router-outlet>
+</div>

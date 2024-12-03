@@ -1,0 +1,169 @@
+<form [formGroup]="loanForm">
+  <div class="card custom-card">
+    <div class="card-header border-bottom-0 justify-content-between">
+      <div class="card-title">{{ 'Create Loan' }}</div>
+      <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#loanCreation" aria-expanded="false"
+        aria-controls="collapseExample">
+        <i class="feather icon-chevron-up fs-18 collapse-open"></i>
+        <i class="feather icon-chevron-down collapse-close fs-18"></i>
+      </a>
+    </div>
+    <div class="collapse show border-top" id="loanCreation">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <label class="col-form-label" for="loanType">Loan Type <span class="text-danger">*</span></label>
+            <select
+              class="form-control"
+              formControlName="loanType"
+              [class.is-invalid]="loanForm.get('loanType')?.invalid && loanForm.get('loanType')?.touched"
+              (change)="onLoanTypeChange($event)"
+            >
+              <option *ngFor="let typeKey of loanTypeKeys" [value]="loanTypes[typeKey]">
+                {{ loanTypes[typeKey] }}
+              </option>
+            </select>
+            <div *ngIf="loanForm.get('loanType')?.invalid && loanForm.get('loanType')?.touched" class="text-danger">
+              Loan Type is required.
+            </div>
+          </div>
+          <div id="otherLoanTypeId" style="display: none;" class="col-sm-3">
+            <label class="col-form-label" for="otherLoanTypeId">Other Loan Type <span class="text-danger">*</span></label>
+            <select
+              class="form-control"
+              formControlName="otherLoanTypeId"
+              [class.is-invalid]="loanForm.get('otherLoanTypeId')?.invalid && loanForm.get('otherLoanTypeId')?.touched"
+            >
+              <option *ngFor="let type of loanOtherTypes" [value]="type.typeId">
+                {{ type.description || type.arabicDescription }}
+              </option>
+            </select>
+            <div *ngIf="loanForm.get('otherLoanTypeId')?.invalid && loanForm.get('otherLoanTypeId')?.touched" class="text-danger">
+              Other Loan Type is required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <app-employee-filter [employeeControl]="employeeControl">
+            </app-employee-filter>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Amount'}} <span class="text-danger">*</span></label>
+              <input class="form-control" type="number"
+                [class.invalid]="loanForm.get('amount')?.invalid && loanForm.get('amount')?.touched"
+                formControlName="amount">
+              <mat-error
+                *ngIf="loanForm.controls['amount']?.touched && loanForm.controls['amount']?.errors?.['required']">
+                <small class="text-danger"> {{'amount' }}</small>
+              </mat-error>
+              <mat-error *ngIf="loanForm.controls['amount']?.errors?.['pattern']">
+                <small class="text-danger"> {{ 'Amount' }} </small>
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Num Of Installments'}} <span class="text-danger">*</span></label>
+              <input class="form-control" type="number"
+                [class.invalid]="loanForm.get('numOfInstallments')?.invalid && loanForm.get('numOfInstallments')?.touched"
+                formControlName="numOfInstallments">
+              <mat-error
+                *ngIf="loanForm.controls['numOfInstallments']?.touched && loanForm.controls['numOfInstallments']?.errors?.['required']">
+                <small class="text-danger"> {{'numOfInstallments' }}</small>
+              </mat-error>
+              <mat-error *ngIf="loanForm.controls['numOfInstallments']?.errors?.['pattern']">
+                <small class="text-danger"> {{ 'Num Of Installments' }} </small>
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Installment Amount'}} <span class="text-danger">*</span></label>
+              <input class="form-control" type="number"
+                [class.invalid]="loanForm.get('installmentAmount')?.invalid && loanForm.get('installmentAmount')?.touched"
+                formControlName="installmentAmount">
+              <mat-error
+                *ngIf="loanForm.controls['installmentAmount']?.touched && loanForm.controls['installmentAmount']?.errors?.['required']">
+                <small class="text-danger"> {{'installmentAmount' }}</small>
+              </mat-error>
+              <mat-error *ngIf="loanForm.controls['installmentAmount']?.errors?.['pattern']">
+                <small class="text-danger"> {{ 'Installment Amount required' }} </small>
+              </mat-error>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">{{'Loan Date' }}<span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                        container=".date-input1"
+                        [class.invalid]="loanForm.get('loanDate')?.invalid && loanForm.get('loanDate')?.touched"
+                        formControlName="loanDate">
+                    @if (loanForm.get('loanDate')?.invalid &&
+                    loanForm.get('loanDate')?.touched) {
+                    <div>
+                        @if (loanForm.get('loanDate')?.invalid &&
+                        loanForm.get('loanDate')?.touched) {
+                        <small class="text-danger"> {{'Loan Date Required'}}</small>}</div>}
+                </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">{{'Effective Date' }}<span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                        container=".date-input1"
+                        [class.invalid]="loanForm.get('effectiveDate')?.invalid && loanForm.get('effectiveDate')?.touched"
+                        formControlName="effectiveDate">
+                    @if (loanForm.get('effectiveDate')?.invalid &&
+                    loanForm.get('effectiveDate')?.touched) {
+                    <div>
+                        @if (loanForm.get('effectiveDate')?.invalid &&
+                        loanForm.get('effectiveDate')?.touched) {
+                        <small class="text-danger"> {{'Effective Date Required'}}</small>}</div>}
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="loanNotes">{{'Loan Notes'}} <span class="text-danger">*</span></label>
+              <textarea class="form-control"
+                        [class.invalid]="loanForm.get('loanNotes')?.invalid && loanForm.get('loanNotes')?.touched"
+                        formControlName="loanNotes"
+                        rows="4"></textarea> <!-- Add rows attribute to define the size of the textarea -->
+
+              <mat-error
+                *ngIf="loanForm.controls['loanNotes']?.touched && loanForm.controls['loanNotes']?.errors?.['required']">
+                <small class="text-danger">{{'loanNotes' }}</small>
+              </mat-error>
+              <mat-error *ngIf="loanForm.controls['loanNotes']?.errors?.['pattern']">
+                <small class="text-danger">{{ 'Loan Notes Required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+          *ngIf="loanForm.errors?.['invalidInstallment'] &&
+                (loanForm.get('numOfInstallments')?.touched || loanForm.get('installmentAmount')?.touched)">
+          <span class="text-danger">The total of installments exceeds or smaller than the loan amount.</span>
+      </div>
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" [disabled]="loanForm.invalid" (click)="createLoan()">{{'submit'}}</button>
+      </div>
+    </div>
+  </div>
+</form>

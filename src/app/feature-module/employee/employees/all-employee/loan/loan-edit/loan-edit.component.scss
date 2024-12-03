@@ -1,0 +1,64 @@
+.form {
+  padding: 10px;
+  max-width: 125%;
+}
+
+.submit-button-container{
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 1rem;
+}
+
+.submit-button{
+  width: 15%;
+}
+
+.col-3 {
+  width: 33%;
+}
+
+@media (max-width: 768px) {
+  .col-3 {
+      width: 50%;
+  }
+}
+
+
+:host ::ng-deep .mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+
+.tab-container {
+  margin-top: 20px;
+}
+
+.custom-mat-toggle {
+  margin-top: 10px;
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-3 {
+  width: 33%;
+}
+
+.custom-mat-toggle {
+  margin-top: 10px;
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.submit-button-container{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.submit-button{
+  width: 15%;
+}

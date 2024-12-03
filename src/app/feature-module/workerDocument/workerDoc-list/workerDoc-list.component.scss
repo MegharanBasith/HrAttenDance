@@ -1,0 +1,37 @@
+.mat-mdc-row:hover {
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+
+/* Modal Custom Shadow */
+.custom-shadow {
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); /* Strong shadow */
+  border-radius: 8px; /* Slightly rounded corners */
+}
+
+/* Custom Button Styles */
+.custom-btn {
+  background-color: #FF902F; /* Primary blue */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px; /* Less rounded corners */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #FF902F; /* Darker blue */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle button shadow */
+}
+
+.custom-btn:disabled {
+  background-color: #d6d6d6;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+/* Ensure Modal Size Responsiveness */
+.modal-lg {
+  max-width: 800px;
+}
+

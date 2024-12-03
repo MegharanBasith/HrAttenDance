@@ -1,0 +1,123 @@
+// .form-container {
+//     padding: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     background-color: #f9f9f9;
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//     margin: 40px auto;
+//     max-width: 1200px;
+// }
+
+.vacation-form {
+    width: 100%;
+    padding: 10px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    flex: 0 0 48%;
+}
+
+mat-form-field,
+mat-checkbox {
+    width: 100%;
+}
+
+.input-block {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+}
+
+.checkmark {
+    border: 2px solid orange;
+    background-color: inherit;
+}
+
+.checkbox-container {
+    padding: 10px;
+}
+
+.custom-header {
+    margin-bottom: 20px;
+}
+
+.col-3 {
+    width: 33%;
+}
+
+.custom-mat-option {
+    background-color: inherit !important;
+    padding: 10px;
+}
+
+.search-input {
+    padding: 20px;
+    width: 300px;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns buttons to the right side */
+    gap: 15px; /* Space between the buttons */
+    padding: 20px; /* Optional padding around the buttons */
+    width: 100%; /* Ensures the container takes the full width */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+
+.submit-button {
+    margin: 0;
+    padding: 10px 20px;
+    width: 200px;
+}
+
+.add-btn-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.add-dialog-btn-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.custom-mat-icon {
+    position: relative;
+    top: 6px;
+}
+
+.icon-btn {
+    margin: 0px !important;
+}
+
+.custom-mat-toggle {
+    margin-top: 10px;
+}
+
+.mat-mdc-row:hover {
+    cursor: pointer;
+    /* Change cursor to pointer */
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-mat-toggle {
+    margin-top: 10px;
+}

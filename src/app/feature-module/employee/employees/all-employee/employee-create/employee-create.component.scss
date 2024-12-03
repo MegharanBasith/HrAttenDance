@@ -1,0 +1,32 @@
+.form {
+    padding: 10px;
+    max-width: 125%;
+}
+
+.submit-button-container{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.submit-button{
+    width: 15%;
+}
+
+.col-3 {
+    width: 33%;
+}
+
+.custom-mat-toggle {
+    margin-top: 10px;
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .col-3 {
+        width: 50%;
+    }
+}

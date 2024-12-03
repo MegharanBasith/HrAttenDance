@@ -1,0 +1,632 @@
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{ 'employee-contract.employeeContractDetails' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="form">
+        <div class="card-container">
+            <div class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{ 'employee-contract.contractDetails' | translate }}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#contractDetails"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="contractDetails">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Contract Number -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.contractNum' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="contractNum" />
+                                </div>
+                            </div>
+
+                            <!-- Contract ID -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.contractId' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="contractId" />
+                                </div>
+                            </div>
+
+
+                            <!-- Version -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.version' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="version" />
+                                </div>
+                            </div>
+
+                            <!-- Contract Type -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.contractType' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="contractType" />
+                                </div>
+                            </div>
+
+                            <!-- Validity -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.validity' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="validity" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{ 'employee-contract.employeeDetails' | translate }}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#employeeDetails"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="employeeDetails">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Employee Number -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.empNum' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="empNum" />
+                                </div>
+                            </div>
+
+                            <!-- Name -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.empName' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="name" />
+                                </div>
+                            </div>
+
+                            <!-- Start Date -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3 date-input1">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.startDate' |
+                                        translate}}</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                            container=".date-input1" formControlName="startDate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Date -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.endDate' | translate
+                                        }}</label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                            container=".date-input1" formControlName="endDate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Main Type ID -->
+                            <!-- <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.mainTypeId' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="mainTypeId" />
+                                </div>
+                            </div> -->
+
+                            <!-- Workflow State -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.workflowState' |
+                                        translate }}</label>
+                                    <input type="text" class="form-control" formControlName="workflowState" />
+                                </div>
+                            </div>
+
+                            <!-- Number of Months -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.numOfMonths' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="numOfMonths" />
+                                </div>
+                            </div>
+
+                            <!-- Working Hours -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.workingHours' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="workingHours" />
+                                </div>
+                            </div>
+
+                            <!-- Use Official Working Hours -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.useOfficialWorkingHours'
+                                        | translate }}</label>
+                                    <input type="text" class="form-control" formControlName="useOfficialWorkingHours" />
+                                </div>
+                            </div>
+
+                            <!-- Transaction Type -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.transType' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="transType" />
+                                </div>
+                            </div>
+
+                            <!-- Basic Salary -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.basicSalary' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="basicSalary" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['basicSalary']?.touched && addAllowanceForm.controls['basicSalary']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.basicSalaryRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+
+                            <!-- Effective Date -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.effectiveDate' |
+                                        translate }}</label>
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        container=".date-input1" formControlName="effectiveDate">
+                                </div>
+                            </div>
+
+                            <!-- Transaction Date -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.transDate' | translate
+                                        }}</label>
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        container=".date-input1" formControlName="transDate">
+                                </div>
+                            </div>
+
+                            <!-- Total Package Amount -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.totalPackageAmount' |
+                                        translate }}</label>
+                                    <input type="text" class="form-control" formControlName="totalPackageAmount" />
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.status' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="status" />
+                                </div>
+                            </div>
+
+                            <!-- Transaction User -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.transUser' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="transUser" />
+                                </div>
+                            </div>
+
+                            <!-- Category ID -->
+                            <!-- <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.category' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="categoryId" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['categoryId']?.touched && addAllowanceForm.controls['categoryId']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.categoryRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{ 'employee-contract.vacationAndTicket' | translate }}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#vacationAndTicket"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="vacationAndTicket">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Vacation Code Annual -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.annualVacation' |
+                                        translate }}</label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="form.get('vacationCodeAnnual')?.invalid && form.get('vacationCodeAnnual')?.touched"
+                                        formControlName="vacationCodeAnnual" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of annualLeaveTypes"
+                                            [value]="option.vacationCode">
+                                            {{ option.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['vacationCodeAnnual']?.touched && addAllowanceForm.controls['vacationCodeAnnual']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.vacationCodeRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.destination' |
+                                        translate }}</label>
+                                    <input type="text" class="form-control" formControlName="destinationId" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['destinationId']?.touched && addAllowanceForm.controls['destinationId']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.destinationRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.ticketClass' |
+                                        translate }}</label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="addAllowanceForm.get('ticketClass')?.invalid && addAllowanceForm.get('ticketClass')?.touched"
+                                        formControlName="ticketClass" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of ticketClassOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['ticketClass']?.touched && addAllowanceForm.controls['ticketClass']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.ticketClassRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.adultTickets' |
+                                        translate }}</label>
+                                    <input type="number" class="form-control" formControlName="adultsTickets" min="0" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['adultsTickets']?.touched && addAllowanceForm.controls['adultsTickets']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.adultsTicketsRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.childTickets' |
+                                        translate }}</label>
+                                    <input type="number" class="form-control" formControlName="childTickets" min="0" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['childTickets']?.touched && addAllowanceForm.controls['childTickets']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.childTicketsRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.infantTickets' |
+                                        translate }}</label>
+                                    <input type="number" class="form-control" formControlName="infantTickets" min="0" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['infantTickets']?.touched && addAllowanceForm.controls['infantTickets']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.infantTicketsRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.totalTicketsPrice' |
+                                        translate }}</label>
+                                    <input type="text" class="form-control" formControlName="totalTicketsPrice" />
+                                </div>
+                            </div> -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.visaCount' |
+                                        translate }}</label>
+                                    <input type="number" class="form-control" formControlName="visaCount" min="0" />
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['visaCount']?.touched && addAllowanceForm.controls['visaCount']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.visaCountRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <div class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{ 'employee-contract.profession' | translate }}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#profession"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="profession">
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Department -->
+                            <!-- <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.department' | translate
+                                        }}</label>
+                                    <input type="text" class="form-control" formControlName="department" />
+                                </div>
+                            </div> -->
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee-contract.profession' | translate
+                                        }}</label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="form.get('professionId')?.invalid && form.get('professionId')?.touched"
+                                        formControlName="professionId" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of professions" [value]="option.erbProfessionId">
+                                            {{ option.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="addAllowanceForm.controls['professionId']?.touched && addAllowanceForm.controls['professionId']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee-contract.professionRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="card-container">
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{ 'employee-contract.contractAllowances' | translate }}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#contractAllowances"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="contractAllowances">
+                <div class="card-body">
+                    <button class="btn btn-success custom-add-btn" (click)="openAddAllowanceModal()"> <i
+                            class="la la-plus-circle"></i> {{'add' | translate}}</button>
+                    <div class="table-responsive">
+                        <table mat-table [dataSource]="allowanceDataSource" matSort
+                            (matSortChange)="sortData($event, allowanceDataSource)" class="table table-striped">
+                            <thead>
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button mat-icon-button (click)="confirmDelete(row)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngFor="let column of allowanceColumns" [matColumnDef]="column">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'employee-contract.' +
+                                        column
+                                        | translate
+                                        }}</th>
+                                    <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                                </ng-container>
+                            </thead>
+
+                            <tbody>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" type="submit" [disabled]="!isFormChanged"
+            (click)="editEmployeeContractDetails()">
+            {{'saveChanges' | translate }}</button>
+    </div>
+</div>
+
+
+<div *ngIf="showAddAllowanceModal" class="modal custom-modal fade" role="dialog" style="display:block; opacity: 1;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{'employee-contract.addEmployeeContractAllowance' | translate}}</h5>
+                <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addAllowanceForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee-contract.allowance'|
+                                    translate}}</label><span class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="addAllowanceForm.get('allowance')?.invalid && addAllowanceForm.get('allowance')?.touched"
+                                    formControlName="allowance" placeholder="{{'select'| translate}}"
+                                    (selectionChange)="onAllowanceChange()">
+                                    <mat-option *ngFor="let option of allowances" [value]="option.AllowanceCode">
+                                        {{ option.Name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="addAllowanceForm.controls['allowance']?.touched && addAllowanceForm.controls['allowance']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee-contract.allowanceRequired'|
+                                        translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee-contract.amount'| translate}}<span
+                                        class="text-danger">*</span></label>
+                                <input type="number" class="form-control"
+                                    [class.invalid]="addAllowanceForm.get('allowanceAmount')?.invalid && addAllowanceForm.get('allowanceAmount')?.touched"
+                                    formControlName="allowanceAmount" (input)="onAllowanceAmountChange($event)" min="0">
+                                <mat-error
+                                    *ngIf="addAllowanceForm.controls['allowanceAmount']?.touched && addAllowanceForm.controls['allowanceAmount']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee-contract.allowanceAmountRequired' |
+                                        translate
+                                        }}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee-contract.percentage'|
+                                    translate}}<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control"
+                                    [class.invalid]="addAllowanceForm.get('allowancePercentage')?.invalid && addAllowanceForm.get('allowancePercentage')?.touched"
+                                    formControlName="allowancePercentage" (input)="onAllowancePercentageChange($event)"
+                                    min="0">
+                                <mat-error
+                                    *ngIf="addAllowanceForm.controls['allowancePercentage']?.touched && addAllowanceForm.controls['allowancePercentage']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee-contract.allowancePercentageRequired' |
+                                        translate }}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for="">{{'employee-contract.effectiveDate'|
+                                    translate}}<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                                        container=".date-input1"
+                                        [class.invalid]="form.get('effectiveDate')?.invalid && form.get('effectiveDate')?.touched"
+                                        formControlName="effectiveDate">
+                                    <mat-error
+                                        *ngIf="form.controls['effectiveDate']?.touched && form.controls['effectiveDate']?.errors?.['required']">
+                                        <small class="text-danger"> {{'earnDeduct.effectiveDateRequired'|
+                                            translate}}</small>
+                                    </mat-error>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee-contract.paidEvery'|
+                                    translate}}</label><span class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="addAllowanceForm.get('paidEvery')?.invalid && addAllowanceForm.get('paidEvery')?.touched"
+                                    formControlName="paidEvery" placeholder="{{'select'| translate}}">
+                                    <mat-option *ngFor="let option of allowances" [value]="option.AllowanceCode">
+                                        {{ option.Name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="addAllowanceForm.controls['paidEvery']?.touched && addAllowanceForm.controls['paidEvery']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee-contract.paidEveryRequired'|
+                                        translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div> -->
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 toggle-container">
+                                <label class="col-form-label" for="">{{'employee-contract.calculateWithSalary'|
+                                    translate}}</label>
+                                <mat-slide-toggle class="toggle-button custom-mat-toggle"
+                                    formControlName="calculateWithSalary" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 toggle-container">
+                                <label class="col-form-label" for="">{{'employee-contract.includeGOSI'|
+                                    translate}}</label>
+                                <mat-slide-toggle class="toggle-button custom-mat-toggle"
+                                    formControlName="includeGOSI" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee-contract.paymentBase'|
+                                    translate}}</label><span class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="addAllowanceForm.get('paymentBase')?.invalid && addAllowanceForm.get('paymentBase')?.touched"
+                                    formControlName="paymentBase" placeholder="{{'select'| translate}}">
+                                    <mat-option *ngFor="let option of allowances" [value]="option.AllowanceCode">
+                                        {{ option.Name }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="addAllowanceForm.controls['paymentBase']?.touched && addAllowanceForm.controls['paymentBase']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee-contract.paymentBaseRequired'|
+                                        translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="submit-button-container">
+                        <button class="btn btn-primary submit-button" type="submit">
+                            {{'submit' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-delete-modal #deleteDialog (confirm)="deleteEmployeeContractAllowance()"></app-delete-modal>

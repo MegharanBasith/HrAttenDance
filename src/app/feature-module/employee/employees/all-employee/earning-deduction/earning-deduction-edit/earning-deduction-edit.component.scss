@@ -1,0 +1,47 @@
+.add-btn-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.add-dialog-btn-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.custom-mat-icon{
+    position: relative;
+    top: 6px;
+}
+
+.icon-btn{
+    margin: 0px !important;
+}
+
+.col-3 {
+    width: 33%;
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    padding: 20px;
+}
+
+.submit-button {
+    width: 200px;
+}
+.custom-mat-toggle {
+    margin-top: 10px;
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: column;
+}

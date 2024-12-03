@@ -1,0 +1,19 @@
+{
+    "data" : [
+        {
+          "policyName": "Leave Policy",
+          "department": "All Departments",
+          "description": "Lorem ipsum dollar",
+          "createdDate": "19 Feb 2023",
+          "id": 1
+        },
+        {
+          "policyName": "Permission Policy",
+          "department": "Marketing",
+          "description": "Lorem ipsum dollar",
+          "createdDate": "18 Feb 2023",
+          "id": 2
+        }
+      ],
+      "totalData":2
+}

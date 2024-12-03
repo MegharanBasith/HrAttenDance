@@ -1,0 +1,11 @@
+.button-container {
+  display: flex;
+  justify-content: space-between; /* This will push the approve button to the end */
+  align-items: center; /* Center align items vertically */
+  padding: 16px; /* Adjust padding as necessary */
+}
+
+.start-buttons {
+  display: flex; /* Use flexbox for start buttons */
+  gap: 16px; /* Space between the buttons */
+}

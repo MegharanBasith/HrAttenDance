@@ -1,0 +1,40 @@
+<div class="content container-fluid">
+
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 class="page-title">Settings</h3>
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="nav-workdayhour" data-bs-toggle="tab" data-bs-target="#workdayhour"
+              type="button" role="tab" aria-controls="workdayhour" aria-selected="true">Work Day Hour</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nav-myLocation" data-bs-toggle="tab" data-bs-target="#myLocation" type="button"
+              role="tab" aria-controls="myLocation" aria-selected="false">Location</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nav-employeeLocation" data-bs-toggle="tab" data-bs-target="#employeeLocation"
+              type="button" role="tab" aria-controls="employeeLocation" aria-selected="false">Employee Location</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="workdayhour" role="tabpanel" aria-labelledby="workdayhour-tab"
+      tabindex="0">
+      <app-customerworkdayhour></app-customerworkdayhour>
+    </div>
+    <div class="tab-pane fade " id="myLocation" role="tabpanel" aria-labelledby="myLocation-tab" tabindex="0">
+      <app-all-location></app-all-location>
+    </div>
+    <div class="tab-pane fade " id="employeeLocation" role="tabpanel" aria-labelledby="employeeLocation-tab"
+      tabindex="0">
+      <app-employee-location></app-employee-location>
+    </div>
+  </div>
+
+
+
+</div>

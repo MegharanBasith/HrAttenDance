@@ -1,0 +1,103 @@
+{
+    "data" : [
+        {
+          "name": "Barry Cuda",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-06.jpg",
+          "company": "Global Technologies",
+          "image": "avatar-06",
+          "clientId": "CLT-0001",
+          "email": "barrycuda@example.com",
+          "phone": "9876543210",
+          "status": "Active",
+          "status2": "Inactive",
+          "id": 1
+        },
+        {
+          "name": "Tressa Wexler",
+          "role": "Manager",
+          "img" : "assets/img/profiles/avatar-14.jpg",
+          "company": "Delta Infotech",
+          "image": "avatar-29",
+          "clientId": "CLT-0002",
+          "email": "tressawexler@example.com",
+          "phone": "9876543211",
+          "status": "Inactive",
+          "id": 2
+        },
+        {
+          "name": "Ruby Bartlett ",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-28.jpg",
+          "company": "Cream Inc",
+          "image": "avatar-07",
+          "clientId": "CLT-0003",
+          "email": "rubybartlett@example.com",
+          "phone": "9876543212",
+          "status": "Inactive",
+          "id": 3
+        },
+        {
+          "name": "Misty Tison",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-18.jpg",
+          "company": "Wellware company",
+          "image": "avatar-06",
+          "clientId": "CLT-0004",
+          "email": "tisonmisty@example.com",
+          "phone": "9876543213",
+          "status": "Inactive",
+          "id": 4
+        },
+        {
+          "name": "Daniel Deacon",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-19.jpg",
+          "company": "Mustang Technologies",
+          "image": "avatar-14",
+          "clientId": "CLT-0005",
+          "email": "danieldeacon@example.com",
+          "phone": "9876543214",
+          "status": "Active",
+          "id": 5
+        },
+        {
+          "name": "Walter  Weaver",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-29.jpg",
+          "company": "International Software",
+          "image": "avatar-18",
+          "clientId": "CLT-0006",
+          "email": "walterweaver@example.com",
+          "phone": "9876543215",
+          "status": "Active",
+          "id": 6
+        },
+        {
+          "name": "Amanda Warren",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-07.jpg",
+          "company": "Mercury Software Inc",
+          "image": "avatar-28",
+          "clientId": "CLT-0007",
+          "email": "amandawarren@example.com",
+          "phone": "9876543216",
+          "status": "Active",
+          "id": 7
+        },
+        {
+          "name": "Bretty Carlson",
+          "role": "CEO",
+          "img" : "assets/img/profiles/avatar-22.jpg",
+          "company": "Carlson Technologies",
+          "image": "avatar-13",
+          "clientId": "CLT-0008",
+          "email": "bettycarlson@example.com",
+          "phone": "9876543217",
+          "status": "Inactive",
+          "id": 8
+        }
+      
+      ],
+      "totalData":8
+}

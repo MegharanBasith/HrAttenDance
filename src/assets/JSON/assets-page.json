@@ -1,0 +1,115 @@
+{
+    "data" : [
+        {
+          "assetUser": "Richard Miles",
+          "assetName": "Dell Laptop",
+          "assetId": "#AST-0001",
+          "assetStatus": "Pending",
+          "purchaseDate": "05-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "05-01-2023",
+          "Amount": "$1215",
+          "id": 1
+        },
+        {
+          "assetUser": "John Doe",
+          "assetName": "Seagate Harddisk",
+          "assetId": "#AST-0002",
+          "assetStatus": "Returned",
+          "purchaseDate": "14-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "14-07-2023",
+          "Amount": "$300",
+          "id": 2
+        },
+        {
+          "assetUser": "John Smith",
+          "assetName": "Canon Portable Printer",
+          "assetId": "#AST-0003",
+          "assetStatus": "Returned",
+          "purchaseDate": "14-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "14-08-2023",
+          "Amount": "$2500",
+          "id": 3
+        },
+        {
+          "assetUser": "Mike Litorus",
+          "assetName": "Dell Laptop",
+          "assetId": "#AST-0004",
+          "assetStatus": "Returned",
+          "purchaseDate": "05-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "05-01-2023",
+          "Amount": "$1215",
+          "id": 4
+        },
+        {
+          "assetUser": "Wilmer Deluna",
+          "assetName": "Seagate Harddisk",
+          "assetId": "#AST-0005",
+          "assetStatus": "Approved",
+          "purchaseDate": "14-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "14-01-2023",
+          "Amount": "$300",
+          "id": 5
+        },
+        {
+          "assetUser": "Jeffrey Warden",
+          "assetName": "Canon Portable Printer",
+          "assetId": "#AST-0006",
+          "assetStatus": "Returned",
+          "purchaseDate": "14-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "14-01-2023",
+          "Amount": "$2500",
+          "id": 6
+        },
+        {
+          "assetUser": "Bernardo Galaviz",
+          "assetName": "Dell Laptop",
+          "assetId": "#AST-0007",
+          "assetStatus": "Approved",
+          "purchaseDate": "05-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "05-02-2023",
+          "Amount": "$1215",
+          "id": 7
+        },
+        {
+          "assetUser": "Lesley Grauer",
+          "assetName": "Seagate Harddisk",
+          "assetId": "#AST-0008",
+          "assetStatus": "Pending",
+          "purchaseDate": "14-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "14-01-2023",
+          "Amount": "$300",
+          "id": 8
+        },
+        {
+          "assetUser": "Jeffery Lalor",
+          "assetName": "Canon Portable Printer",
+          "assetId": "#AST-0009",
+          "assetStatus": "Pending",
+          "purchaseDate": "14-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "14-01-2023",
+          "Amount": "$2500",
+          "id": 9
+        },
+        {
+          "assetUser": "Loren Gatlin",
+          "assetName": "Dell Laptop",
+          "assetId": "#AST-0010",
+          "assetStatus": "Pending",
+          "purchaseDate": "05-01-2023",
+          "warrenty": "12 Months",
+          "warrentyEnd": "05-01-2023",
+          "Amount": "$1215",
+          "id": 10
+        }
+      ],
+      "totalData":10
+}

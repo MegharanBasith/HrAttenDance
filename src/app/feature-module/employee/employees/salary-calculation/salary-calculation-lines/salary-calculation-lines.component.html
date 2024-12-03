@@ -1,0 +1,440 @@
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <div class="button-container">
+        <button *ngIf="selectedSalaryCalculation.workflowState !== approvedWorkflowState"
+            class="btn btn-danger custom-button" (click)="deleteSalaryCalculationLines()"
+            [disabled]="selection.selected.length===0">
+            <mat-icon>delete</mat-icon>
+            {{ 'delete' | translate }}
+        </button>
+
+        <div *ngIf="selectedSalaryCalculation.workflowState !== approvedWorkflowState"
+            class="btn-list btn-card">
+            <button *ngIf="isAdmin" class="btn btn-success custom-button" (click)="approveSalaryCalculation()">
+                <mat-icon>check</mat-icon>
+                {{ 'approve' | translate }}
+            </button>
+            <button
+                class="btn btn-info custom-button" (click)="recalculateSalaryCalculationLines()">
+                {{ 'recalculate' | translate }}
+            </button>
+        </div>
+    </div>
+    <!-- <div *ngIf="isAdmin" class="btn-list btn-card">
+        <button class="btn btn-success custom-button" (click)="approveSalaryCalculation()"> 
+            <mat-icon>check</mat-icon>
+            {{ 'approve' | translate }}
+        </button>
+    </div> -->
+    <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"
+            class="table table-striped custom-table mb-0 datatable">
+            <thead>
+                <ng-container matColumnDef="select">
+                    <th class="text-center" mat-header-cell *matHeaderCellDef rowspan="2">
+                        <label class="custom_check">
+                            <input type="checkbox" (change)="$event ? masterToggle(dataSource, selection) : null"
+                                [checked]="selection.hasValue() && isAllSelected(dataSource, selection)"
+                                [indeterminate]="selection.hasValue() && !isAllSelected(dataSource, selection)" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </th>
+                    <td class="text-center" mat-cell *matCellDef="let salaryCalculation">
+                        <label class="custom_check">
+                            <input type="checkbox" (change)="$event ? selection.toggle(salaryCalculation) : null"
+                                [checked]="selection.isSelected(salaryCalculation)" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                </ng-container>
+                <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'salaryCalculationLines.' + column |
+                        translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                </ng-container>
+            </thead>
+            <tbody>
+                <tr mat-header-row
+                    *matHeaderRowDef="selectedSalaryCalculation.workflowState === approvedWorkflowState ? columns : displayedColumnsWithActions">
+                </tr>
+                <tr mat-row
+                    *matRowDef="let row; columns: selectedSalaryCalculation.workflowState === approvedWorkflowState ? columns : displayedColumnsWithActions;"
+                    (click)="onRowClicked(row)">
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <mat-paginator [length]="totalSalaryCalculations" [pageSize]="10" [showFirstLastButtons]="true"
+        (page)="setPage($event)">
+    </mat-paginator>
+
+    <mat-tab-group class="custom-mat-group">
+        <mat-tab label="{{'salaryCalculationLines.general' | translate}}">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.lineNum'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.lineNum" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.monthDays'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.monthDays" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.basicSalary'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.basicSalary" [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.empId'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.empId" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.actualWorkingDays'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.actualWorkingDays"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.deservedBasicSalary'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.deservedBasicSalary"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.empName'| translate}}</label>
+                        <input class="form-control" type="text" [value]="selectedRow?.empName" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.absenceDays'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.absenceDays" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.isPaid' | translate }}</label>
+                        <mat-slide-toggle class="toggle-button" [checked]="selectedRow?.isPaid"
+                            [disabled]="true"></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.category'| translate}}</label>
+                        <input class="form-control" type="text" [value]="selectedRow?.categoryId" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.vacationDays'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.vacationDays" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.netSalary' | translate }}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.netSalary" [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.totalVacationDays'|
+                            translate}}</label>
+                        <input class="form-control" type="text" [value]="selectedRow?.totalVacationDays"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{'salaryCalculationLines.earnings' | translate}}">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.overtimeAmount'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.overtimeAmount"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.prepaidAllowance'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.prepaidAllowance"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.businessTripEmployeePerDiem' |
+                            translate }}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.businessTripEmployeePerDiem"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.vacationSalary'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.vacationSalary"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.loanAmount'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.loanAmount" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.otherEarnings' | translate
+                            }}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.otherEarnings"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.vacationTicketAmount'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.vacationTicketAmount"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.businessTripEmployeeAllowance'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.businessTripEmployeeAllowance"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{'salaryCalculationLines.deductions' | translate}}">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.totalAbsenceAmount'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.totalAbsenceAmount"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.absenceDaysAuto'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.absenceDaysAuto"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.businessTripAdvancedAmount' |
+                            translate }}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.businessTripAdvancedAmount"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.totalPenaltyDays'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.totalPenaltyDays"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.gosiAmount'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.gosiAmount" [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.totalPenaltyAmount'|
+                            translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.totalPenaltyAmount"
+                            [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'salaryCalculationLines.loanAmount'| translate}}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.loanAmount" [disabled]="true">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.otherDeductions' | translate
+                            }}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.ebC_OtherDeductions"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label d-block">{{ 'salaryCalculationLines.totalAbsencePenaltyDaysAuto' | translate
+                            }}</label>
+                        <input class="form-control" type="number" [value]="selectedRow?.totalAbsencePenaltyDaysAuto"
+                            [disabled]="true">
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{'salaryCalculationLines.allowances' | translate}}">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="selectedRow?.allowanceList" matSort
+                    class="table table-striped custom-table mb-0 datatable">
+                    <thead>
+                        <ng-container *ngFor="let column of allowanceColumns" [matColumnDef]="column">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'salaryCalculationLines.' + column
+                                |
+                                translate }} </th>
+                            <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                        </ng-container>
+                    </thead>
+                    <tbody>
+                        <tr mat-header-row *matHeaderRowDef="allowanceColumns">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: allowanceColumns">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+    <p-dialog header="{{'employeeList.employeeList' | translate }}" [modal]="true" [(visible)]="visible"
+        [style]="{ width: '70rem' }">
+        <div class="row">
+            <div class="input-block mb-3">
+                <label class="col-form-label" for="">{{'salaryCalculationList.processType'| translate}}<span
+                        class="text-danger">*</span></label>
+                <mat-select class="custom-mat-select" [(ngModel)]="selectedProcessType"
+                    placeholder="{{'select'| translate}}">
+                    <mat-option *ngFor="let option of processTypeOtions" [value]="option.id">
+                        {{ option.value }}
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div *ngIf="selectedProcessType === 1">
+            <div class="search-filter-container">
+                <div class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="{{ 'filterById' | translate }}"
+                        class="form-control custom-input" [(ngModel)]="employeeIdFilter">
+                </div>
+                <button class="btn btn-info ml-2" (click)="filterEmployees()"> {{'filter'| translate }} </button>
+            </div>
+            <div class="table-responsive">
+                <table mat-table [dataSource]="employeeDataSource" matSort
+                    (matSortChange)="sortEmployeeListData($event)"
+                    class="table table-striped custom-table mb-0 datatable">
+
+                    <!-- Checkbox Column -->
+                    <ng-container matColumnDef="select">
+                        <th class="text-center" mat-header-cell *matHeaderCellDef rowspan="2">
+                            <label class="custom_check">
+                                <input type="checkbox"
+                                    (change)="$event ? masterToggle(employeeDataSource, employeeSelection) : null"
+                                    [checked]="employeeSelection.hasValue() && isAllSelected(employeeDataSource, employeeSelection)"
+                                    [indeterminate]="employeeSelection.hasValue() && !isAllSelected(employeeDataSource, employeeSelection)" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </th>
+                        <td class="text-center" mat-cell *matCellDef="let employee">
+                            <label class="custom_check">
+                                <input type="checkbox" (change)="$event ? employeeSelection.toggle(employee) : null"
+                                    [checked]="employeeSelection.isSelected(employee)" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </td>
+                    </ng-container>
+
+                    <!-- Id Column -->
+                    <ng-container matColumnDef="employeeId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.employeeId' | translate}}
+                        </th>
+                        <td mat-cell *matCellDef="let employee">{{employee.employeeId}}</td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.name' | translate}}</th>
+                        <td mat-cell *matCellDef="let employee">{{employee.name}}</td>
+                    </ng-container>
+
+                    <!-- Iqama Number Column -->
+                    <ng-container matColumnDef="iqamaNumber">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.iqamaNumber' | translate}}
+                        </th>
+                        <td mat-cell *matCellDef="let employee">{{employee.iqamaNumber}}</td>
+                    </ng-container>
+
+                    <!-- Passport Number Column -->
+                    <ng-container matColumnDef="passportNumber">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.passportNumber' |
+                            translate}}</th>
+                        <td mat-cell *matCellDef="let employee">{{employee.passportNumber}}</td>
+                    </ng-container>
+
+                    <!-- Header Row -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                    <!-- Data Row -->
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+
+
+            </div>
+            <mat-paginator [length]="totalEmployees" [pageSize]="10" [showFirstLastButtons]="true"
+                (page)="setEmployeePage($event)"></mat-paginator>
+        </div>
+
+        <div class="submit-button-container">
+            <button class="btn btn-success submit-button" (click)="createSalaryCalculation()"
+                [disabled]="!validToSubmit()">
+                <mat-icon> check </mat-icon>
+                {{'submit' | translate }}
+            </button>
+        </div>
+    </p-dialog>
+</div>

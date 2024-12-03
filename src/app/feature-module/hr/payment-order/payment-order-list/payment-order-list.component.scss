@@ -1,0 +1,39 @@
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: stretch; /* Ensure buttons are aligned properly */
+    margin-top: 20px;
+  }
+  
+  .back-button {
+    align-self: flex-start; /* Align Back button to the left */
+  }
+  
+  .submit-button {
+    margin-top: 20px;
+    align-self: flex-end; /* Align Submit button to the right */
+  }
+  
+  .searchable-table{
+    margin-top: 20px;
+  }
+
+  .custom-h4{
+    margin-bottom: 20px;
+  }
+
+  .search-filter-container {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+  }
+  
+  .p-input-icon-right {
+    position: relative; /* Keep this if needed for the search icon */
+    margin-inline-end: 10px; /* Add space between the input and the button */
+  }
+  
+  .ml-2 {
+    margin-inline-start: 10px; /* Adds space between the input and the button */
+  }
+  

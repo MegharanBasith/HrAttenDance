@@ -1,0 +1,403 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col-12">
+        <h3 class="page-title">Manage Resumes</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item">Jobs</li>
+          <li class="breadcrumb-item active">Manage Resumes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_header">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="dataTables_length">
+              <label>
+                Show
+                <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()"
+                  class="form-control form-control-sm">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table matSort (matSortChange)="sortData($event)"
+          class="table table-striped custom-table datatable mb-0" id="datatable">
+          <thead>
+            <tr>
+              <th mat-sort-header="id">#</th>
+              <th mat-sort-header="name1">Name</th>
+              <th mat-sort-header="jobtitle">Job Title</th>
+              <th mat-sort-header="department">Department</th>
+              <th mat-sort-header="startdate">Start Date</th>
+              <th mat-sort-header="expiredate">Expire Date</th>
+              <th mat-sort-header="jobtype" class="text-center">Job Type</th>
+              <th mat-sort-header="status" class="text-center">Status</th>
+              <th mat-sort-header="resume">Resume</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            @for (item of lstManage; track item) {
+              <tr>
+                <td>{{item.id}}</td>
+                <td>
+                  <h2 class="table-avatar">
+                    <a [routerLink] = "routes.employeeProfile" class="avatar"><img alt=""
+                    [src]="item.img"></a>
+                    <a [routerLink] = "routes.employeeProfile">{{item.name1}}
+                      <span>{{item.name2}}</span></a>
+                    </h2>
+                  </td>
+                  <td><a routerLink="'/jobs/jobs-details'">{{item.jobtitle}}</a></td>
+                  <td>{{item.department}}</td>
+                  <td>{{item.startdate}}</td>
+                  <td>{{item.expiredate}}</td>
+                  <td class="text-center">
+                    <div class="dropdown action-label">
+                      <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="javascript:void(0);"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-circle-dot" [ngClass]="{'text-success': item.jobtype === 'Part Time','text-danger':item.jobtype === 'Full Time'||item.jobtype === 'Internship'}"></i> {{item.jobtype}}
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-info me-1"></i> Full Time</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-success me-1"></i> Part Time</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-danger me-1"></i> Internship</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-warning me-1"></i> Temporary</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-warning me-1"></i> Other</a>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="dropdown action-label">
+                      <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="javascript:void(0);"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-circle-dot "[ngClass]="{'text-success': item.status === 'Closed','text-danger':item.status === 'Open'||item.status === 'Cancelled'}" ></i> {{item.status}}
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-info me-1"></i> Open</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-success  me-1"></i> Closed</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="fa-regular fa-circle-dot text-danger me-1"></i> Cancelled</a>
+                      </div>
+                    </div>
+                  </td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary"><i
+                  class="fa-solid fa-download me-1"></i> {{item.resume}}</a></td>
+                  <td class="text-center">
+                    <div class="dropdown dropdown-action">
+                      <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#edit_job"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                            <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                              data-bs-target="#delete_job"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    }
+                    @if (lstManage.length === 0) {
+                      <tr>
+                        <td colspan="10">
+                          <h5 style="text-align: center;">No data found</h5>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div class="table_footer">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info">
+                    Showing {{ serialNumberArray[0] }} to
+                    {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                    {{ totalData }} entries
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-7">
+                  <div class="pagination_section">
+                    <ul class="pagination">
+							<li class="page-item" [ngClass]="{
+										  disabled: currentPage === 1
+										}">
+                        <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                        tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+                      </li>
+
+                      @for (item of pageNumberArray; track item; let i = $index) {
+								<li class="page-item" [class.active]="item === currentPage" [ngClass]="
+											(pageNumberArray[currentPage - 2] > item &&
+											  item !== 1 &&
+											  pageNumberArray.length > 6) ||
+											(pageNumberArray[currentPage] < item &&
+											  item !== 1 &&
+											  pageNumberArray.length > 6 &&
+											  pageNumberArray.length !== item)
+											  ? 'hide-page-no'
+											  : 'show-page-no'
+										  ">
+                          <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                            {{ item }}
+                          </a>
+                        </li>
+                        @if (
+                          i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                          ) {
+                          <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                            <a class="page-link" href="javascript:void(0);"> ... </a>
+                          </li>
+                        }
+                        @if (
+                          i === pageNumberArray.length - 2 &&
+                          pageNumberArray.length > 6
+                          ) {
+<li [hidden]="
+											currentPage >=
+											  pageNumberArray[pageNumberArray.length - 2] ||
+											totalData < serialNumberArray[serialNumberArray.length - 1]
+										  " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                            <a class="page-link" href="javascript:void(0);"> ... </a>
+                          </li>
+                        }
+                      }
+
+							<li class="page-item" [ngClass]="{
+										  disabled:
+											currentPage ===
+											  pageNumberArray[pageNumberArray.length - 1] ||
+											lstManage.length === 0
+										}">
+                        <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Page Content -->
+        <!-- Edit Job Modal -->
+        <div id="edit_job" class="modal custom-modal fade" role="dialog">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Job</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editCandidateForm">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="input-block mb-3">
+                        <label for="">Job Title</label>
+                        <input class="form-control" type="text" value="Web Developer"
+                          [class.invalid]="editCandidateForm.get('JobName')?.invalid && editCandidateForm.get('JobName')?.touched"
+                          formControlName="JobName">
+                          @if (editCandidateForm.get('JobName')?.invalid && editCandidateForm.get('JobName')?.touched) {
+                            <div
+                              >
+                              @if (editCandidateForm.get('JobName')?.invalid && editCandidateForm.get('JobName')?.touched) {
+                                <small
+                                class="text-danger"> *Job title required</small>
+                              }
+                            </div>
+                          }
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Department</label>
+
+                          <mat-select class="select custom-mat-select" placeholder="Web Development">
+                            <mat-option value="sortByAlphabet">Web Development</mat-option>
+                            <mat-option value="ascending">IT Management</mat-option>
+                            <mat-option value="descending">Accounts Management</mat-option>
+                            <mat-option value="recentlyViewed">Support Management</mat-option>
+                            <mat-option value="recentlyAdded">Marketing</mat-option>
+                          </mat-select>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Job Location</label>
+                          <input class="form-control" type="text" value="California">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">No of Vacancies</label>
+                          <input class="form-control" type="text" value="5">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Experience</label>
+                          <input class="form-control" type="text" value="2 Years">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Age</label>
+                          <input class="form-control" type="text" value="-">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Salary From</label>
+                          <input type="text" class="form-control" value="32k">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Salary To</label>
+                          <input type="text" class="form-control" value="38k">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Job Type</label>
+
+                          <mat-select class="select custom-mat-select" placeholder="Full Time">
+                            <mat-option value="sortByAlphabet">Full Time</mat-option>
+                            <mat-option value="ascending">Part Time</mat-option>
+                            <mat-option value="descending">Internship</mat-option>
+                            <mat-option value="recentlyViewed">Temporary</mat-option>
+                            <mat-option value="recentlyAdded">Remote</mat-option>
+                            <mat-option value="recentlyAdded">Others</mat-option>
+                          </mat-select>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-block mb-3">
+                          <label for="">Status</label>
+
+                          <mat-select class="select custom-mat-select" placeholder="Open">
+                            <mat-option value="sortByAlphabet">Open</mat-option>
+                            <mat-option value="ascending">Closed</mat-option>
+                            <mat-option value="descending">Cancelled</mat-option>
+
+                          </mat-select>
+
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-block mb-3 date-input1">
+                          <label for="">Start Date</label>
+                          <input type="text" class="form-control datetimepicker" bsDatepicker container=".date-input1" value="3 Mar 2023"
+
+                            [class.invalid]="editCandidateForm.get('Startdate')?.invalid && editCandidateForm.get('Startdate')?.touched"
+                            formControlName="Startdate">
+                            @if (editCandidateForm.get('Startdate')?.invalid && editCandidateForm.get('Startdate')?.touched) {
+                              <div
+                                >
+                                @if (editCandidateForm.get('Startdate')?.invalid && editCandidateForm.get('Startdate')?.touched) {
+                                  <small
+                                  class="text-danger"> *Start date required</small>
+                                }
+                              </div>
+                            }
+
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-block mb-3 date-input2">
+                            <label for="">Expired Date</label>
+                            <input type="text" class="form-control datetimepicker" bsDatepicker container=".date-input2" value="31 May 2023"
+
+                              [class.invalid]="editCandidateForm.get('Expiredate')?.invalid && editCandidateForm.get('Expiredate')?.touched"
+                              formControlName="Expiredate">
+                              @if (editCandidateForm.get('Expiredate')?.invalid && editCandidateForm.get('Expiredate')?.touched) {
+                                <div
+                                  >
+                                  @if (editCandidateForm.get('Expiredate')?.invalid && editCandidateForm.get('Expiredate')?.touched) {
+                                    <small
+                                    class="text-danger"> *Expired date required</small>
+                                  }
+                                </div>
+                              }
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="input-block mb-3">
+                              <label for="">Description</label>
+                              <textarea class="form-control"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="submit-section">
+                          <button class="btn btn-primary submit-btn">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /Edit Job Modal -->
+
+              <!-- Delete Job Modal -->
+              <div class="modal custom-modal fade" id="delete_job" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <div class="form-header">
+                        <h3>Delete</h3>
+                        <p>Are you sure want to delete?</p>
+                      </div>
+                      <div class="modal-btn delete-action">
+                        <div class="row">
+                          <div class="col-6">
+                            <a href="javascript:void(0);" class="btn btn-primary continue-btn"
+                            >Delete</a>
+                          </div>
+                          <div class="col-6">
+                            <a href="javascript:void(0);" data-bs-dismiss="modal"
+                            class="btn btn-primary cancel-btn">Cancel</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /Delete Job Modal -->

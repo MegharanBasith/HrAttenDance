@@ -1,0 +1,224 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Reports</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink] = "routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Reports</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row filter-row mb-4">
+    <div class="col-sm-6 col-md-3 col-xxl-3">
+      <div class="input-block mb-3">
+        <div class="cals-icon">
+          <input class="form-control" type="text" placeholder="Search by asset name">
+          <span class="icon-text"><i class="fas fa-laptop"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-xxl-3">
+      <div class="input-block mb-3">
+        <div class="cals-icon">
+          <input class="form-control" type="text" placeholder="Search by allocated name">
+          <span class="icon-text"><i class="fa-solid fa-user"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-xxl-2">
+      <div class="input-block mb-3 ">
+        <div class="cals-icon">
+          <input class="form-control" type="text" placeholder="Asset ID">
+          <span class="icon-text"><i class="fa-regular fa-folder-open"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-xxl-2">
+      <div class="input-block mb-3">
+        <div class="cal-icon">
+          <input class="form-control" type="text" placeholder="Category">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3 col-xxl-2">
+      <a href="javascript:void(0);" class="btn btn-primary w-100 text-capitalize"><i class="file-text"></i> Generate Report</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-newdatatable">
+        <table matSort (matSortChange)="sortData($event)" class="table table-new custom-table mb-0 datatable">
+          <thead>
+            <tr>
+              <th mat-sort-header="id">#</th>
+              <th mat-sort-header="name">Name</th>
+              <th mat-sort-header="assetId">Asset ID</th>
+              <th mat-sort-header="category">Category</th>
+              <th mat-sort-header="department">Department</th>
+              <th mat-sort-header="allocatedTo">Allocated to</th>
+              <th mat-sort-header="status">Status</th>
+              <th mat-sort-header="action">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (data of assetsReports; track data; let i = $index) {
+              <tr >
+                <td>{{data.id}}</td>
+                <td>
+                  <a [routerLink] = "routes.assetsDetails" class="table-imgname">
+                    <img [src]="data.img1" class="me-2" alt="Laptop Image">
+                    <span>{{data.name}}</span>
+                  </a>
+                </td>
+                <td>{{data.assetId}}</td>
+                <td>{{data.category}}</td>
+                <td>{{data.department}}</td>
+                <td class="table-namesplit">
+                  <a href="javascript:void(0);" class="table-profileimage">
+                    <img [src]="data.img2" class="me-2" alt="User Image">
+                  </a>
+                  <a href="javascript:void(0);" class="table-name">
+                    <span>{{data.allocatedTo}}</span>
+                    <p>{{data.emailId}}</p>
+                  </a>
+                </td>
+                @if (data.status !== 'Assign') {
+                  <td>
+                    <div class="dropdown action-label">
+                      <a class="btn btn-white btn-sm btn-rounded dropdown-toggle text-primary" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{data.status}}
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0);"> {{data.status1}}</a>
+                        <a class="dropdown-item" href="javascript:void(0);">{{data.status2}}</a>
+                        <a class="dropdown-item" href="javascript:void(0);">{{data.status3}}</a>
+                      </div>
+                    </div>
+                  </td>
+                }
+                @if (data.status === 'Assign') {
+                  <td>
+                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-assigns" class="btn btn-assign" ><i class="la la-plus-circle"></i> Assign  </a>
+                  </td>
+                }
+                <td>
+                  <div class="table-actions d-flex">
+                    <a class="delete-table me-2" href="javascript:void(0);">
+                      <img src="assets/img/icons/edit.svg" alt="Edit Icon">
+                    </a>
+                    <a class="delete-table confirm-text" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_asset">
+                      <img src="assets/img/icons/delete.svg" alt="Delete Icon">
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+                                <li class="page-item" [ngClass]="{
+                                  disabled: currentPage === 1
+                                }">
+                <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+
+              @for (item of pageNumberArray; track item; let i = $index) {
+                                    <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                                    (pageNumberArray[currentPage - 2] > item &&
+                                      item !== 1 &&
+                                      pageNumberArray.length > 6) ||
+                                    (pageNumberArray[currentPage] < item &&
+                                      item !== 1 &&
+                                      pageNumberArray.length > 6 &&
+                                      pageNumberArray.length !== item)
+                                      ? 'hide-page-no'
+                                      : 'show-page-no'
+                                  ">
+                  <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                    {{ item }}
+                  </a>
+                </li>
+                @if (
+                  i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                  ) {
+                  <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+                @if (
+                  i === pageNumberArray.length - 2 &&
+                  pageNumberArray.length > 6
+                  ) {
+<li [hidden]="
+                                    currentPage >=
+                                      pageNumberArray[pageNumberArray.length - 2] ||
+                                    totalData < serialNumberArray[serialNumberArray.length - 1]
+                                  " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+              }
+
+                                <li class="page-item" [ngClass]="{
+                                  disabled:
+                                    currentPage ===
+                                      pageNumberArray[pageNumberArray.length - 1] ||
+                                    assetsReports.length === 0
+                                }">
+                <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
+
+<!-- Delete Asset Modal -->
+<div class="modal custom-modal fade" id="delete_asset" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Report</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+            </div>
+            <div class="col-6">
+              <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Asset Modal -->

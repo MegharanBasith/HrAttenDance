@@ -1,0 +1,178 @@
+<div class="row">
+  <!-- Rating -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Default Rating</h5>
+      </div>
+      <div class="card-body">
+        <p>This is the most basic example of ratings.</p>
+        <div class="rating rating-default">
+          @for (item of basicStar; track item; let i = $index) {
+            @if (item.show == false) {
+              <img
+                (click)="clickBasicStar(item, i, basicStar)"
+                src="assets/img/ratings/star-off.png"
+                />
+            }
+            @if (item.show == true) {
+              <img
+                (click)="clickBasicStar(item, i, basicStar)"
+                src="assets/img/ratings/star-on.png"
+                />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Rating -->
+
+  <!-- Rating -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Score</h5>
+      </div>
+      <div class="card-body">
+        <p>Stars with a saved rating.</p>
+        <div class="rating rating-score">
+          @for (item of savedStar; track item; let i = $index) {
+            @if (item.show == false) {
+              <img
+                (click)="clickBasicStar(item, i, savedStar)"
+                src="assets/img/ratings/star-off.png"
+                />
+            }
+            @if (item.show == true) {
+              <img
+                (click)="clickBasicStar(item, i, savedStar)"
+                src="assets/img/ratings/star-on.png"
+                />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Rating -->
+
+  <!-- Rating -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Max Number</h5>
+      </div>
+      <div class="card-body">
+        <p>Change the max numbers of stars</p>
+        <div class="rating rating-number">
+          @for (item of maxStar; track item; let i = $index) {
+            @if (item.show == false) {
+              <img
+                (click)="clickBasicStar(item, i, maxStar)"
+                src="assets/img/ratings/star-off.png"
+                />
+            }
+            @if (item.show == true) {
+              <img
+                (click)="clickBasicStar(item, i, maxStar)"
+                src="assets/img/ratings/star-on.png"
+                />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Rating -->
+
+  <!-- Rating -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Read Only</h5>
+      </div>
+      <div class="card-body">
+        <p>Prevent users from voting</p>
+        <div class="rating rating-read-only2">
+          @for (item of readOnlyStar; track item; let i = $index) {
+            @if (item.show == false) {
+              <img
+                src="assets/img/ratings/star-off.png"
+                />
+            }
+            @if (item.show == true) {
+              <img
+                src="assets/img/ratings/star-on.png"
+                />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Rating -->
+
+  <!-- Rating -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Half Rating</h5>
+      </div>
+      <div class="card-body">
+        <p>You can represent a float score as a half star icon.</p>
+        <div class="rating rating-half-enable">
+          @for (item of halfRatingStar; track item; let i = $index) {
+            @if (item.show == false && item.half == false) {
+              <img
+                (click)="clickBasicStar(item, i, halfRatingStar)"
+                src="assets/img/ratings/star-off.png"
+                />
+            }
+            @if (item.show == true) {
+              <img
+                (click)="clickBasicStar(item, i, halfRatingStar)"
+                src="assets/img/ratings/star-on.png"
+                />
+            }
+            @if (item.half == true) {
+              <img
+                src="assets/img/ratings/star-half.png"
+                />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Rating -->
+
+  <!-- Rating -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Custom Icon</h5>
+      </div>
+      <div class="card-body">
+        <p>Use any icon you want.</p>
+        <div class="rating rating-custom-icon">
+          @for (item of heartIcon; track item; let i = $index) {
+            @if (item.show == false) {
+              <img
+                (click)="clickBasicStar(item, i, heartIcon)"
+                src="assets/img/ratings/like-off.png"
+                />
+            }
+            @if (item.show == true) {
+              <img
+                (click)="clickBasicStar(item, i, heartIcon)"
+                src="assets/img/ratings/like-on.png"
+                />
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Rating -->
+</div>

@@ -1,0 +1,242 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">Job Details</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Job Details</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="job-info job-widget">
+                <h3 class="job-title">Android Developer</h3>
+                <span class="job-dept">App Development</span>
+                <ul class="job-post-det">
+                    <li><i class="fa fa-calendar-days"></i> Post Date: <span class="text-blue">Feb 18, 2023</span></li>
+                    <li><i class="fa fa-calendar-days"></i> Last Date: <span class="text-blue">May 31, 2023</span></li>
+                    <li><i class="fa-solid fa-user-o"></i> Applications: <span class="text-blue">4</span></li>
+                    <li><i class="fa-solid fa-eye"></i> Views: <span class="text-blue">3806</span></li>
+                </ul>
+            </div>
+            <div class="job-content job-widget">
+                <div class="job-desc-title">
+                    <h4>Job Description</h4>
+                </div>
+                <div class="job-description">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                </div>
+                <div class="job-desc-title">
+                    <h4>Job Description</h4>
+                </div>
+                <div class="job-description">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                    <ul class="square-list">
+                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="job-det-info job-widget">
+                <a class="btn job-btn" data-bs-toggle="modal" data-bs-target="#edit_job">Edit</a>
+                <div class="info-list">
+                    <span><i class="fa fa-bar-chart"></i></span>
+                    <h5>Job Type</h5>
+                    <p> Full Time</p>
+                </div>
+                <div class="info-list">
+                    <span><i class="fa fa-money-bill-1"></i></span>
+                    <h5>Salary</h5>
+                    <p>$32k - $38k</p>
+                </div>
+                <div class="info-list">
+                    <span><i class="fa fa-suitcase"></i></span>
+                    <h5>Experience</h5>
+                    <p>2 Years</p>
+                </div>
+                <div class="info-list">
+                    <span><i class="fa fa-ticket"></i></span>
+                    <h5>Vacancy</h5>
+                    <p>5</p>
+                </div>
+                <div class="info-list">
+                    <span><i class="fa fa-map-signs"></i></span>
+                    <h5>Location</h5>
+                    <p> Dreams Technologies
+                        <br> 3864 Quiet Valley Lane,
+                        <br> Sherman Oaks,
+                        <br> California, 91403
+                    </p>
+                </div>
+                <div class="info-list">
+                    <p class="text-truncate"> 818-978-7102
+                        <br> <a href="mailto:danielporter@example.com"
+                            title="danielporter@example.com">danielporter&#64;example.com</a>
+                        <br> <a href="https://www.example.com" target="_blank"
+                            title="https://www.example.com">https://www.example.com</a>
+                    </p>
+                </div>
+                <div class="info-list text-center">
+                    <a class="app-ends">Application ends in 2d 7h 6m</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
+
+<!-- Edit Job Modal -->
+<div id="edit_job" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Job</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Job Title</label>
+                                <input class="form-control" type="text" value="Web Developer">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Department</label>
+                                <mat-select class="custom-mat-select" placeholder="-">
+                                    <mat-option value="-">-</mat-option>
+                                    <mat-option value="Web Development">Web Development</mat-option>
+                                    <mat-option value="Application Development">Application Development</mat-option>
+                                    <mat-option value="IT Management">IT Management</mat-option>
+                                    <mat-option value="Accounts Management">Accounts Management</mat-option>
+                                    <mat-option value="Support Management">Support Management</mat-option>
+                                    <mat-option value="Marketing">Marketing</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Job Location</label>
+                                <input class="form-control" type="text" value="California">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">No of Vacancies</label>
+                                <input class="form-control" type="text" value="5">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Experience</label>
+                                <input class="form-control" type="text" value="2 Years">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Age</label>
+                                <input class="form-control" type="text" value="-">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Salary From</label>
+                                <input type="text" class="form-control" value="32k">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Salary To</label>
+                                <input type="text" class="form-control" value="38k">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Job Type</label>
+                                <mat-select class="custom-mat-select" placeholder="Full Time">
+                                    <mat-option value="Full Time">Full Time</mat-option>
+                                    <mat-option value="Part Time">Part Time</mat-option>
+                                    <mat-option value="Internship">Internship</mat-option>
+                                    <mat-option value="Temporary">Temporary</mat-option>
+                                    <mat-option value="Remote">Remote</mat-option>
+                                    <mat-option value="Others">Others</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-block mb-3">
+                                <label for="">Status</label>
+                                <mat-select class="custom-mat-select" placeholder="Open">
+                                    <mat-option value="Open">Open</mat-option>
+                                    <mat-option value="Closed">Closed</mat-option>
+                                    <mat-option value="Cancelled">Cancelled</mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label for="">Start Date</label>
+                                <input type="text" class="form-control datetimepicker" bsDatepicker
+                                    container=".date-input1" value="3 Mar 2023">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-block mb-3 date-input2">
+                                <label for="">Expired Date</label>
+                                <input type="text" class="form-control datetimepicker" bsDatepicker
+                                    container=".date-input2" value="31 May 2023">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-block mb-3">
+                                <label for="">Description</label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button class="btn btn-primary submit-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Edit Job Modal -->

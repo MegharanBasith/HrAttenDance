@@ -1,0 +1,85 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "number": "#INV-001",
+          "client": "Global Technologies",
+          "project": "Office Management",
+          "email": "barrycuda@texas.com",
+          "tax": "GST",
+          "client_address": "Texas",
+          "billing_address": "Washington",
+          "estimate_date": "11-Mar-2023",
+          "expiry_date": "17-Mar-2023",
+          "items": [
+            {
+              "item": "Item",
+              "description": "Description",
+              "unit_cost": "10",
+              "qty": 10,
+              "amount": "$2099"
+            }
+          ],
+          "totalamount": 100,
+          "discount": 5,
+          "grandTotal": 100,
+          "other_information": "Description",
+          "status": "Paid"
+        },
+        {
+          "id": 2,
+          "number": "#INV-002",
+          "client": "Delta Infotech",
+          "project": "Office Management",
+          "email": "barrycuda@texas.com",
+          "tax": "GST",
+          "client_address": "Texas",
+          "billing_address": "Washington",
+          "estimate_date": "11-Mar-2023",
+          "expiry_date": "17-Mar-2023",
+          "items": [
+            {
+                "item": "Item",
+                "description": "Description",
+                "unit_cost": "10",
+                "qty": 10,
+                "amount": 2099
+            }
+          ],
+          "totalamount": 100,
+          "discount": 5,
+          "grandTotal": 100,
+          "other_information": "Description",
+          "status": "Sent"
+        },
+        {
+          "id": 3,
+          "number": "#INV-003",
+          "client": "Cream Inc",
+          "project": "Office Management",
+          "email": "barrycuda@texas.com",
+          "tax": "GST",
+          "client_address": "Texas",
+          "billing_address": "Florida",
+          "estimate_date": "11-Mar-2023",
+          "expiry_date": "17-Mar-2023",
+          "items": [
+            {
+                "item": "Item",
+                "description": "Description",
+                "unit_cost": "10",
+                "qty": 10,
+                "amount": 2099
+            }
+          ],
+          "totalamount": 100,
+          "discount": 5,
+          "grandTotal": 100,
+          "other_information": "Description",
+          "status": "Partially Paid"
+        }
+        
+       
+      ],
+      "totalData":4
+}

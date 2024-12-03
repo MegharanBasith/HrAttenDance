@@ -1,0 +1,931 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Performance Indicator</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Performance</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_indicator"><i class="la la-plus-circle"></i>
+      Add New</a>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table_header">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label>
+              Show
+              <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()"
+                class="form-control form-control-sm">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              Entries
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table matSort (matSortChange)="sortData($event)"
+        class="table table-striped custom-table mb-0 datatable">
+        <thead>
+          <tr>
+            <th mat-sort-header="id" style="width: 30px;">#</th>
+            <th mat-sort-header="designation">Designation</th>
+            <th mat-sort-header="department">Department</th>
+            <th mat-sort-header="addedBy">Added By</th>
+            <th mat-sort-header="createdBy">Create At</th>
+            <th mat-sort-header="status">Status</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of lstindicator; track item; let i = $index) {
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.designation}}</td>
+              <td>{{item.department}}</td>
+              <td>
+                <h2 class="table-avatar">
+                  <a [routerLink] = "routes.employeeProfile" class="avatar"><img alt=""
+                  src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
+                  <a [routerLink] = "routes.employeeProfile">{{item.addedBy}}</a>
+                </h2>
+              </td>
+              <td>
+                {{item.createdBy}}
+              </td>
+              <td>
+                <div class="dropdown action-label">
+                  <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-regular fa-circle-dot text-success"></i> Active
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item"><i class="fa-regular fa-circle-dot text-success me-1"></i> Active</a>
+                    <a class="dropdown-item"><i class="fa-regular fa-circle-dot text-danger me-1"></i>
+                  Inactive</a>
+                </div>
+              </div>
+            </td>
+            <td class="text-end">
+              <div class="dropdown dropdown-action">
+                <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                  aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" data-bs-toggle="modal"
+                      data-bs-target="#edit_indicator"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                      <a class="dropdown-item" data-bs-toggle="modal"
+                        data-bs-target="#delete_indicator"><i class="fa-regular fa-trash-can m-r-5"></i>
+                      Delete</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            }
+            @if (lstindicator.length === 0) {
+              <tr>
+                <td colspan="10">
+                  <h5 style="text-align: center;">No data found</h5>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+                            <li class="page-item" [ngClass]="{
+                          disabled: currentPage === 1
+                        }">
+                <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+
+              @for (item of pageNumberArray; track item; let i = $index) {
+                                <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                            (pageNumberArray[currentPage - 2] > item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6) ||
+                            (pageNumberArray[currentPage] < item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6 &&
+                              pageNumberArray.length !== item)
+                              ? 'hide-page-no'
+                              : 'show-page-no'
+                          ">
+                  <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                    {{ item }}
+                  </a>
+                </li>
+                @if (
+                  i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                  ) {
+                  <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+                @if (
+                  i === pageNumberArray.length - 2 &&
+                  pageNumberArray.length > 6
+                  ) {
+<li [hidden]="
+                            currentPage >=
+                              pageNumberArray[pageNumberArray.length - 2] ||
+                            totalData < serialNumberArray[serialNumberArray.length - 1]
+                          " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+              }
+
+                            <li class="page-item" [ngClass]="{
+                          disabled:
+                            currentPage ===
+                              pageNumberArray[pageNumberArray.length - 1] ||
+                            lstindicator.length === 0
+                        }">
+                <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
+<!-- Add Performance Indicator Modal -->
+<div id="add_indicator" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Set New Indicator</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addIndicatorForm">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Designation</label>
+                <mat-select   class="custom-mat-select"
+                  [class.invalid]="addIndicatorForm.get('designationName')?.invalid && addIndicatorForm.get('designationName')?.touched"
+                  formControlName="designationName" placeholder="Select Designation">
+                  <mat-option value="select">Select Designation</mat-option>
+                  <mat-option value="designer">Web Designer</mat-option>
+                  <mat-option value="ios">IOS Developer</mat-option>
+                </mat-select>
+                @if (addIndicatorForm.get('designationName')?.invalid && addIndicatorForm.get('designationName')?.touched) {
+                  <div
+                    >
+                    @if (addIndicatorForm.get('designationName')?.invalid && addIndicatorForm.get('designationName')?.touched) {
+                      <small
+                      class="text-danger"> Designation is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <h4 class="modal-sub-title">Technical</h4>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Customer Experience</label>
+                <mat-select   class="custom-mat-select"
+                  [class.invalid]="addIndicatorForm.get('experienceName')?.invalid && addIndicatorForm.get('experienceName')?.touched"
+                  formControlName="experienceName" placeholder="None">
+                  <mat-option value="none">None</mat-option>
+                  <mat-option value>Beginner</mat-option>
+                  <mat-option value="intermediate">Intermediate</mat-option>
+                  <mat-option value="advanced">Advanced</mat-option>
+                  <mat-option value="expert">Expert / Leader</mat-option>
+                </mat-select>
+                @if (addIndicatorForm.get('experienceName')?.invalid && addIndicatorForm.get('experienceName')?.touched) {
+                  <div
+                    >
+                    @if (addIndicatorForm.get('experienceName')?.invalid && addIndicatorForm.get('experienceName')?.touched) {
+                      <small
+                      class="text-danger"> Customer Experience is required</small>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Marketing</label>
+                <mat-select  class="custom-mat-select"
+                  [class.invalid]="addIndicatorForm.get('marketingName')?.invalid && addIndicatorForm.get('marketingName')?.touched"
+                  formControlName="marketingName" placeholder="None">
+                  <mat-option vaue="51">None</mat-option>
+                  <mat-option vaue="52">Beginner</mat-option>
+                  <mat-option vaue="53">Intermediate</mat-option>
+                  <mat-option vaue="54">Advanced</mat-option>
+                  <mat-option vaue="55">Expert / Leader</mat-option>
+                </mat-select>
+                @if (addIndicatorForm.get('marketingName')?.invalid && addIndicatorForm.get('marketingName')?.touched) {
+                  <div
+                    >
+                    @if (addIndicatorForm.get('marketingName')?.invalid && addIndicatorForm.get('marketingName')?.touched) {
+                      <small
+                      class="text-danger"> Marketing is required</small>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Management</label>
+                <mat-select  class="custom-mat-select" placeholder="None">
+                  <mat-option value="80">None</mat-option>
+                  <mat-option value="81">Beginner</mat-option>
+                  <mat-option value="82">Intermediate</mat-option>
+                  <mat-option value="83">Advanced</mat-option>
+                  <mat-option value="84">Expert / Leader</mat-option>
+                </mat-select>
+                <!-- <div
+                *ngIf="addIndicatorForm.get('ManagementSkill')?.invalid && addIndicatorForm.get('ManagementSkill')?.touched">
+                <small
+                  *ngIf="addIndicatorForm.get('ManagementSkill')?.invalid && addIndicatorForm.get('ManagementSkill')?.touched"
+                class="text-danger"> Management is required</small>
+              </div> -->
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Administration</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('AdministrationName')?.invalid && addIndicatorForm.get('AdministrationName')?.touched"
+                formControlName="AdministrationName" placeholder="None">
+                <mat-option>None</mat-option>
+                <mat-option>Beginner</mat-option>
+                <mat-option>Intermediate</mat-option>
+                <mat-option>Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('AdministrationName')?.invalid && addIndicatorForm.get('AdministrationName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('AdministrationName')?.invalid && addIndicatorForm.get('AdministrationName')?.touched) {
+                    <small
+                    class="text-danger"> Designation is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Presentation Skill</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('presentationName')?.invalid && addIndicatorForm.get('presentationName')?.touched"
+                formControlName="presentationName" placeholder="None" >
+                <mat-option>None</mat-option>
+                <mat-option>Beginner</mat-option>
+                <mat-option>Intermediate</mat-option>
+                <mat-option>Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('presentationName')?.invalid && addIndicatorForm.get('presentationName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('presentationName')?.invalid && addIndicatorForm.get('presentationName')?.touched) {
+                    <small
+                    class="text-danger"> Presentation Skill is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Quality Of Work</label>
+              <mat-select class="form-control"
+                [class.invalid]="addIndicatorForm.get('QualityName')?.invalid && addIndicatorForm.get('QualityName')?.touched"
+                formControlName="QualityName" placeholder="None">
+                <mat-option value="31">None</mat-option>
+                <mat-option value="32">Beginner</mat-option>
+                <mat-option value="33">Intermediate</mat-option>
+                <mat-option value="34">Advanced</mat-option>
+                <mat-option value="35">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('QualityName')?.invalid && addIndicatorForm.get('QualityName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('QualityName')?.invalid && addIndicatorForm.get('QualityName')?.touched) {
+                    <small
+                    class="text-danger"> Quality is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Efficiency</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('effientcyName')?.invalid && addIndicatorForm.get('effientcyName')?.touched"
+                formControlName="effientcyName" placeholder="None">
+                <mat-option value="81">None</mat-option>
+                <mat-option value="82">Beginner</mat-option>
+                <mat-option value="83">Intermediate</mat-option>
+                <mat-option value="84">Advanced</mat-option>
+                <mat-option value="85">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('effientcyName')?.invalid && addIndicatorForm.get('effientcyName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('effientcyName')?.invalid && addIndicatorForm.get('effientcyName')?.touched) {
+                    <small
+                    class="text-danger"> Efficiency is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h4 class="modal-sub-title">Organizational</h4>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Integrity</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('integrityName')?.invalid && addIndicatorForm.get('integrityName')?.touched"
+                formControlName="integrityName" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option value="begineer">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advanced">Advanced</mat-option>
+                <mat-option value="expert">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('integrityName')?.invalid && addIndicatorForm.get('integrityName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('integrityName')?.invalid && addIndicatorForm.get('integrityName')?.touched) {
+                    <small
+                    class="text-danger"> Integrity is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Professionalism</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('professionalismName')?.invalid && addIndicatorForm.get('professionalismName')?.touched"
+                formControlName="professionalismName" placeholder="None">
+                <mat-option value="61">None</mat-option>
+                <mat-option value="62">Beginner</mat-option>
+                <mat-option value="63">Intermediate</mat-option>
+                <mat-option value="64">Advanced</mat-option>
+                <mat-option value="65">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('professionalismName')?.invalid && addIndicatorForm.get('professionalismName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('professionalismName')?.invalid && addIndicatorForm.get('professionalismName')?.touched) {
+                    <small
+                    class="text-danger"> Professionalism is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Team Work</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('teamWork')?.invalid && addIndicatorForm.get('teamWork')?.touched"
+                formControlName="teamWork" placeholder="None">
+                <mat-option value="71">None</mat-option>
+                <mat-option value="72">Beginner</mat-option>
+                <mat-option value="73">Intermediate</mat-option>
+                <mat-option value="74">Advanced</mat-option>
+                <mat-option value="75">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('teamWork')?.invalid && addIndicatorForm.get('teamWork')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('teamWork')?.invalid && addIndicatorForm.get('teamWork')?.touched) {
+                    <small
+                    class="text-danger"> teamWork is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Critical Thinking</label>
+              <mat-select class="form-control"
+                [class.invalid]="addIndicatorForm.get('criticalName')?.invalid && addIndicatorForm.get('criticalName')?.touched"
+                formControlName="criticalName" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option value="begineer">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advanced">Advanced</mat-option>
+                <mat-option value="expert">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('criticalName')?.invalid && addIndicatorForm.get('criticalName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('criticalName')?.invalid && addIndicatorForm.get('criticalName')?.touched) {
+                    <small
+                    class="text-danger"> Critical Thinking is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Conflict Management</label>
+              <mat-select  class=" form-control"
+                [class.invalid]="addIndicatorForm.get('ManagementName')?.invalid && addIndicatorForm.get('ManagementName')?.touched"
+                formControlName="ManagementName" placeholder="None">
+                <mat-option value="1">None</mat-option>
+                <mat-option value="2">Beginner</mat-option>
+                <mat-option value="3">Intermediate</mat-option>
+                <mat-option value="4">Advanced</mat-option>
+                <mat-option value="5">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('ManagementName')?.invalid && addIndicatorForm.get('ManagementName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('ManagementName')?.invalid && addIndicatorForm.get('ManagementName')?.touched) {
+                    <small
+                    class="text-danger"> Conflict Management is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Attendance</label>
+              <mat-select  class=" form-control"
+                [class.invalid]="addIndicatorForm.get('AttendanceName')?.invalid && addIndicatorForm.get('AttendanceName')?.touched"
+                formControlName="AttendanceName" placeholder="None">
+                <mat-option value="6">None</mat-option>
+                <mat-option value="7">Beginner</mat-option>
+                <mat-option value="8">Intermediate</mat-option>
+                <mat-option value="9">Advanced</mat-option>
+                <mat-option value="10">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('AttendanceName')?.invalid && addIndicatorForm.get('AttendanceName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('AttendanceName')?.invalid && addIndicatorForm.get('AttendanceName')?.touched) {
+                    <small
+                    class="text-danger"> Attendance is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Ability To Meet Deadline</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('deadLineName')?.invalid && addIndicatorForm.get('deadLineName')?.touched"
+                formControlName="deadLineName" placeholder="None">
+                <mat-option value="21">None</mat-option>
+                <mat-option value="22">Beginner</mat-option>
+                <mat-option value="23">Intermediate</mat-option>
+                <mat-option value="24">Advanced</mat-option>
+                <mat-option value="25">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('deadLineName')?.invalid && addIndicatorForm.get('deadLineName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('deadLineName')?.invalid && addIndicatorForm.get('deadLineName')?.touched) {
+                    <small
+                    class="text-danger"> Deadline is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Status</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('statusName')?.invalid && addIndicatorForm.get('statusName')?.touched"
+                formControlName="statusName" placeholder="Active">
+                <mat-option value="27">Active</mat-option>
+                <mat-option value="28">Inactive</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('statusName')?.invalid && addIndicatorForm.get('statusName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('statusName')?.invalid && addIndicatorForm.get('statusName')?.touched) {
+                    <small
+                    class="text-danger"> Status is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <button class="btn btn-primary submit-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!-- /Add Performance Indicator Modal -->
+<!-- /Add Performance Indicator Modal -->
+
+
+<!-- Edit Performance Indicator Modal -->
+<div id="edit_indicator" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Set New Indicator</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addIndicatorForm">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Designation</label>
+                <mat-select  class="custom-mat-select"
+                  [class.invalid]="addIndicatorForm.get('designationName')?.invalid && addIndicatorForm.get('designationName')?.touched"
+                  formControlName="designationName" placeholder="Select Designation">
+                  <mat-option value="select">Select Designation</mat-option>
+                  <mat-option value="designer">Web Designer</mat-option>
+                  <mat-option value="ios">IOS Developer</mat-option>
+                </mat-select>
+                @if (addIndicatorForm.get('designationName')?.invalid && addIndicatorForm.get('designationName')?.touched) {
+                  <div
+                    >
+                    @if (addIndicatorForm.get('designationName')?.invalid && addIndicatorForm.get('designationName')?.touched) {
+                      <small
+                      class="text-danger"> Designation is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <h4 class="modal-sub-title">Technical</h4>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Customer Experience</label>
+                <mat-select  class="custom-mat-select"
+                  [class.invalid]="addIndicatorForm.get('experienceName')?.invalid && addIndicatorForm.get('experienceName')?.touched"
+                  formControlName="experienceName" placeholder="None">
+                  <mat-option value="none">None</mat-option>
+                  <mat-option value="beginner">Beginner</mat-option>
+                  <mat-option value="intermediate">Intermediate</mat-option>
+                  <mat-option value="advance">Advanced</mat-option>
+                  <mat-option>Expert / Leader</mat-option>
+                </mat-select>
+                @if (addIndicatorForm.get('experienceName')?.invalid && addIndicatorForm.get('experienceName')?.touched) {
+                  <div
+                    >
+                    @if (addIndicatorForm.get('experienceName')?.invalid && addIndicatorForm.get('experienceName')?.touched) {
+                      <small
+                      class="text-danger"> Customer Experience is required</small>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Marketing</label>
+                <mat-select  class="custom-mat-select"
+                  [class.invalid]="addIndicatorForm.get('marketingName')?.invalid && addIndicatorForm.get('marketingName')?.touched"
+                  formControlName="marketingName" placeholder="None">
+                  <mat-option value="None">None</mat-option>
+                  <mat-option value="beginner">Beginner</mat-option>
+                  <mat-option value="intermediate">Intermediate</mat-option>
+                  <mat-option value="advanced">Advanced</mat-option>
+                  <mat-option>Expert / Leader</mat-option>
+                </mat-select>
+                @if (addIndicatorForm.get('marketingName')?.invalid && addIndicatorForm.get('marketingName')?.touched) {
+                  <div
+                    >
+                    @if (addIndicatorForm.get('marketingName')?.invalid && addIndicatorForm.get('marketingName')?.touched) {
+                      <small
+                      class="text-danger"> Marketing is required</small>
+                    }
+                  </div>
+                }
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Management</label>
+                <mat-select  class="custom-mat-select" placeholder="None">
+                  <mat-option value="30">None</mat-option>
+                  <mat-option value="31">Beginner</mat-option>
+                  <mat-option value="32">Intermediate</mat-option>
+                  <mat-option value="33">Advanced</mat-option>
+                  <mat-option value="34">Expert / Leader</mat-option>
+                </mat-select>
+                <!-- <div
+                *ngIf="addIndicatorForm.get('ManagementSkill')?.invalid && addIndicatorForm.get('ManagementSkill')?.touched">
+                <small
+                  *ngIf="addIndicatorForm.get('ManagementSkill')?.invalid && addIndicatorForm.get('ManagementSkill')?.touched"
+                class="text-danger"> Management is required</small>
+              </div> -->
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Administration</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('AdministrationName')?.invalid && addIndicatorForm.get('AdministrationName')?.touched"
+                formControlName="AdministrationName" placeholder="None">
+                <mat-option value="11">None</mat-option>
+                <mat-option value="12">Beginner</mat-option>
+                <mat-option value="13">Intermediate</mat-option>
+                <mat-option value="14">Advanced</mat-option>
+                <mat-option value="15">Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('AdministrationName')?.invalid && addIndicatorForm.get('AdministrationName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('AdministrationName')?.invalid && addIndicatorForm.get('AdministrationName')?.touched) {
+                    <small
+                    class="text-danger"> Designation is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Presentation Skill</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('presentationName')?.invalid && addIndicatorForm.get('presentationName')?.touched"
+                formControlName="presentationName" placeholder="None" >
+                <mat-option>None</mat-option>
+                <mat-option>Beginner</mat-option>
+                <mat-option>Intermediate</mat-option>
+                <mat-option>Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('presentationName')?.invalid && addIndicatorForm.get('presentationName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('presentationName')?.invalid && addIndicatorForm.get('presentationName')?.touched) {
+                    <small
+                    class="text-danger"> Presentation Skill is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Quality Of Work</label>
+              <mat-select class="form-control"
+                [class.invalid]="addIndicatorForm.get('QualityName')?.invalid && addIndicatorForm.get('QualityName')?.touched"
+                formControlName="QualityName" placeholder="None">
+                <mat-option>None</mat-option>
+                <mat-option>Beginner</mat-option>
+                <mat-option>Intermediate</mat-option>
+                <mat-option>Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('QualityName')?.invalid && addIndicatorForm.get('QualityName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('QualityName')?.invalid && addIndicatorForm.get('QualityName')?.touched) {
+                    <small
+                    class="text-danger"> Quality is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Efficiency</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('effientcyName')?.invalid && addIndicatorForm.get('effientcyName')?.touched"
+                formControlName="effientcyName" placeholder="None">
+                <mat-option>None</mat-option>
+                <mat-option>Beginner</mat-option>
+                <mat-option>Intermediate</mat-option>
+                <mat-option>Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('effientcyName')?.invalid && addIndicatorForm.get('effientcyName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('effientcyName')?.invalid && addIndicatorForm.get('effientcyName')?.touched) {
+                    <small
+                    class="text-danger"> Efficiency is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h4 class="modal-sub-title">Organizational</h4>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Integrity</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('integrityName')?.invalid && addIndicatorForm.get('integrityName')?.touched"
+                formControlName="integrityName" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option value="beginer">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advance">Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('integrityName')?.invalid && addIndicatorForm.get('integrityName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('integrityName')?.invalid && addIndicatorForm.get('integrityName')?.touched) {
+                    <small
+                    class="text-danger"> Integrity is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Professionalism</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('professionalismName')?.invalid && addIndicatorForm.get('professionalismName')?.touched"
+                formControlName="professionalismName" placeholder="None">
+                <mat-option value="91">None</mat-option>
+                <mat-option value="92">Beginner</mat-option>
+                <mat-option value="93">Intermediate</mat-option>
+                <mat-option value="94">Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('professionalismName')?.invalid && addIndicatorForm.get('professionalismName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('professionalismName')?.invalid && addIndicatorForm.get('professionalismName')?.touched) {
+                    <small
+                    class="text-danger"> Professionalism is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Team Work</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('teamWork')?.invalid && addIndicatorForm.get('teamWork')?.touched"
+                formControlName="teamWork" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option value="beginner">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value>Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('teamWork')?.invalid && addIndicatorForm.get('teamWork')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('teamWork')?.invalid && addIndicatorForm.get('teamWork')?.touched) {
+                    <small
+                    class="text-danger"> teamWork is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Critical Thinking</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('criticalName')?.invalid && addIndicatorForm.get('criticalName')?.touched"
+                formControlName="criticalName" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option vlaue="beginener">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advanced">Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('criticalName')?.invalid && addIndicatorForm.get('criticalName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('criticalName')?.invalid && addIndicatorForm.get('criticalName')?.touched) {
+                    <small
+                    class="text-danger"> Critical Thinking is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Conflict Management</label>
+              <mat-select  class=" form-control"
+                [class.invalid]="addIndicatorForm.get('ManagementName')?.invalid && addIndicatorForm.get('ManagementName')?.touched"
+                formControlName="ManagementName" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option value="begineer">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advanced">Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('ManagementName')?.invalid && addIndicatorForm.get('ManagementName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('ManagementName')?.invalid && addIndicatorForm.get('ManagementName')?.touched) {
+                    <small
+                    class="text-danger"> Conflict Management is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Attendance</label>
+              <mat-select  class=" form-control"
+                [class.invalid]="addIndicatorForm.get('AttendanceName')?.invalid && addIndicatorForm.get('AttendanceName')?.touched"
+                formControlName="AttendanceName" placeholder="None">
+                <mat-option value="none">None</mat-option>
+                <mat-option value="begineer">Beginner</mat-option>
+                <mat-option value="intermediate">Intermediate</mat-option>
+                <mat-option value="advanced">Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('AttendanceName')?.invalid && addIndicatorForm.get('AttendanceName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('AttendanceName')?.invalid && addIndicatorForm.get('AttendanceName')?.touched) {
+                    <small
+                    class="text-danger"> Attendance is required</small>
+                  }
+                </div>
+              }
+            </div>
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Ability To Meet Deadline</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('deadLineName')?.invalid && addIndicatorForm.get('deadLineName')?.touched"
+                formControlName="deadLineName" placeholder="None">
+                <mat-option value="21">None</mat-option>
+                <mat-option value="22">Beginner</mat-option>
+                <mat-option value="23">Intermediate</mat-option>
+                <mat-option value="24">Advanced</mat-option>
+                <mat-option>Expert / Leader</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('deadLineName')?.invalid && addIndicatorForm.get('deadLineName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('deadLineName')?.invalid && addIndicatorForm.get('deadLineName')?.touched) {
+                    <small
+                    class="text-danger"> Deadline is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">Status</label>
+              <mat-select  class="custom-mat-select"
+                [class.invalid]="addIndicatorForm.get('statusName')?.invalid && addIndicatorForm.get('statusName')?.touched"
+                formControlName="statusName" placeholder="Active">
+                <mat-option value="active">Active</mat-option>
+                <mat-option value="inactive">Inactive</mat-option>
+              </mat-select>
+              @if (addIndicatorForm.get('statusName')?.invalid && addIndicatorForm.get('statusName')?.touched) {
+                <div
+                  >
+                  @if (addIndicatorForm.get('statusName')?.invalid && addIndicatorForm.get('statusName')?.touched) {
+                    <small
+                    class="text-danger"> Status is required</small>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <button class="btn btn-primary submit-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!-- /Edit Performance Indicator Modal -->
+
+<!-- Delete Performance Indicator Modal -->
+<div class="modal custom-modal fade" id="delete_indicator" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Performance Indicator List</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a  class="btn btn-primary continue-btn"
+              >Delete</a>
+            </div>
+            <div class="col-6">
+              <a  data-bs-dismiss="modal"
+              class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Performance Indicator Modal -->

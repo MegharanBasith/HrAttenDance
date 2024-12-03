@@ -1,0 +1,85 @@
+{
+    "data": [
+      {
+        "pipelineName": "Calls",
+        "totalDealValue": "$04,14,000",
+        "noOfDeals": "654",
+        "stages": "Win",
+        "createdDate": "10 Feb 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Chat",
+        "totalDealValue": "$11,14,400",
+        "noOfDeals": "787",
+        "stages": "Win",
+        "createdDate": "24 Feb 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Collabrative",
+        "totalDealValue": "$04,14,400",
+        "noOfDeals": "315",
+        "stages": "In Pipeline",
+        "createdDate": "05 Mar 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Differentiate",
+        "totalDealValue": "$09,14,400",
+        "noOfDeals": "478",
+        "stages": "Win",
+        "createdDate": "17 Mar 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Email",
+        "totalDealValue": "$11,14,400",
+        "noOfDeals": "787",
+        "stages": "Win",
+        "createdDate": "08 Apr 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Identify",
+        "totalDealValue": "$16,11,400",
+        "noOfDeals": "142",
+        "stages": "Conversation",
+        "createdDate": "20 Apr 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Interact",
+        "totalDealValue": "$78,11,800",
+        "noOfDeals": "315",
+        "stages": "Folllow Up",
+        "createdDate": "12 May 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Marketing",
+        "totalDealValue": "$09,05,947",
+        "noOfDeals": "478",
+        "stages": "Schedule Service",
+        "createdDate": "26 May 2024",
+        "status": "Inactive"
+      },
+      {
+        "pipelineName": "Operational",
+        "totalDealValue": "$04,51,000",
+        "noOfDeals": "664",
+        "stages": "Win",
+        "createdDate": "13 June 2024",
+        "status": "Active"
+      },
+      {
+        "pipelineName": "Sales",
+        "totalDealValue": "$72,14,078",
+        "noOfDeals": "128",
+        "stages": "Lost",
+        "createdDate": "28 June 2024",
+        "status": "Active"
+      }
+    ],
+    "totalData":10
+  }

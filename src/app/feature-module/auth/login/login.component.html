@@ -1,0 +1,76 @@
+<div class="account-page">
+  <p-toast></p-toast>
+  <div *ngIf="showSpinner">
+    <app-spinner></app-spinner>
+  </div>
+  <div class="main-wrapper">
+    <div class="account-content">
+      <!-- <a [routerLink]="routes.jobList" class="btn btn-primary apply-btn">Apply Job</a> -->
+      <div class="container">
+
+        <!-- Account Logo -->
+        <div class="account-logo">
+          <a [routerLink]="routes.adminDashboard"><img src="assets/img/logo2.png" alt="Dreams Technologies"></a>
+        </div>
+        <!-- /Account Logo -->
+
+        <div class="account-box">
+          <div class="account-wrapper">
+            <h2 class="account-title">Login</h2>
+            <!-- <p class="account-subtitle">Access to our dashboard</p> -->
+
+            <!-- Account Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+              <div class="input-block mb-4">
+                <label class="col-form-label">Domain <span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="domain" type="text">
+                <div *ngIf="loginForm.get('domain')?.touched && loginForm.get('domain')?.invalid">
+                  <small class="text-danger" *ngIf="loginForm.get('domain')?.errors?.['required']">*Domain is
+                    required.</small>
+                </div>
+              </div>
+              <div class="input-block mb-4">
+                <label class="col-form-label">Email <span class="mandatory">*</span></label>
+                <input class="form-control" formControlName="email" type="text">
+                <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+                  <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['required']">*Email is
+                    required.</small>
+                  <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email
+                    format.</small>
+                </div>
+              </div>
+              <div class="input-block mb-4">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <label class="col-form-label">Password <span class="mandatory">*</span></label>
+                  </div>
+                </div>
+                <div class="position-relative">
+                  <input class="form-control" formControlName="password" [type]="password[1] ? 'text' : 'password' "
+                    value="123456" id="password">
+                  <span class="fa-solid" [ngClass]=" password[1] ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="togglePassword(1)" id="toggle-password"></span>
+                </div>
+                <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                  <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.['required']">*Password is
+                    required.</small>
+                </div>
+              </div>
+              <div class="input-block mb-4 text-center">
+                <button class="btn btn-primary account-btn" type="submit">Login</button>
+              </div>
+              <div class="account-footer">
+                <p>Don't have an account yet? <a [routerLink]="routes.register">Register</a></p>
+                <a class="text-muted" [routerLink]="routes.forgot_password">
+                  Forgot password?
+                </a>
+              </div>
+            </form>
+            <!-- /Account Form -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

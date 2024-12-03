@@ -1,0 +1,319 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <p-toast></p-toast>
+  <div *ngIf="showSpinner">
+  <app-spinner></app-spinner>
+</div>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Timesheet</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Timesheet</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#generate_timesheet"><i class="la la-plus-circle"></i>
+          Generate</a>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_header">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <!-- <div class="dataTables_length">
+              <label>
+                Show
+                <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()" class="form-control form-control-sm">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"
+          class="table table-striped custom-table mb-0 datatable">
+          <thead>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let row">
+                  <button mat-icon-button (click)="deleteTimesheet(row, $event)"
+                      [disabled]="row.timesheetStatus == 'Approved' || row.timesheetStatus == 'Invoiced'">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </td>
+          </ng-container>
+            <ng-container *ngFor="let column of cols" [matColumnDef]="column.field">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.header }} </th>
+              <td mat-cell *matCellDef="let element"> {{ element[column.field] }} </td>
+            </ng-container>
+
+
+
+            <!-- <tr>
+            <th mat-sort-header="employee">Employee</th>
+            <th mat-sort-header="date">Date</th>
+            <th mat-sort-header="project">Projects</th>
+            <th mat-sort-header="assignedhours" class="text-center">Assigned Hours</th>
+            <th mat-sort-header="hrs" class="text-center">Hours</th>
+            <th mat-sort-header="description" class="d-none d-sm-table-cell">Description</th>
+            <th class="text-end">Actions</th>
+          </tr> -->
+          </thead>
+          <tbody>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+            <!-- @for (item of lstTimesheet; track item; let i = $index) {
+            <tr>
+              <td>
+                <h2 class="table-avatar">
+                  <a [routerLink] = "routes.employeeProfile" class="avatar"><img alt=""
+                  [src]="item.img"></a>
+                  <a [routerLink] = "routes.employeeProfile">{{item.employee}}
+                    <span>{{item.designation}} </span></a>
+                  </h2>
+                </td>
+                <td>{{item.date}} </td>
+                <td>
+                  <h2>{{item.project}} </h2>
+                </td>
+                <td class="text-center">{{item.assignedhours}}</td>
+                <td class="text-center">{{item.hrs}}</td>
+                <td class="d-none d-sm-table-cell col-md-4">{{item.description}}</td>
+                <td class="text-end">
+                  <div class="dropdown dropdown-action">
+                    <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-bs-toggle="modal"
+                          data-bs-target="#edit_todaywork"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                          <a class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#delete_workdetail"><i class="fa-regular fa-trash-can m-r-5"></i>
+                          Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                }
+                @if (lstTimesheet.length === 0) {
+                  <tr>
+                    <td colspan="10">
+                      <h5 style="text-align: center;">No data found</h5>
+                    </td>
+                  </tr>
+                } -->
+          </tbody>
+        </table>
+      </div>
+      <mat-paginator [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+      <!-- <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+              <li class="page-item" [ngClass]="{
+                          disabled: currentPage === 1
+                        }">
+                <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);" tabindex="-1"><i
+                    class="fa fa-angle-double-left"></i></a>
+              </li>
+
+              @for (item of pageNumberArray; track item; let i = $index) {
+              <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                            (pageNumberArray[currentPage - 2] > item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6) ||
+                            (pageNumberArray[currentPage] < item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6 &&
+                              pageNumberArray.length !== item)
+                              ? 'hide-page-no'
+                              : 'show-page-no'
+                          ">
+                <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                  {{ item }}
+                </a>
+              </li>
+              @if (
+              i === 0 && pageNumberArray.length > 6 && currentPage > 2
+              ) {
+              <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)"
+                (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                <a class="page-link" href="javascript:void(0);"> ... </a>
+              </li>
+              }
+              @if (
+              i === pageNumberArray.length - 2 &&
+              pageNumberArray.length > 6
+              ) {
+              <li [hidden]="
+                            currentPage >=
+                              pageNumberArray[pageNumberArray.length - 2] ||
+                            totalData < serialNumberArray[serialNumberArray.length - 1]
+                          " class="page-item" (click)="moveToPage(currentPage + 2)"
+                (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                <a class="page-link" href="javascript:void(0);"> ... </a>
+              </li>
+              }
+              }
+
+              <li class="page-item" [ngClass]="{
+                          disabled:
+                            currentPage ===
+                              pageNumberArray[pageNumberArray.length - 1] ||
+                              lstTimesheet.length === 0
+                        }">
+                <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i
+                    class=" fa fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
+<!-- Add Today Work Modal -->
+<div id="generate_timesheet" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Generate Timesheet</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="input-block mb-3 col-sm-6">
+              <label class="col-form-label" for="">Period <span class="text-danger">*</span></label>
+              <mat-select class="custom-mat-select" placeholder="select period" (selectionChange)="onPeriodChange($event)">
+                <mat-option *ngFor="let period of timesheetPeriods" [value]="period.timeSheetPeriod">
+                  {{ period.timeSheetPeriod }}
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn" (click)="GenerateTimesheet()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Add Today Work Modal -->
+
+<!-- Edit Today Work Modal -->
+<div id="edit_todaywork" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Work Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="input-block mb-3 col-sm-6">
+              <label class="col-form-label" for="">Project <span class="text-danger">*</span></label>
+              <mat-select class="custom-mat-select " placeholder="Office Management">
+                <mat-option value="office">Office Management</mat-option>
+                <mat-option value="project">Project Management</mat-option>
+                <mat-option value="videocall">Video Calling App</mat-option>
+                <mat-option value="hospital">Hospital Administration</mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-block mb-3 col-sm-4">
+              <label class="col-form-label" for="">Deadline <span class="text-danger">*</span></label>
+              <div class="cal-icon">
+                <input class="form-control" type="text" value="5 May 2023" readonly>
+              </div>
+            </div>
+            <div class="input-block mb-3 col-sm-4">
+              <label class="col-form-label" for="">Total Hours <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" value="100" readonly>
+            </div>
+            <div class="input-block mb-3 col-sm-4">
+              <label for="">Remaining Hours <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" value="60" readonly>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-block date-input2 mb-3 col-sm-6">
+              <label class="col-form-label" for="">Date <span class="text-danger">*</span></label>
+              <div class="cal-icon">
+                <input class="form-control datetimepicker" bsDatepicker container=".date-input2" type="text"
+                  value="31-12-2022">
+              </div>
+            </div>
+            <div class="input-block mb-3 col-sm-6">
+              <label class="col-form-label" for="">Hours <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" value="9">
+            </div>
+          </div>
+          <div class="input-block mb-3">
+            <label class="col-form-label" for="">Description <span class="text-danger">*</span></label>
+            <textarea rows="4"
+              class="form-control">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque.</textarea>
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Edit Today Work Modal -->
+
+<!-- Delete Today Work Modal -->
+<div class="modal custom-modal fade" id="delete_workdetail" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Work Details</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+            </div>
+            <div class="col-6">
+              <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Today Work Modal -->

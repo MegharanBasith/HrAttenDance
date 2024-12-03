@@ -1,0 +1,15 @@
+.vacation-form {
+    padding: 10px;
+    max-width: 120%;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the end */
+    gap: 20px; /* Add space between buttons */
+    padding: 20px;
+}
+
+.submit-button {
+    width: 200px;
+}

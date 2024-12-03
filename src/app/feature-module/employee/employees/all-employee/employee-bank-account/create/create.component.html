@@ -1,0 +1,177 @@
+<div class="form-container">
+    <p-toast></p-toast>
+
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <form [formGroup]="form" class="vacation-form">
+        <div class="card custom-card">
+            <div class="card-header border-bottom-0 justify-content-between">
+                <div class="card-title">{{ 'employee.createEmployeeBankAccount' | translate }}</div>
+                <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#employeeBankAccountDetails"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                    <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                </a>
+            </div>
+            <div class="collapse show border-top" id="employeeBankAccountDetails">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.employee'| translate}}<span
+                                        class="text-danger">*</span></label>
+                                <input type="number" class="form-control"
+                                    [class.invalid]="form.get('employeeId')?.invalid && form.get('emploueeId')?.touched"
+                                    formControlName="employeeId">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.paymentMethod'|
+                                    translate}}</label><span class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('paymentMethod')?.invalid && form.get('paymentMethod')?.touched"
+                                    formControlName="paymentMethod" placeholder="{{'select'| translate}}">
+                                    <mat-option *ngFor="let option of paymentMethods" [value]="option.pymMethodId">
+                                        {{ option.pymMethodDesc }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="form.controls['paymentMethod']?.touched && form.controls['paymentMethod']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.paymentMethodRequired'| translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.bank'| translate}}</label><span
+                                    class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('bank')?.invalid && form.get('bank')?.touched"
+                                    formControlName="bank" placeholder="{{'select'| translate}}">
+                                    <mat-option *ngFor="let option of banks" [value]="option.bankId">
+                                        {{ option.description }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="form.controls['bank']?.touched && form.controls['bank']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.bankRequired'| translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.accountTypeId'|
+                                    translate}}</label><span class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('accountType')?.invalid && form.get('accountType')?.touched"
+                                    formControlName="accountType" placeholder="{{'select'| translate}}">
+                                    <mat-option *ngFor="let option of accountTypes" [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="form.controls['accountType']?.touched && form.controls['accountType']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.accountTypeRequired'| translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.applicableID'| translate}}</label><span
+                                    class="text-danger">*</span>
+                                <mat-select class="custom-mat-select"
+                                    [class.invalid]="form.get('applicableId')?.invalid && form.get('applicableId')?.touched"
+                                    formControlName="applicableId" placeholder="{{'select'| translate}}">
+                                    <mat-option *ngFor="let option of applicableIds" [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="form.controls['applicableId']?.touched && form.controls['applicableId']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.applicableIdRequired'| translate}}</small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.accountNumber'| translate}}<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control"
+                                    [class.invalid]="form.get('accountNumber')?.invalid && form.get('accountNumber')?.touched"
+                                    formControlName="accountNumber">
+                                <!-- <mat-error
+                                    *ngIf="form.controls['accountNumber']?.touched && form.controls['accountNumber']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.accountNumberRequired' | translate
+                                        }}</small>
+                                </mat-error> -->
+                                <mat-error *ngIf="form.controls['accountNumber']?.touched && form.get('accountNumber')?.hasError('invalidAccountNumber')">
+                                    <small class="text-danger"> {{ form.get('accountNumber')?.getError('invalidAccountNumber') }} </small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                                <label class="col-form-label" for="">{{'employee.iban'| translate}}<span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control"
+                                    [class.invalid]="form.get('iban')?.invalid && form.get('iban')?.touched"
+                                    formControlName="iban">
+                                <mat-error
+                                    *ngIf="form.controls['iban']?.touched && form.controls['iban']?.errors?.['required']">
+                                    <small class="text-danger"> {{'employee.ibanRequired' | translate }}</small>
+                                </mat-error>
+                                <mat-error *ngIf="form.controls['iban']?.touched && form.get('iban')?.hasError('invalidIban')">
+                                    <small class="text-danger"> {{ form.get('iban')?.getError('invalidIban') }} </small>
+                                </mat-error>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for="">{{'employee.accountExpiryDate'| translate}}</label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        container=".date-input1"
+                                        [class.invalid]="form.get('accountExpiryDate')?.invalid && form.get('accountExpiryDate')?.touched"
+                                        formControlName="accountExpiryDate">
+                                    <!-- <mat-error
+                                        *ngIf="form.controls['accountExpiryDate']?.touched && form.controls['accountExpiryDate']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee.accountExpiryDateRequired'|
+                                            translate}}</small>
+                                    </mat-error> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input1">
+                                <label class="col-form-label" for="">{{'employee.atmExpiryDate'| translate}}</label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                        container=".date-input1"
+                                        [class.invalid]="form.get('atmExpiryDate')?.invalid && form.get('atmExpiryDate')?.touched"
+                                        formControlName="atmExpiryDate">
+                                    <!-- <mat-error
+                                        *ngIf="form.controls['atmExpiryDate']?.touched && form.controls['atmExpiryDate']?.errors?.['required']">
+                                        <small class="text-danger"> {{'employee.atmExpiryDateRequired'|
+                                            translate}}</small>
+                                    </mat-error> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="submit-container">
+        <button class="btn btn-info submit-button"  [routerLink]="routes.employeeList">{{'cancel'
+            | translate
+            }}</button>
+        <button class="btn btn-primary submit-button" [disabled]="form.invalid" (click)="createBankAccount()">{{'submit'
+            | translate
+            }}</button>
+    </div>
+</div>

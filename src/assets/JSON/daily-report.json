@@ -1,0 +1,51 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "name1": "John Doe",
+          "name2": "#0001",
+          "date": "20 Dec 2023",
+          "department": "Design",
+          "status": "Week off",
+          "img": "assets/img/profiles/avatar-2.jpg"
+        },
+        {
+          "id": 2,
+          "name1": "John Smith",
+          "name2": "#0003",
+          "date": "20 Dec 2023",
+          "department": "Android Developer",
+          "status": "Week off",
+          "img": "assets/img/profiles/avatar-10.jpg"
+        },
+        {
+          "id": 3,
+          "name1": "Mike Litorus",
+          "name2": "#0004",
+          "date": "20 Dec 2023",
+          "department": "IOS Developer",
+          "status": "Week off",
+          "img": "assets/img/profiles/avatar-05.jpg"
+        },
+        {
+          "id": 4,
+          "name1": "Richard Miles",
+          "name2": "#0002",
+          "date": "20 Dec 2023",
+          "department": "Web Developer",
+          "status": "Absent",
+          "img": "assets/img/profiles/avatar-09.jpg"
+        },
+        {
+          "id": 5,
+          "name1": "Wilmer Deluna",
+          "name2": "#0005",
+          "date": "20 Dec 2023",
+          "department": "Team Leader",
+          "status": "Week off",
+          "img": "assets/img/profiles/avatar-11.jpg"
+        }
+      ],
+      "totalData":5
+    
+}

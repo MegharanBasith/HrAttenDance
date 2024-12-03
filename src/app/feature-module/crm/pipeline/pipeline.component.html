@@ -1,0 +1,1096 @@
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <h3 class="page-title">Pipeline</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a [routerLink]="routes.adminDashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Pipeline</li>
+        </ul>
+      </div>
+      <div class="col-md-8 float-end ms-auto">
+        <div class="d-flex title-head">
+          <div class="view-icons">
+            <a href="javascript:void(0);" class="grid-view btn btn-link"
+              ><i class="las la-redo-alt"></i
+            ></a>
+            <a
+              href="javascript:void(0);"
+              class="list-view btn btn-link"
+              id="collapse-header"
+              (click)="fullscreen()"
+              ><i class="las la-expand-arrows-alt"></i
+            ></a>
+            <a
+              href="javascript:void(0);"
+              class="list-view btn btn-link"
+              id="filter_search"
+              (click)="openFilter()"
+              ><i class="las la-filter"></i
+            ></a>
+          </div>
+          <div class="form-sort">
+            <a
+              href="javascript:void(0);"
+              class="list-view btn btn-link"
+              data-bs-toggle="modal"
+              data-bs-target="#export"
+              ><i class="las la-file-export"></i>Export</a
+              >
+            </div>
+            <a
+              href="javascript:void(0);"
+              class="btn add-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#add_pipeline"
+              ><i class="la la-plus-circle"></i> Add Pipeline</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Page Header -->
+
+      <!-- Search Filter -->
+      <div
+        class="filter-filelds"
+        id="filter_inputs"
+        [ngClass]="{ 'd-block': filter, 'd-none': !filter }"
+        >
+        <div class="row filter-row custom-filter-row">
+          <div class="custom-col">
+            <div class="input-block mb-3 form-focus">
+              <mat-form-field class="example-full-width">
+                <mat-label>Pipeline Name</mat-label>
+                <input type="text" class="form-control floating" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="custom-col">
+            <div class="input-block mb-3 form-focus">
+              <mat-form-field class="example-full-width">
+                <mat-label>Deal Value</mat-label>
+                <input class="form-control floating datetimepicker" type="text" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="custom-col">
+            <div class="input-block mb-3 form-focus">
+              <div class="cal-icon">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Created Date</mat-label>
+                  <input type="text" matInput class="form-control floating datetimepicker" bsDatepicker />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-col">
+            <div class="input-block mb-3 form-focus select-focus matlabelselect">
+
+              <mat-select class="select custom-mat-select floating-mat-select" placeholder="--Select--">
+                <mat-option>--Select--</mat-option>
+                <mat-option value="Germany">Select</mat-option>
+                <mat-option value="USA">Win</mat-option>
+                <mat-option value="Canada">In Pipeline</mat-option>
+                <mat-option value="India">Conversation</mat-option>
+                <mat-option value="China">Folllow Up</mat-option>
+                <mat-option value="China">Lost</mat-option>
+              </mat-select>
+              <label class="focus-label">Stages</label>
+            </div>
+          </div>
+          <div class="custom-col">
+            <a href="javascript:void(0);" class="btn btn-success w-100"> Search </a>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <!-- /Search Filter -->
+      <div class="filter-section">
+        <ul>
+          <li>
+            <div class="form-sort">
+              <i class="las la-sort-alpha-up-alt"></i>
+
+              <mat-select
+                class="select space-select"
+                placeholder="Sort By Alphabet"
+                >
+                <mat-option value="all">Sort By Alphabet</mat-option>
+                <mat-option value="web">Ascending</mat-option>
+                <mat-option value="marketing">Descending</mat-option>
+                <mat-option value="it">Recently Viewed</mat-option>
+                <mat-option value="it">Recently Added</mat-option>
+              </mat-select>
+            </div>
+          </li>
+          <li>
+            <div class="search-set">
+              <div class="search-input">
+                <a href="javascript:void(0);" class="btn btn-searchset"
+                  ><i class="las la-search"></i
+                ></a>
+                <div class="dataTables_filter">
+                  <label>
+                    <input
+                      [(ngModel)]="searchDataValue"
+                      [ngModelOptions]="{ standalone: true }"
+                      [ngModelOptions]="{ standalone: true }"
+                      (ngModelChange)="searchData(searchDataValue)"
+                      type="search"
+                      class="form-control"
+                      placeholder="Search..."
+                    /></label>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table_header">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="dataTables_length">
+                    <label class="col-form-label" for="">
+                      Show
+                      <select
+                        [(ngModel)]="pageSize"
+                        (ngModelChange)="changePageSize()"
+                        class="form-control form-control-sm"
+                        >
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      Entries
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table
+                matSort
+                (matSortChange)="sortData($event)"
+                class="table table-striped custom-table datatable contact-table"
+                >
+                <thead>
+                  <tr>
+                    <th mat-sort-header="Pipeline">Pipeline Name</th>
+                    <th mat-sort-header="total value">Total Deal Value</th>
+                    <th mat-sort-header="no of deals">No of Deals</th>
+                    <th mat-sort-header="stages">Stages</th>
+                    <th mat-sort-header="created">Created Date</th>
+                    <th mat-sort-header="status">Status</th>
+                    <th class="no-sort text-end">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of pipeline; track row; let i = $index) {
+                    <tr>
+                      <td>
+                        {{ row.pipelineName }}
+                      </td>
+                      <td>
+                        {{ row.totalDealValue }}
+                      </td>
+                      <td>{{ row.noOfDeals }}</td>
+                      <td>
+                        <div class="pipeline-progress d-flex align-items-center">
+                          <div class="progress">
+                            <div
+                              class="progress-bar"
+                      [ngClass]="{
+                        'progress-bar-success': row.stages === 'Win',
+                        'progress-bar-info': row.stages === 'Conversation',
+                        'progress-bar-violet': row.stages === 'In Pipeline',
+                        'progress-bar-warning': row.stages === 'Folllow Up',
+                        'progress-bar-danger': row.stages === 'Lost',
+                        'progress-bar-pink': row.stages === 'Schedule Service'
+                      }"
+                              role="progressbar"
+                            ></div>
+                          </div>
+                          <span>{{ row.stages }}</span>
+                        </div>
+                      </td>
+                      <td>{{ row.createdDate }}</td>
+                      <td>
+                        <div class="dropdown action-label">
+                          <a
+                            href="javascript:void(0);"
+                            class="btn btn-white btn-sm"
+                    [ngClass]="{
+                      'badge-outline-success': row.status === 'Active',
+                      'badge-outline-danger': row.status === 'Inactive'
+                    }"
+                            >
+                            {{ row.status }}
+                          </a>
+                        </div>
+                      </td>
+                      <td class="text-end">
+                        <div class="dropdown dropdown-action">
+                          <a
+                            href="javascript:void(0);"
+                            class="action-icon dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            ><i class="material-icons">more_vert</i></a
+                            >
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a
+                                class="dropdown-item"
+                                href="javascript:void(0);"
+                                data-bs-toggle="modal"
+                                data-bs-target="#edit_pipeline"
+                                ><i class="fa-solid fa-pencil m-r-5"></i> Edit</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  href="javascript:void(0);"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#delete_pipeline"
+                                  ><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a
+                                  >
+                                  <a
+                                    class="dropdown-item"
+                                    [routerLink]="routes.contactDetails"
+                                    ><i class="fa-regular fa-eye"></i> Preview</a
+                                    >
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table_footer">
+                      <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info">
+                          Showing {{ serialNumberArray[0] }} to
+                          {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                          {{ totalData }} entries
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-md-7">
+                        <div class="pagination_section">
+                          <ul class="pagination">
+                            <li
+                              class="page-item"
+                [ngClass]="{
+                  disabled: currentPage === 1
+                }"
+                              >
+                              <a
+                                (click)="getMoreData('previous')"
+                                class="page-link"
+                                href="javascript:void(0);"
+                                tabindex="-1"
+                                ><i class="fa fa-angle-double-left"></i></a
+                                >
+                              </li>
+
+                              @for (item of pageNumberArray; track item; let i = $index) {
+                                <li
+                                  class="page-item"
+                                  [class.active]="item === currentPage"
+                  [ngClass]="
+                    (pageNumberArray[currentPage - 2] > item &&
+                      item !== 1 &&
+                      pageNumberArray.length > 6) ||
+                    (pageNumberArray[currentPage] < item &&
+                      item !== 1 &&
+                      pageNumberArray.length > 6 &&
+                      pageNumberArray.length !== item)
+                      ? 'hide-page-no'
+                      : 'show-page-no'
+                  "
+                                  >
+                                  <a
+                                    (click)="moveToPage(item)"
+                                    class="page-link"
+                                    href="javascript:void(0);"
+                                    >
+                                    {{ item }}
+                                  </a>
+                                </li>
+                                @if (
+                                  i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                                  ) {
+                                  <li
+                                    class="page-item"
+                                    [hidden]="currentPage === 1"
+                                    (click)="moveToPage(currentPage - 2)"
+                                    (keydown.enter)="moveToPage(currentPage - 2)"
+                                    tabindex="0"
+                                    >
+                                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                                  </li>
+                                }
+                                @if (
+                                  i === pageNumberArray.length - 2 &&
+                                  pageNumberArray.length > 6
+                                  ) {
+                                  <li
+                  [hidden]="
+                    currentPage >=
+                      pageNumberArray[pageNumberArray.length - 2] ||
+                    totalData < serialNumberArray[serialNumberArray.length - 1]
+                  "
+                                    class="page-item"
+                                    (click)="moveToPage(currentPage + 2)"
+                                    (keydown.enter)="moveToPage(currentPage + 2)"
+                                    tabindex="0"
+                                    >
+                                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                                  </li>
+                                }
+                              }
+
+                              <li
+                                class="page-item"
+                [ngClass]="{
+                  disabled:
+                    currentPage ===
+                      pageNumberArray[pageNumberArray.length - 1] ||
+                    pipeline.length === 0
+                }"
+                                >
+                                <a
+                                  (click)="getMoreData('next')"
+                                  class="page-link"
+                                  href="javascript:void(0);"
+                                  ><i class=" fa fa-angle-double-right"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Add Pipeline -->
+                  <div
+                    class="modal custom-modal fade custom-modal-two modal-padding"
+                    id="add_pipeline"
+                    role="dialog"
+                    >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header header-border justify-content-between p-0">
+                          <h5 class="modal-title">Add New Pipeline</h5>
+                          <button
+                            type="button"
+                            class="btn-close position-static"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            >
+                            <span aria-hidden="true">×</span>
+                          </button>
+                        </div>
+                        <div class="modal-body p-0">
+                          <form>
+                            <div class="contact-input-set">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="input-block mb-3">
+                                    <label class="col-form-label"
+                                      >Pipeline Name <span class="text-danger">*</span></label
+                                      >
+                                      <input class="form-control" type="text" />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div
+                                      class="pipeline-modal-head d-flex justify-content-between mb-3"
+                                      >
+                                      <h4>Pipeline Stages</h4>
+                                      <a
+                                        href="javascript:void(0);"
+                                        class="add-stage"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#add_stage"
+                                        ><i class="la la-plus-square me-2"></i>Add New</a
+                                        >
+                                      </div>
+                                      <ul class="pipeline-stages">
+                                        <li>
+                                          <p>
+                                            <i class="la la-grip-vertical"></i>
+                                            Inpipeline
+                                          </p>
+                                          <div class="edit-delete-stage">
+                                            <a
+                                              href="javascript:void(0);"
+                                              class="edit-stage"
+                                              data-bs-toggle="modal"
+                                              data-bs-target="#edit_stage"
+                                              ><i class="la la-edit me-2"></i>Edit</a
+                                              >
+                                              <a
+                                                href="javascript:void(0);"
+                                                class="delete-stage"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#delete_stage"
+                                                ><i class="la la-trash-alt me-2"></i>Delete</a
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <p>
+                                                <i class="la la-grip-vertical"></i>
+                                                Follow Up
+                                              </p>
+                                              <div class="edit-delete-stage">
+                                                <a
+                                                  href="javascript:void(0);"
+                                                  class="edit-stage"
+                                                  data-bs-toggle="modal"
+                                                  data-bs-target="#edit_stage"
+                                                  ><i class="la la-edit me-2"></i>Edit</a
+                                                  >
+                                                  <a
+                                                    href="javascript:void(0);"
+                                                    class="delete-stage"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#delete_stage"
+                                                    ><i class="la la-trash-alt me-2"></i>Delete</a
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <p>
+                                                    <i class="la la-grip-vertical"></i>
+                                                    Schedule service
+                                                  </p>
+                                                  <div class="edit-delete-stage">
+                                                    <a
+                                                      href="javascript:void(0);"
+                                                      class="edit-stage"
+                                                      data-bs-toggle="modal"
+                                                      data-bs-target="#edit_stage"
+                                                      ><i class="la la-edit me-2"></i>Edit</a
+                                                      >
+                                                      <a
+                                                        href="javascript:void(0);"
+                                                        class="delete-stage"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#delete_stage"
+                                                        ><i class="la la-trash-alt me-2"></i>Delete</a
+                                                        >
+                                                      </div>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                                <div class="col-md-12">
+                                                  <div class="pipeline-modal-head input-blocks add-products">
+                                                    <h4 class="mb-3">Access</h4>
+                                                    <div class="access-info-tab">
+                                                      <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                          <span
+                                                            class="custom_radio mb-0"
+                                                            id="pills-public-tab"
+                                                            data-bs-toggle="pill"
+                                                            data-bs-target="#pills-public"
+                                                            role="tab"
+                                                            aria-controls="pills-public"
+                                                            aria-selected="true"
+                                                            >
+                                                            <input
+                                                              type="radio"
+                                                              class="form-control"
+                                                              name="public"
+                                                              checked
+                                                              />
+                                                              <span class="checkmark"></span> All</span
+                                                              >
+                                                            </li>
+                                                            <li class="nav-item" role="presentation">
+                                                              <span
+                                                                class="custom_radio mb-0 active"
+                                                                id="pills-select-people-tab"
+                                                                data-bs-toggle="pill"
+                                                                data-bs-target="#pills-select-people"
+                                                                role="tab"
+                                                                aria-controls="pills-select-people"
+                                                                aria-selected="false"
+                                                                >
+                                                                <input
+                                                                  type="radio"
+                                                                  class="form-control"
+                                                                  name="select-people"
+                                                                  />
+                                                                  <span class="checkmark"></span> Select People</span
+                                                                  >
+                                                                </li>
+                                                              </ul>
+                                                            </div>
+                                                          </div>
+                                                          <div class="tab-content" id="pills-tabContent2">
+                                                            <div
+                                                              class="tab-pane fade"
+                                                              id="pills-public"
+                                                              role="tabpanel"
+                                                              aria-labelledby="pills-public-tab"
+                                                            ></div>
+                                                            <div
+                                                              class="tab-pane fade show active"
+                                                              id="pills-select-people"
+                                                              role="tabpanel"
+                                                              aria-labelledby="pills-select-people-tab"
+                                                              >
+                                                              <ul class="person-selected">
+                                                                <li>
+                                                                  <div class="person-profile">
+                                                                    <a href="javascript:void(0);" class="profile-pic">
+                                                                      <img
+                                                                        src="assets/img/avatar/avatar-21.jpg"
+                                                                        alt="Img"
+                                                                        />
+                                                                        Vaughan
+                                                                      </a>
+                                                                    </div>
+                                                                    <a href="javascript:void(0);" class="remove-person"
+                                                                      >Remove</a
+                                                                      >
+                                                                    </li>
+                                                                    <li>
+                                                                      <div class="person-profile">
+                                                                        <a href="javascript:void(0);" class="profile-pic">
+                                                                          <img
+                                                                            src="assets/img/avatar/avatar-1.jpg"
+                                                                            alt="Img"
+                                                                            />
+                                                                            Jessica
+                                                                          </a>
+                                                                        </div>
+                                                                        <a href="javascript:void(0);" class="remove-person"
+                                                                          >Remove</a
+                                                                          >
+                                                                        </li>
+                                                                      </ul>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                                <div class="col-lg-12 text-end form-wizard-button">
+                                                                  <button
+                                                                    class="button btn-lights reset-btn"
+                                                                    type="reset"
+                                                                    data-bs-dismiss="modal"
+                                                                    >
+                                                                    Reset
+                                                                  </button>
+                                                                  <button class="btn btn-primary" type="submit">
+                                                                    Save Pipeline
+                                                                  </button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </form>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <!-- /Add Pipeline -->
+
+                                                  <!-- Edit Pipeline -->
+                                                  <div
+                                                    class="modal custom-modal fade custom-modal-two modal-padding"
+                                                    id="edit_pipeline"
+                                                    role="dialog"
+                                                    >
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                      <div class="modal-content">
+                                                        <div class="modal-header header-border justify-content-between p-0">
+                                                          <h5 class="modal-title">Edit Pipeline</h5>
+                                                          <button
+                                                            type="button"
+                                                            class="btn-close position-static"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"
+                                                            >
+                                                            <span aria-hidden="true">×</span>
+                                                          </button>
+                                                        </div>
+                                                        <div class="modal-body p-0">
+                                                          <form>
+                                                            <div class="contact-input-set">
+                                                              <div class="row">
+                                                                <div class="col-md-12">
+                                                                  <div class="input-block mb-3">
+                                                                    <label class="col-form-label"
+                                                                      >Pipeline Name <span class="text-danger">*</span></label
+                                                                      >
+                                                                      <input class="form-control" type="text" value="Sales" />
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class="col-md-12">
+                                                                    <div
+                                                                      class="pipeline-modal-head d-flex justify-content-between mb-3"
+                                                                      >
+                                                                      <h4>Pipeline Stages</h4>
+                                                                      <a
+                                                                        href="javascript:void(0);"
+                                                                        class="add-stage"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#add_stage"
+                                                                        ><i class="la la-plus-square me-2"></i>Add New</a
+                                                                        >
+                                                                      </div>
+                                                                      <ul class="pipeline-stages">
+                                                                        <li>
+                                                                          <p>
+                                                                            <i class="la la-grip-vertical"></i>
+                                                                            Inpipeline
+                                                                          </p>
+                                                                          <div class="edit-delete-stage">
+                                                                            <a
+                                                                              href="javascript:void(0);"
+                                                                              class="edit-stage"
+                                                                              data-bs-toggle="modal"
+                                                                              data-bs-target="#edit_stage"
+                                                                              ><i class="la la-edit me-2"></i>Edit</a
+                                                                              >
+                                                                              <a
+                                                                                href="javascript:void(0);"
+                                                                                class="delete-stage"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#delete_stage"
+                                                                                ><i class="la la-trash-alt me-2"></i>Delete</a
+                                                                                >
+                                                                              </div>
+                                                                            </li>
+                                                                            <li>
+                                                                              <p>
+                                                                                <i class="la la-grip-vertical"></i>
+                                                                                Follow Up
+                                                                              </p>
+                                                                              <div class="edit-delete-stage">
+                                                                                <a
+                                                                                  href="javascript:void(0);"
+                                                                                  class="edit-stage"
+                                                                                  data-bs-toggle="modal"
+                                                                                  data-bs-target="#edit_stage"
+                                                                                  ><i class="la la-edit me-2"></i>Edit</a
+                                                                                  >
+                                                                                  <a
+                                                                                    href="javascript:void(0);"
+                                                                                    class="delete-stage"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target="#delete_stage"
+                                                                                    ><i class="la la-trash-alt me-2"></i>Delete</a
+                                                                                    >
+                                                                                  </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                  <p>
+                                                                                    <i class="la la-grip-vertical"></i>
+                                                                                    Schedule service
+                                                                                  </p>
+                                                                                  <div class="edit-delete-stage">
+                                                                                    <a
+                                                                                      href="javascript:void(0);"
+                                                                                      class="edit-stage"
+                                                                                      data-bs-toggle="modal"
+                                                                                      data-bs-target="#edit_stage"
+                                                                                      ><i class="la la-edit me-2"></i>Edit</a
+                                                                                      >
+                                                                                      <a
+                                                                                        href="javascript:void(0);"
+                                                                                        class="delete-stage"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#delete_stage"
+                                                                                        ><i class="la la-trash-alt me-2"></i>Delete</a
+                                                                                        >
+                                                                                      </div>
+                                                                                    </li>
+                                                                                  </ul>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                  <div class="pipeline-modal-head input-blocks add-products">
+                                                                                    <h4 class="mb-3">Access</h4>
+                                                                                    <div class="access-info-tab">
+                                                                                      <ul class="nav nav-pills" id="pills-tab2" role="tablist">
+                                                                                        <li class="nav-item" role="presentation">
+                                                                                          <span
+                                                                                            class="custom_radio mb-0"
+                                                                                            id="pills-public-tab2"
+                                                                                            data-bs-toggle="pill"
+                                                                                            data-bs-target="#pills-public2"
+                                                                                            role="tab"
+                                                                                            aria-controls="pills-public2"
+                                                                                            aria-selected="true"
+                                                                                            >
+                                                                                            <input
+                                                                                              type="radio"
+                                                                                              class="form-control"
+                                                                                              name="public"
+                                                                                              checked
+                                                                                              />
+                                                                                              <span class="checkmark"></span> All</span
+                                                                                              >
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                              <span
+                                                                                                class="custom_radio mb-0 active"
+                                                                                                id="pills-select-people-tab2"
+                                                                                                data-bs-toggle="pill"
+                                                                                                data-bs-target="#pills-select-people2"
+                                                                                                role="tab"
+                                                                                                aria-controls="pills-select-people2"
+                                                                                                aria-selected="false"
+                                                                                                >
+                                                                                                <input
+                                                                                                  type="radio"
+                                                                                                  class="form-control"
+                                                                                                  name="select-people"
+                                                                                                  />
+                                                                                                  <span class="checkmark"></span> Select People</span
+                                                                                                  >
+                                                                                                </li>
+                                                                                              </ul>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                          <div class="tab-content" id="pills-tabContent3">
+                                                                                            <div
+                                                                                              class="tab-pane fade"
+                                                                                              id="pills-public2"
+                                                                                              role="tabpanel"
+                                                                                              aria-labelledby="pills-public-tab2"
+                                                                                            ></div>
+                                                                                            <div
+                                                                                              class="tab-pane fade show active"
+                                                                                              id="pills-select-people2"
+                                                                                              role="tabpanel"
+                                                                                              aria-labelledby="pills-select-people-tab2"
+                                                                                              >
+                                                                                              <ul class="person-selected">
+                                                                                                <li>
+                                                                                                  <div class="person-profile">
+                                                                                                    <a href="javascript:void(0);" class="profile-pic">
+                                                                                                      <img
+                                                                                                        src="assets/img/avatar/avatar-21.jpg"
+                                                                                                        alt="Img"
+                                                                                                        />
+                                                                                                        Vaughan
+                                                                                                      </a>
+                                                                                                    </div>
+                                                                                                    <a href="javascript:void(0);" class="remove-person"
+                                                                                                      >Remove</a
+                                                                                                      >
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                      <div class="person-profile">
+                                                                                                        <a href="javascript:void(0);" class="profile-pic">
+                                                                                                          <img
+                                                                                                            src="assets/img/avatar/avatar-1.jpg"
+                                                                                                            alt="Img"
+                                                                                                            />
+                                                                                                            Jessica
+                                                                                                          </a>
+                                                                                                        </div>
+                                                                                                        <a href="javascript:void(0);" class="remove-person"
+                                                                                                          >Remove</a
+                                                                                                          >
+                                                                                                        </li>
+                                                                                                      </ul>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <div class="col-lg-12 text-end form-wizard-button">
+                                                                                                  <button
+                                                                                                    class="button btn-lights reset-btn"
+                                                                                                    type="reset"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    >
+                                                                                                    Reset
+                                                                                                  </button>
+                                                                                                  <button class="btn btn-primary" type="submit">
+                                                                                                    Save Pipeline
+                                                                                                  </button>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </form>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  <!-- /Edit Pipeline -->
+
+                                                                                  <!-- Add Stage -->
+                                                                                  <div
+                                                                                    class="modal custom-modal fade modal-padding"
+                                                                                    id="add_stage"
+                                                                                    role="dialog"
+                                                                                    >
+                                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                                      <div class="modal-content">
+                                                                                        <div class="modal-header header-border justify-content-between p-0">
+                                                                                          <h5 class="modal-title">Add New Stage</h5>
+                                                                                          <button
+                                                                                            type="button"
+                                                                                            class="btn-close position-static"
+                                                                                            data-bs-dismiss="modal"
+                                                                                            aria-label="Close"
+                                                                                            >
+                                                                                            <span aria-hidden="true">×</span>
+                                                                                          </button>
+                                                                                        </div>
+                                                                                        <div class="modal-body p-0">
+                                                                                          <form>
+                                                                                            <div class="row">
+                                                                                              <div class="col-md-12">
+                                                                                                <div class="input-block mb-3">
+                                                                                                  <label class="col-form-label"
+                                                                                                    >Stage Name <span class="text-danger">*</span></label
+                                                                                                    >
+                                                                                                    <input class="form-control" type="text" />
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <div class="col-lg-12 text-end form-wizard-button">
+                                                                                                  <button
+                                                                                                    class="button btn-lights reset-btn"
+                                                                                                    type="reset"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    >
+                                                                                                    Reset
+                                                                                                  </button>
+                                                                                                  <button class="btn btn-primary" type="submit">
+                                                                                                    Save Stage
+                                                                                                  </button>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </form>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                    <!-- /Add Stage -->
+
+                                                                                    <!-- Edit Stage -->
+                                                                                    <div
+                                                                                      class="modal custom-modal fade modal-padding"
+                                                                                      id="edit_stage"
+                                                                                      role="dialog"
+                                                                                      >
+                                                                                      <div class="modal-dialog modal-dialog-centered">
+                                                                                        <div class="modal-content">
+                                                                                          <div class="modal-header header-border justify-content-between p-0">
+                                                                                            <h5 class="modal-title">Edit Stage</h5>
+                                                                                            <button
+                                                                                              type="button"
+                                                                                              class="btn-close position-static"
+                                                                                              data-bs-dismiss="modal"
+                                                                                              aria-label="Close"
+                                                                                              >
+                                                                                              <span aria-hidden="true">×</span>
+                                                                                            </button>
+                                                                                          </div>
+                                                                                          <div class="modal-body p-0">
+                                                                                            <form>
+                                                                                              <div class="row">
+                                                                                                <div class="col-md-12">
+                                                                                                  <div class="input-block mb-3">
+                                                                                                    <label class="col-form-label"
+                                                                                                      >Stage Name <span class="text-danger">*</span></label
+                                                                                                      >
+                                                                                                      <input class="form-control" type="text" value="Win" />
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                  <div class="col-lg-12 text-end form-wizard-button">
+                                                                                                    <button
+                                                                                                      class="button btn-lights reset-btn"
+                                                                                                      type="reset"
+                                                                                                      data-bs-dismiss="modal"
+                                                                                                      >
+                                                                                                      Reset
+                                                                                                    </button>
+                                                                                                    <button class="btn btn-primary" type="submit">
+                                                                                                      Save Stage
+                                                                                                    </button>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </form>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                      <!-- /Edit Stage -->
+
+                                                                                      <!-- Delete Pipeline -->
+                                                                                      <div class="modal custom-modal fade" id="delete_pipeline" role="dialog">
+                                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                                          <div class="modal-content">
+                                                                                            <div class="modal-body">
+                                                                                              <div class="success-message text-center">
+                                                                                                <div class="success-popup-icon bg-danger">
+                                                                                                  <i class="la la-trash-restore"></i>
+                                                                                                </div>
+                                                                                                <h3>Are you sure, You want to delete</h3>
+                                                                                                <p>Pipeline ”Sales” from your Account</p>
+                                                                                                <div class="col-lg-12 text-center form-wizard-button">
+                                                                                                  <a
+                                                                                                    href="javascript:void(0);"
+                                                                                                    class="button btn-lights"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    >Not Now</a
+                                                                                                    >
+                                                                                                    <a href="javascript:void(0);" class="btn btn-primary" data-bs-dismiss="modal">Okay</a>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <!-- /Delete Pipeline -->
+
+                                                                                        <!-- Delete Pipeline -->
+                                                                                        <div class="modal custom-modal fade" id="delete_stage" role="dialog">
+                                                                                          <div class="modal-dialog modal-dialog-centered">
+                                                                                            <div class="modal-content">
+                                                                                              <div class="modal-body">
+                                                                                                <div class="success-message text-center">
+                                                                                                  <div class="success-popup-icon bg-danger">
+                                                                                                    <i class="la la-trash-restore"></i>
+                                                                                                  </div>
+                                                                                                  <h3>Are you sure, You want to delete</h3>
+                                                                                                  <p>Stage ”Inpipeline” from your Account</p>
+                                                                                                  <div class="col-lg-12 text-center form-wizard-button">
+                                                                                                    <a
+                                                                                                      href="javascript:void(0);"
+                                                                                                      class="button btn-lights"
+                                                                                                      data-bs-dismiss="modal"
+                                                                                                      >Not Now</a
+                                                                                                      >
+                                                                                                      <a href="javascript:void(0);" class="btn btn-primary" data-bs-dismiss="modal">Okay</a>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                          <!-- /Delete Pipeline -->
+
+                                                                                          <!-- Export -->
+                                                                                          <div class="modal custom-modal fade modal-padding" id="export" role="dialog">
+                                                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                                              <div class="modal-content">
+                                                                                                <div class="modal-header header-border justify-content-between p-0">
+                                                                                                  <h5 class="modal-title">Export</h5>
+                                                                                                  <button
+                                                                                                    type="button"
+                                                                                                    class="btn-close position-static"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-label="Close"
+                                                                                                    >
+                                                                                                    <span aria-hidden="true">×</span>
+                                                                                                  </button>
+                                                                                                </div>
+                                                                                                <div class="modal-body p-0">
+                                                                                                  <form>
+                                                                                                    <div class="row">
+                                                                                                      <div class="col-md-12">
+                                                                                                        <div class="input-block mb-3">
+                                                                                                          <h5 class="mb-3">Export</h5>
+                                                                                                          <div class="status-radio-btns d-flex">
+                                                                                                            <div class="people-status-radio">
+                                                                                                              <input
+                                                                                                                type="radio"
+                                                                                                                class="status-radio"
+                                                                                                                id="pdf"
+                                                                                                                name="export-type"
+                                                                                                                checked
+                                                                                                                />
+                                                                                                                <label for="pdf">Person</label>
+                                                                                                              </div>
+                                                                                                              <div class="people-status-radio">
+                                                                                                                <input
+                                                                                                                  type="radio"
+                                                                                                                  class="status-radio"
+                                                                                                                  id="excel"
+                                                                                                                  name="export-type"
+                                                                                                                  />
+                                                                                                                  <label for="excel">Organization</label>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                          <div class="col-md-12">
+                                                                                                            <h4 class="mb-3">Filters</h4>
+                                                                                                            <div class="input-block mb-3">
+                                                                                                              <label class="col-form-label"
+                                                                                                                >Fields <span class="text-danger">*</span></label
+                                                                                                                >
+
+                                                                                                                <mat-select
+                                                                                                                  class="custom-mat-select select"
+                                                                                                                  placeholder="All Fields"
+                                                                                                                  >
+                                                                                                                  <mat-option value="all">All Fields</mat-option>
+                                                                                                                  <mat-option value="all">Contact</mat-option>
+                                                                                                                  <mat-option value="all">Company</mat-option>
+                                                                                                                </mat-select>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-6">
+                                                                                                              <div class="input-block mb-3">
+                                                                                                                <label class="col-form-label"
+                                                                                                                  >From Date <span class="text-danger">*</span></label
+                                                                                                                  >
+                                                                                                                  <div class="cal-icon">
+                                                                                                                    <input
+                                                                                                                      class="form-control floating datetimepicker"
+                                                                                                                      type="text"
+                                                                                                                      bsDatepicker
+                                                                                                                      />
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                                <div class="col-md-6">
+                                                                                                                  <div class="input-block mb-3">
+                                                                                                                    <label class="col-form-label"
+                                                                                                                      >To Date <span class="text-danger">*</span></label
+                                                                                                                      >
+                                                                                                                      <div class="cal-icon">
+                                                                                                                        <input
+                                                                                                                          class="form-control floating datetimepicker"
+                                                                                                                          type="text"
+                                                                                                                          bsDatepicker
+                                                                                                                          />
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="col-lg-12 text-end form-wizard-button">
+                                                                                                                      <button
+                                                                                                                        class="button btn-lights reset-btn"
+                                                                                                                        type="reset"
+                                                                                                                        data-bs-dismiss="modal"
+                                                                                                                        >
+                                                                                                                        Reset
+                                                                                                                      </button>
+                                                                                                                      <button class="btn btn-primary" type="submit">
+                                                                                                                        Export Now
+                                                                                                                      </button>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                </form>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                        <!-- /Export -->
+                                                                                                      </div>

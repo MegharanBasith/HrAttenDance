@@ -1,0 +1,90 @@
+<!-- Two Col Sidebar -->
+<div class="two-col-bar" id="two-col-bar" (mouseover)="miniSideBarMouseHover('over')"
+  (mouseout)="miniSideBarMouseHover('out')" (focus)="miniSideBarFocus('over')" (blur)="miniSideBarBlur('out')">
+  <div class="sidebar sidebar-twocol">
+    <div class="sidebar-left slimscroll">
+      <ng-scrollbar>
+        <ul class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+          @for (mainTittle of side_bar_data; track mainTittle) {
+          <li class="nav-item" role="presentation">
+            <a (click)="showTabs(mainTittle)" (keydown.enter)="showTabs(mainTittle)" tabindex="0" class="nav-link"
+              [class.active]="mainTittle.showMyTab === true">
+              <span class="material-icons-outlined">
+                {{ mainTittle.materialicons }}
+              </span>
+            </a>
+          </li>
+          }
+        </ul>
+      </ng-scrollbar>
+    </div>
+
+    <div class="sidebar-right" [ngClass]="showSubMenusTab === false ? 'show-sub-menu' : 'hide-sub-menu'">
+      <div class="tab-content">
+        @for (mainTittle of side_bar_data; track mainTittle) {
+        @if (mainTittle.showMyTab === true) {
+        <div class="">
+          <p>{{ mainTittle.menuValue }}</p>
+          <ul>
+            @if (mainTittle.hasSubRoute === true) {
+            @for (subMenus of mainTittle.subMenus; track subMenus) {
+            <li>
+              <a [routerLink]="subMenus.route"
+                [class.active]="page === subMenus.base || page === subMenus.base2 || page === subMenus.base3 || page === subMenus.base4 || page === subMenus.base5 || page === subMenus.base6 || page === subMenus.base7 || page === subMenus.base8">
+                @if (subMenus.currentActive === true) {
+                  <span
+                  class="badge rounded-pill bg-primary float-end">1</span>
+                }
+                {{ subMenus.menuValue }}
+              </a>
+            </li>
+            }
+            }
+            @if (mainTittle.hasSubRouteTwo === true) {
+            <li>
+              <a [routerLink]="routes.chat">Chat</a>
+            </li>
+            <li class="sub-menu">
+              <a href="javascript:void(0);" (click)="openSubmenus()" [ngClass]="{'subdrop': submenus === true}">Calls
+                <span class="menu-arrow"></span></a>
+              <ul [ngClass]="{'d-block':submenus, 'd-none': !submenus}">
+                <li><a [routerLink]="routes.voicecall">Voice Call</a></li>
+                <li><a [routerLink]="routes.videocall">Video Call</a></li>
+                <li><a [routerLink]="routes.outgoingcall">Outgoing Call</a></li>
+                <li><a [routerLink]="routes.incomingcall">Incoming Call</a></li>
+              </ul>
+            </li>
+            <li>
+              <a [routerLink]="routes.calendar">Calendar</a>
+            </li>
+            <li>
+              <a [routerLink]="routes.contacts">Contacts</a>
+            </li>
+            <li>
+              <a [routerLink]="routes.email">Email</a>
+            </li>
+            <li>
+              <a [routerLink]="routes.filemanager">File Manager</a>
+            </li>
+            }
+            <ng-container>
+              @if (mainTittle.hasSubRoute === false) {
+              <li>
+                <a [routerLink]="mainTittle.route" [class.active]="page === mainTittle.base">
+                  {{ mainTittle.menuValue }}
+                  @if (mainTittle.changeLogVersion === true) {
+                  <span class="badge badge-primary ms-auto">v4.0</span>
+                  }
+                </a>
+              </li>
+              }
+            </ng-container>
+          </ul>
+        </div>
+        }
+        }
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Two Col Sidebar -->

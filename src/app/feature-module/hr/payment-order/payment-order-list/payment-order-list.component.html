@@ -1,0 +1,348 @@
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '40rem' }">
+        <ng-template pTemplate="header">
+            <div class="inline-flex align-items-center justify-content-center gap-2">
+                <h3>{{'paymentOrderList.createPaymentOrder' | translate}}</h3>
+            </div>
+        </ng-template>
+        <form [formGroup]="paymentOrderForm">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'paymentOrderList.voucherType'| translate}}<span
+                                class="text-danger">*</span></label>
+                        <mat-select class="custom-mat-select"
+                            [class.invalid]="paymentOrderForm.get('voucherType')?.invalid && paymentOrderForm.get('voucherType')?.touched"
+                            formControlName="voucherType" placeholder="{{'select'| translate}}" (selectionChange)="onVoucherTypeChange()">
+                            <mat-option *ngFor="let option of voucherTypeOptions" [value]="option.id">
+                                {{ option.value }}
+                            </mat-option>
+                        </mat-select>
+                        @if (paymentOrderForm.get('voucherType')?.hasError('required') &&
+                        paymentOrderForm.get('voucherType')?.touched) {
+                        <div>
+                            @if (paymentOrderForm.get('voucherType')?.hasError('required') &&
+                            paymentOrderForm.get('voucherType')?.touched)
+                            {
+                            <small class="text-danger"> {{'paymentOrderList.voucherTypeRequired'| translate}}</small>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'paymentOrderList.paymentType'| translate}}<span
+                                class="text-danger">*</span></label>
+                        <mat-select class="custom-mat-select"
+                            [class.invalid]="paymentOrderForm.get('paymentType')?.invalid && paymentOrderForm.get('paymentType')?.touched"
+                            formControlName="paymentType" placeholder="{{'select'| translate}}"
+                            (selectionChange)="onPaymentTypeChange()">
+                            <mat-option *ngFor="let option of paymentTypeOptions" [value]="option.id">
+                                {{ option.value }}
+                            </mat-option>
+                        </mat-select>
+                        @if (paymentOrderForm.get('paymentType')?.hasError('required') &&
+                        paymentOrderForm.get('paymentType')?.touched) {
+                        <div>
+                            @if (paymentOrderForm.get('paymentType')?.hasError('required') &&
+                            paymentOrderForm.get('paymentType')?.touched)
+                            {
+                            <small class="text-danger"> {{'paymentOrderList.paymentTypeRequired'| translate}}</small>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="paymentOrderForm.get('paymentType')?.value === transferPaymentType" class="row">
+                <div class="input-block mb-3">
+                    <label class="col-form-label" for="">{{'paymentOrderList.bankAccount'| translate}}<span
+                            class="text-danger">*</span></label>
+                    <mat-select class="custom-mat-select"
+                        [class.invalid]="paymentOrderForm.get('bankAccount')?.invalid && paymentOrderForm.get('bankAccount')?.touched"
+                        formControlName="bankAccount" placeholder="{{'select'| translate}}">
+                        <mat-option *ngFor="let option of bankAccounts" [value]="option.bankAccountId">
+                            {{ option.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="paymentOrderForm.controls['bankAccount']?.errors?.['required'] && paymentOrderForm.controls['bankAccount']?.touched">
+                        <small class="text-danger"> {{'paymentOrderList.bankAccountRequired'| translate}}</small>
+                    </mat-error>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-block mb-3">
+                    <label class="col-form-label" for="">{{'paymentOrderList.period'| translate}}<span
+                            class="text-danger">*</span></label>
+                    <mat-select class="custom-mat-select"
+                        [class.invalid]="paymentOrderForm.get('period')?.invalid && paymentOrderForm.get('period')?.touched"
+                        formControlName="period" placeholder="{{'select'| translate}}">
+                        <mat-option *ngFor="let option of periods" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                    @if (paymentOrderForm.get('period')?.hasError('required') &&
+                    paymentOrderForm.get('period')?.touched) {
+                    <div>
+                        @if (paymentOrderForm.get('period')?.hasError('required') &&
+                        paymentOrderForm.get('period')?.touched)
+                        {
+                        <small class="text-danger"> {{'paymentOrderList.periodRequired'| translate}}</small>
+                        }
+                    </div>
+                    }
+                </div>
+                <!-- <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                        <label class="col-form-label" for="">{{'paymentOrderList.molType'| translate}}<span
+                                class="text-danger">*</span></label>
+                        <mat-select class="custom-mat-select"
+                            [class.invalid]="paymentOrderForm.get('molType')?.invalid && paymentOrderForm.get('molType')?.touched"
+                            formControlName="molType" placeholder="{{'select'| translate}}">
+                            <mat-option *ngFor="let option of molTypeOptions" [value]="option.id">
+                                {{ option.value }}
+                            </mat-option>
+                        </mat-select>
+                        @if (paymentOrderForm.get('molType')?.hasError('required') &&
+                        paymentOrderForm.get('molType')?.touched) {
+                        <div>
+                            @if (paymentOrderForm.get('molType')?.hasError('required') &&
+                            paymentOrderForm.get('molType')?.touched)
+                            {
+                            <small class="text-danger"> {{'paymentOrderList.molTypeRequired'| translate}}</small>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="input-block mb-3">
+                    <label class="col-form-label" for="">{{'description' | translate}}</label>
+                    <input class="form-control" type="text"
+                        [class.invalid]="paymentOrderForm.get('description')?.invalid && paymentOrderForm.get('description')?.touched"
+                        formControlName="description">
+                </div>
+            </div>
+        </form>
+        <ng-template pTemplate="footer">
+            <div>
+                <button class="btn btn-primary" (click)="onCreatePaymentOrderSubmit()" type="submit"
+                    [disabled]="paymentOrderForm.invalid"> {{'submit' | translate}}</button>
+            </div>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog header="Header" [(visible)]="showGenerateWPSDialog" [modal]="true" [style]="{ width: '50rem'}">
+        <ng-template pTemplate="header">
+            <div class="inline-flex align-items-center justify-content-center gap-2">
+                <h3>Generate WPS</h3>
+            </div>
+        </ng-template>
+        <ng-container>
+            <div class="row">
+                <div class="input-block mb-3">
+                    <label class="col-form-label" for="">{{'paymentOrderList.generationType'| translate}}<span
+                            class="text-danger">*</span></label>
+                    <mat-select class="custom-mat-select" [(ngModel)]="selectedGenerationType"
+                        placeholder="{{'select'| translate}}" (selectionChange)="onGenerationTypeSelectionChange()">
+                        <mat-option *ngFor="let option of filteredGenerationTypes" [value]="option.id">
+                            {{ option.value }}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+            <div *ngIf="selectedGenerationType === 2">
+                <h4 class="custom-h4">{{'paymentOrderList.selectSalaryCalculations'| translate}}</h4>
+                <div class="search-filter-container">
+                    <div class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" placeholder="{{ 'filterById' | translate }}"
+                            class="form-control custom-input" [(ngModel)]="salaryCalculationIdFilter">
+                    </div>
+                    <button class="btn btn-info ml-2" (click)="filterSalaryCalculations()">{{'filter'|
+                        translate}}</button>
+                </div>
+                <div class="table-responsive searchable-table">
+                    <table mat-table [dataSource]="salaryCalculationDataSource" matSort
+                        class="table table-striped custom-table mb-0 datatable">
+
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                            <th class="text-center" mat-header-cell *matHeaderCellDef rowspan="2">
+                                <label class="custom_check">
+                                    <input type="checkbox"
+                                        (change)="$event ? masterToggle(salaryCalculationDataSource, salaryCalculationSelection) : null"
+                                        [checked]="salaryCalculationSelection.hasValue() && isAllSelected(salaryCalculationDataSource, salaryCalculationSelection)"
+                                        [indeterminate]="salaryCalculationSelection.hasValue() && !isAllSelected(salaryCalculationDataSource, salaryCalculationSelection)" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </th>
+                            <td class="text-center" mat-cell *matCellDef="let salaryCalculation">
+                                <label class="custom_check">
+                                    <input type="checkbox" (click)="$event.stopPropagation()"
+                                        (change)="$event ? salaryCalculationSelection.toggle(salaryCalculation) : null"
+                                        [checked]="salaryCalculationSelection.isSelected(salaryCalculation)" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                        </ng-container>
+
+                        <!-- Id Column -->
+                        <ng-container matColumnDef="salaryCalculationId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{'salaryCalculationList.salaryCalculationId' | translate}}</th>
+                            <td mat-cell *matCellDef="let salaryCalculation">{{salaryCalculation.salaryCalculationId}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Header Row -->
+                        <tr mat-header-row *matHeaderRowDef="salaryCalculationDisplayedColumns"></tr>
+
+                        <!-- Data Row -->
+                        <tr mat-row *matRowDef="let row; columns: salaryCalculationDisplayedColumns;"></tr>
+
+                    </table>
+                </div>
+                <mat-paginator [length]="totalSalaryCalculations" [pageSize]="10" [showFirstLastButtons]="true"
+                (page)="setSalaryCalculationPage($event)"></mat-paginator>
+            </div>
+            <div *ngIf="selectedGenerationType === 1">
+                <h4 class="custom-h4">{{'selectEmployees' | translate}}</h4>
+                <div class="search-filter-container">
+                    <div class="p-input-icon-right">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" placeholder="{{ 'filterById' | translate }}"
+                            class="form-control custom-input" [(ngModel)]="employeeIdFilter">
+                    </div>
+                    <button class="btn btn-info ml-2" (click)="filterEmployees()"> {{'filter'| translate }} </button>
+                </div>
+                <div class="table-responsive searchable-table">
+                    <table mat-table [dataSource]="employeeDataSource" matSort
+                        class="table table-striped custom-table mb-0 datatable">
+
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                            <th class="text-center" mat-header-cell *matHeaderCellDef rowspan="2">
+                                <label class="custom_check">
+                                    <input type="checkbox"
+                                        (change)="$event ? masterToggle(employeeDataSource, employeeSelection) : null"
+                                        [checked]="employeeSelection.hasValue() && isAllSelected(employeeDataSource, employeeSelection)"
+                                        [indeterminate]="employeeSelection.hasValue() && !isAllSelected(employeeDataSource, employeeSelection)" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </th>
+                            <td class="text-center" mat-cell *matCellDef="let employee">
+                                <label class="custom_check">
+                                    <input type="checkbox" (click)="$event.stopPropagation()"
+                                        (change)="$event ? employeeSelection.toggle(employee) : null"
+                                        [checked]="employeeSelection.isSelected(employee)" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                        </ng-container>
+
+                        <!-- Id Column -->
+                        <ng-container matColumnDef="employeeId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.employeeId' |
+                                translate}}
+                            </th>
+                            <td mat-cell *matCellDef="let employee">{{employee.employeeId}}</td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.name' | translate}}
+                            </th>
+                            <td mat-cell *matCellDef="let employee">{{employee.name}}</td>
+                        </ng-container>
+
+                        <!-- Iqama Number Column -->
+                        <ng-container matColumnDef="iqamaNumber">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.iqamaNumber' |
+                                translate}}</th>
+                            <td mat-cell *matCellDef="let employee">{{employee.iqamaNumber}}</td>
+                        </ng-container>
+
+                        <!-- Passport Number Column -->
+                        <ng-container matColumnDef="passportNumber">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'employeeList.passportNumber' |
+                                translate}}</th>
+                            <td mat-cell *matCellDef="let employee">{{employee.passportNumber}}</td>
+                        </ng-container>
+
+                        <!-- Header Row -->
+                        <tr mat-header-row *matHeaderRowDef="employeeDisplayedColumns"></tr>
+
+                        <!-- Data Row -->
+                        <tr mat-row *matRowDef="let row; columns: employeeDisplayedColumns;"></tr>
+
+                    </table>
+                </div>
+                <mat-paginator [length]="totalEmployees" [pageSize]="10" [showFirstLastButtons]="true"
+                (page)="setEmployeePage($event)"></mat-paginator>
+            </div>
+        </ng-container>
+
+
+        <ng-template pTemplate="footer">
+            <button icon="pi pi-check" class="btn btn-success submit-button" (click)="generatePaymentOrderWPS()"
+                [disabled]="!(selectedGenerationType >= 0)"> {{'submit' |
+                translate}}</button>
+        </ng-template>
+
+    </p-dialog>
+
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{'paymentOrderList.paymentOrderList'| translate}}</h3>
+            </div>
+            <div class="col-auto float-end ms-auto">
+                <button class="btn btn-primary custom-button" (click)="onCreate()">
+                    <mat-icon> add </mat-icon>
+                    {{'create' | translate}} </button>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"
+            class="table table-striped custom-table mb-0 datatable">
+            <thead>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button (click)="confirmDelete(row, $event)" [disabled]="row.workflowState === approvedWorkflowState">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'paymentOrderList.' + column |
+                        translate }} </th>
+                    <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                </ng-container>
+            </thead>
+            <tbody>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsWithActions"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsWithActions;" (click)="onRowClicked(row)">
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <mat-paginator [length]="totalPaymentOrders" [pageSize]="10" [showFirstLastButtons]="true"
+        (page)="setPage($event)">
+    </mat-paginator>
+</div>
+
+<app-delete-modal #deleteDialog (confirm)="deletePaymentOrder(selectedRow)"></app-delete-modal>

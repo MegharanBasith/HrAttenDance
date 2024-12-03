@@ -1,0 +1,30 @@
+.custom-mat-option {
+    background-color: inherit !important;
+    padding: 10px;
+}
+
+.search-input {
+    padding: 20px;
+    width: 300px;
+}
+
+.select-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.selected-item {
+    display: flex;
+    align-items: center; /* Vertical alignment */
+}
+
+.column1 {
+    padding-right: 16px; /* Space between columns */
+}
+
+.column2 {
+    flex: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

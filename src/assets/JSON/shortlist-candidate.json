@@ -1,0 +1,32 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "name1": "John Doe",
+          "name2": "Web Designer",
+          "jobtitle": "Web Developer",
+          "department": "Development",
+          "status": "Offered",
+          "img":"assets/img/profiles/avatar-2.jpg"
+        },
+        {
+          "id": 2,
+          "name1": "Richard Miles",
+          "name2": "Web Developer",
+          "jobtitle": "Web Designer",
+          "department": "Designing",
+          "status": "Offered",
+          "img":"assets/img/profiles/avatar-09.jpg"
+        },
+        {
+          "id": 3,
+          "name1": "John Smith",
+          "name2": "Android Developer",
+          "jobtitle": "Android Developer",
+          "department": "Android",
+          "status": "Offered",
+          "img":"assets/img/profiles/avatar-10.jpg"
+        }
+      ],
+      "totalData":3
+}

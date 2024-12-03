@@ -1,0 +1,487 @@
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{ (leave.workflowState === approvedWorkflowState ? 'leave.leaveRequest' :
+                    'leave.editLeave') | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <p-toast></p-toast>
+        <div *ngIf="showSpinner">
+            <app-spinner></app-spinner>
+        </div>
+        <form [formGroup]="leaveForm" class="vacation-form">
+            <div>
+                <p-messages [(value)]="messages" [enableService]="false" [closable]="false" />
+            </div>
+            <div class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{ 'leave.leaveDetails' | translate }}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#leaveDetails"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="leaveDetails">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'employee.employee' | translate }}<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="text"
+                                        [class.invalid]="leaveForm.get('empNum')?.invalid && leaveForm.get('empNum')?.touched"
+                                        formControlName="empNum" [attr.disabled]="true">
+                                    <!-- <mat-select class="custom-mat-select"
+                                    [class.invalid]="leaveForm.get('empNum')?.invalid && leaveForm.get('empNum')?.touched"
+                                    formControlName="empNum" placeholder="{{'select' | translate}}">
+                                    <mat-option class="custom-mat-option">
+                                        <input type="text" placeholder="{{'search'+'...' | translate}}"
+                                            [(ngModel)]="searchValue" (input)="filterEmployees()"
+                                            class="form-control search-input" [ngModelOptions]="{standalone: true}"
+                                            (click)="$event.stopPropagation()" />
+                                    </mat-option>
+
+                                    <mat-option *ngFor="let employee of filteredEmployees"
+                                        [value]="employee.employeeId">
+                                        {{ employee.name }}
+                                    </mat-option>
+                                </mat-select> -->
+                                    <!-- @if (leaveForm.get('empNum')?.invalid && leaveForm.get('empNum')?.touched) {
+                                <div>
+                                    @if (leaveForm.get('empNum')?.invalid && leaveForm.get('empNum')?.touched) {
+                                    <small class="text-danger"> {{'leave.employeeRequired'| translate}}</small>
+                                    }
+                                </div>
+                                } -->
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{ 'leave.leaveType' | translate }}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('vacationTypeStr')?.invalid && leaveForm.get('vacationTypeStr')?.touched"
+                                        formControlName="vacationTypeStr" placeholder="{{'select' | translate}}">
+                                        <mat-option *ngFor="let option of vacationTypeOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('vacationTypeStr')?.invalid &&
+                                    leaveForm.get('vacationTypeStr')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('vacationTypeStr')?.invalid &&
+                                        leaveForm.get('vacationTypeStr')?.touched) {
+                                        <small class="text-danger"> {{'leave.leaveTypeRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="input-block mb-3 date-input1">
+                                    <label class="col-form-label" for="">{{'leave.startDate'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                            container=".date-input1"
+                                            [class.invalid]="leaveForm.get('startDate')?.invalid && leaveForm.get('startDate')?.touched"
+                                            formControlName="startDate" (dateChange)="calculateVacationDays()">
+                                        @if (leaveForm.get('startDate')?.invalid && leaveForm.get('startDate')?.touched)
+                                        {
+                                        <div>
+                                            @if (leaveForm.get('startDate')?.invalid &&
+                                            leaveForm.get('startDate')?.touched)
+                                            {
+                                            <small class="text-danger"> {{'leave.startDateRequired'| translate}}</small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3 date-input1">
+                                    <label class="col-form-label" for="">{{'leave.endDate'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <div class="cal-icon">
+                                        <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                                            container=".date-input1"
+                                            [class.invalid]="leaveForm.get('endDate')?.invalid && leaveForm.get('endDate')?.touched"
+                                            formControlName="endDate" (dateChange)="calculateVacationDays()">
+                                        @if (leaveForm.get('endDate')?.invalid && leaveForm.get('endDate')?.touched) {
+                                        <div>
+                                            @if (leaveForm.get('endDate')?.invalid && leaveForm.get('endDate')?.touched)
+                                            {
+                                            <small class="text-danger"> {{'leave.endDateRequired'| translate}}</small>
+                                            }
+                                        </div>
+                                        }
+                                        <div *ngIf="leaveForm.errors?.['invalidDateRange']">
+                                            <small class="text-danger">{{'* ' + ('endDateError' | translate)}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.vacationDays'| translate}}</label>
+                                    <input class="form-control" type="number" formControlName="vacationDays"
+                                        [attr.disabled]="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.totalVacationSalary'| translate}}</label>
+                                    <input class="form-control" type="number" formControlName="totalVacationSalary"
+                                        [attr.disabled]="true">
+                                </div>
+                            </div>
+                            <div *ngIf="showUpdateReturnDate() && leave.workflowState === approvedWorkflowState"
+                                class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <button class="btn btn btn-primary btn-dialog" (click)="visible = true">
+                                        <mat-icon class="custom-mat-icon">edit</mat-icon>
+                                        {{'leave.updateActualReturnDate' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div *ngIf="!showUpdateReturnDate() && leave.workflowState === approvedWorkflowState"
+                                class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.actualReturnDate'| translate}}</label>
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                                        container=".date-input1" formControlName="actualReturnDate">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.backToWorkDate'| translate}}</label>
+                                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                                        container=".date-input1" formControlName="backToWorkDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label d-block">{{ 'leave.isPaid' | translate
+                                        }}</label>
+                                    <mat-slide-toggle class="toggle-button"
+                                        [checked]="leave?.ispaid === 0 ? false : true"
+                                        [disabled]="true"></mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.ticketEntitlement'|
+                                        translate}}</label>
+                                    <div class="checkbox-container">
+                                        <label class="custom_check">
+                                            <input type="checkbox" formControlName="ticketEntitlement"
+                                                (change)="onTicketEntitlementChange()">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.visaEntitlement'| translate}}</label>
+                                    <div class="checkbox-container">
+                                        <label class="custom_check">
+                                            <input type="checkbox" formControlName="visaEntitlement"
+                                                (change)="onVisaEntitlementChange()">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isLeaveTicket" class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{'leave.ticketDetails'| translate}}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#ticketDetails"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="ticketDetails">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.ticketDeparture'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('departureFromStr')?.invalid && leaveForm.get('departureFromStr')?.touched"
+                                        formControlName="departureFromStr" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of ticketDepartureOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('departureFromStr')?.hasError('required') &&
+                                    leaveForm.get('departureFromStr')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('departureFromStr')?.hasError('required') &&
+                                        leaveForm.get('departureFromStr')?.touched)
+                                        {
+                                        <small class="text-danger"> {{'leave.ticketDepartureRequired'|
+                                            translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.destinationCity'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('destinationCity')?.invalid && leaveForm.get('destinationCity')?.touched"
+                                        formControlName="destinationCity" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of employeeDestinationCities"
+                                            [value]="option.destinationCity">
+                                            {{ option.destinationCity }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('destinationCity')?.hasError('required') &&
+                                    leaveForm.get('destinationCity')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('destinationCity')?.hasError('required') &&
+                                        leaveForm.get('destinationCity')?.touched)
+                                        {
+                                        <small class="text-danger"> {{'leave.destinationCityRequired'|
+                                            translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.ticketFor'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('ticketForStr')?.invalid && leaveForm.get('ticketForStr')?.touched"
+                                        formControlName="ticketForStr" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of ticketForOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('ticketForStr')?.hasError('required') &&
+                                    leaveForm.get('ticketForStr')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('ticketForStr')?.hasError('required') &&
+                                        leaveForm.get('ticketForStr')?.touched) {
+                                        <small class="text-danger"> {{'leave.ticketForRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="hasVisa" class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{'leave.visaDetails'| translate}}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#visaDetails"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="visaDetails">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.visaFor'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('visaForStr')?.invalid && leaveForm.get('visaForStr')?.touched"
+                                        formControlName="visaForStr" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of ticketForOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('visaForStr')?.hasError('required') &&
+                                    leaveForm.get('visaForStr')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('visaForStr')?.hasError('required') &&
+                                        leaveForm.get('visaForStr')?.touched) {
+                                        <small class="text-danger"> {{'leave.visaForRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.numberOfVisas'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="number" formControlName="visaUsed">
+                                    @if (leaveForm.get('visaUsed')?.hasError('required') &&
+                                    leaveForm.get('visaUsed')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('visaUsed')?.hasError('required') &&
+                                        leaveForm.get('visaUsed')?.touched) {
+                                        <small class="text-danger"> {{'leave.numberOfVisasRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.visaDays'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control" type="number" formControlName="visaDays">
+                                    @if (leaveForm.get('numberOfVisas')?.hasError('required') &&
+                                    leaveForm.get('visaDays')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('visaDays')?.hasError('required') &&
+                                        leaveForm.get('visaDays')?.touched) {
+                                        <small class="text-danger"> {{'leave.visaDaysRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card custom-card">
+                <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{'leave.paymentDetails'| translate}}</div>
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#paymentDetails"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                        <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                    </a>
+                </div>
+                <div class="collapse show border-top" id="paymentDetails">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.payWith'| translate}} <span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('payWithStr')?.invalid && leaveForm.get('payWithStr')?.touched"
+                                        formControlName="payWithStr" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of payWithOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('payWithStr')?.invalid && leaveForm.get('payWithStr')?.touched) {
+                                    <div>
+                                        @if (leaveForm.get('payWithStr')?.invalid &&
+                                        leaveForm.get('payWithStr')?.touched) {
+                                        <small class="text-danger"> {{'leave.payWithRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">{{'leave.paymentMethod'| translate}}<span
+                                            class="text-danger">*</span></label>
+                                    <mat-select class="custom-mat-select"
+                                        [class.invalid]="leaveForm.get('paymentMethodStr')?.invalid && leaveForm.get('paymentMethodStr')?.touched"
+                                        formControlName="paymentMethodStr" placeholder="{{'select'| translate}}">
+                                        <mat-option *ngFor="let option of paymentMethodOptions" [value]="option">
+                                            {{ option }}
+                                        </mat-option>
+                                    </mat-select>
+                                    @if (leaveForm.get('paymentMethodStr')?.invalid &&
+                                    leaveForm.get('paymentMethodStr')?.touched)
+                                    {
+                                    <div>
+                                        @if (leaveForm.get('paymentMethodStr')?.invalid &&
+                                        leaveForm.get('paymentMethodStr')?.touched) {
+                                        <small class="text-danger"> {{'leave.paymentMethodRequired'| translate}}</small>
+                                        }
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!isDisabled()" class="submit-container">
+                <button class="btn btn-primary submit-button" [disabled]="leaveForm.invalid"
+                    (click)="onSubmit()">{{'submit'
+                    | translate
+                    }}</button>
+            </div>
+        </form>
+    </div>
+    <p-dialog header="Update Actual Return Date" [modal]="true" [(visible)]="visible" [style]="{ width: '40rem' }">
+        <div class="row">
+            <div class="input-block mb-3">
+                <label class="col-form-label" for="">{{'leave.returnVacationAction'| translate}}<span
+                        class="text-danger">*</span></label>
+                <mat-select class="custom-mat-select" [(ngModel)]="returnVacationAction"
+                    placeholder="{{'select'| translate}}">
+                    <mat-option *ngFor="let option of returnVacationActionOptions" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="input-block mb-3">
+                <label class="col-form-label" for="">{{'leave.absenceType'| translate}}<span
+                        class="text-danger">*</span></label>
+                <mat-select class="custom-mat-select" [(ngModel)]="absenceType" placeholder="{{'select'| translate}}">
+                    <mat-option *ngFor="let option of absenceTypeOptions" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="input-block mb-3">
+                <label class="col-form-label" for="">{{'leave.backToWorkDate'| translate}}</label>
+                <input class="form-control datetimepicker" type="text" bsDatepicker container=".date-input1"
+                    [disabled]="true" [(ngModel)]="backToWorkDate">
+            </div>
+            <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">{{'leave.actualReturnDate'| translate}}<span
+                        class="text-danger">*</span></label>
+                <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
+                        container=".date-input1" [(ngModel)]="actualReturnDate"
+                        (bsValueChange)="calculateDifferenceDays($event)">
+                </div>
+            </div>
+            <div class="input-block mb-3">
+                <label class="col-form-label" for="">{{'leave.differenceDays'| translate}}</label>
+                <input class="form-control" type="number" [(ngModel)]="differnceDays" [disabled]="true">
+            </div>
+            <div class="input-block mb-3">
+                <label class="col-form-label" for="">{{'leave.actionDays'| translate}}</label>
+                <input class="form-control" type="number" [(ngModel)]="actionDays">
+            </div>
+        </div>
+        <div class="flex">
+            <button class="btn btn-secondary btn-dialog" (click)="visible = false"> {{'cancel' | translate}} </button>
+            <button class="btn btn-primary btn-dialog" [disabled]="!isValidToUpdateActualReturnDate()"
+                (click)="updateActualReturnDate()"> {{'update' | translate}} </button>
+        </div>
+    </p-dialog>
+
+</div>

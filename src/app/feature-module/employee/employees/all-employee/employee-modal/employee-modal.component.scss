@@ -1,0 +1,34 @@
+.step-header{
+    margin-bottom: 20px;
+}
+.page-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .page-button {
+    font-size: 16px; /* Size of the page numbers */
+    color: orange; /* Default color for inactive buttons */
+    background-color: #ffffff; /* White background for buttons */
+    border: 1px solid orange; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    margin: 0 5px;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+    padding: 5px 10px; /* Padding for clickable area */
+    text-align: center; /* Center text within buttons */
+  }
+  
+  .page-button:hover {
+    background-color: #f0f0f0; /* Light background on hover */
+  }
+  
+  .page-button.active {
+    color: #ffffff; /* White text for active button */
+    background-color: orange; /* Blue background for active button */
+    border-color: orange; /* Match border color to background */
+    font-weight: bold; /* Make the active button bold */
+  }
+  

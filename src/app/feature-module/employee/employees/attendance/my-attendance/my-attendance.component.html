@@ -1,0 +1,147 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">My Attendance</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">My Attendance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card punch-status">
+                <div class="card-body">
+                    <div class="punch-det">
+                        @if(ispunchout){
+                        <h6>Punch In at</h6>
+                        <p>{{punchstatus?.punchTime|date:'EEEE,MMM d, y, h:mm a'}}</p>
+                        }@else {
+                        <h6>last Punch In at</h6>
+                        <p>{{punchstatus?.punchTime|date:'EEEE,MMM d, y, h:mm a'}}</p>
+                        }
+                    </div>
+                    <div class="punch-info">
+                        <div class="punch-hours">
+                            @if(ispunchout){
+                            <p>{{elapsedTime}}</p>
+                            }@else {
+                            <p>00:00:00</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="punch-btn-section" *ngIf="isVisible">
+                        @if(!ispunchout){
+                        <button type="button" class="btn btn-primary punch-btn"  id="punchInButton"
+                            (click)="addEmployeeattendanceIn()">Punch In</button>
+
+                        }@else {
+                        <button type="button" class="btn btn-primary punch-btn"
+                            (click)="addEmployeeattendanceout()">Punch Out</button>
+                        }
+                    </div>
+                    <div class="text-center fw-medium" *ngIf="!isVisible">
+                       You Are Away From Office Location About <br> {{distanceBwLocation.toFixed(2)}} Meters
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card recent-activity">
+                <div class="card-body">
+                    <h5 class="card-title">Today Activity</h5>
+                    <div style="max-height: 330px;overflow-y: auto;">
+                        <ul class="res-activity-list">
+                            <li *ngFor="let punch of punchActivitystatus">
+                                @if(punch.isPunchIn){
+                                <p class="mb-0">Punch In at</p>
+                                }@else {
+                                <p class="mb-0">Punch Out at</p>
+                                }
+                                <p class="res-activity-time">
+                                    <i class="fa-regular fa-clock"></i>
+                                    {{punch.punchTime | date:'h:mm a'}}
+                                    
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-4">
+            <div style="width: 100%;height: 100%;" *ngIf="myLocation && targetLocation && targetLocation.lat > 0">
+            <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="moveMap($event)"
+                (mapMousemove)="move($event)">
+                <map-marker *ngIf="userLocation" [position]="userLocation" [label]="'You'" [options]="{ draggable: false }"></map-marker>
+  
+                <map-marker *ngIf="targetLocation" [position]="targetLocation" [label]="'office'" [options]="{ draggable: false }"></map-marker>
+              
+            </google-map>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Search Filter -->
+    <div class="row filter-row">
+        <div class="col-sm-4">
+            <div class="input-block mb-3 form-focus select-focus select">
+                <mat-select [(value)]="selectedmonth" class="custom-mat-select floating-mat-select">
+                    <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
+                </mat-select>
+                <label for="" class="focus-label">Select Month</label>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-block mb-3 form-focus select-focus select">
+                <mat-select [(value)]="selectedyear" class="custom-mat-select floating-mat-select">
+                    <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+                </mat-select>
+                <label for="" class="focus-label">Select Year</label>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <a class="btn btn-success w-100" (click)="getEmployeeList()"> Search </a>
+        </div>
+    </div>
+    <!-- /Search Filter -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-striped custom-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date </th>
+                            <th>Punch In</th>
+                            <th>Punch Out</th>
+                            <th>Production</th>
+                            <th>Overtime</th>
+                            <th>Total Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (attendance of attendances; track $index) {
+                        <tr>
+                            <td>{{attendance.id}}</td>
+                            <td>{{attendance.date|date:"M/d/yy"}}</td>
+                            <td>{{attendance.inTime|date:"h:mm a"}}</td>
+                            <td>{{attendance.outTime|date:"h:mm a"}}</td>
+                            <td>{{attendance.workingHours}}</td>
+                            <td>{{attendance.overTime}}</td>
+                            <td>{{attendance.totalHours}}</td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>

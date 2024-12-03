@@ -1,0 +1,163 @@
+<div class="content container-fluid" style="padding-top: 0px;">
+ 
+   
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-6">
+          <h3 class="page-title">Work Hours</h3>
+        </div>
+          <div class="col-sm-6" style="float: right;" *ngIf="showCreate==true" >
+            <a class="btn add-btn " data-bs-toggle="modal"data-bs-target="#edit_department">
+              <i class="la la-plus-circle"></i> Create</a>
+              <a class="btn add-btn btn-danger" (click)="deleteworkdayhour()" style="margin-right: 5px;" *ngIf="showDelete==true" >
+                <i class="la la-trash"></i> Delete</a>
+          </div>          
+  </div>
+  </div>
+
+  <div class="row filter-row">
+    <!-- <div class="col-sm-2">
+      <div class="input-block mb-3 form-focus select-focus select">
+          <mat-select readonly [(value)]="customerId" class="custom-mat-select floating-mat-select">
+              <mat-option *ngFor="let customer of customerDDL" [value]="customer">
+                  {{customer}}
+              </mat-option>
+          </mat-select>
+          <label for="" class="focus-label">Select Customer</label>
+      </div>
+  </div> -->
+    <div class="col-sm-3">
+        <div class="input-block mb-3 form-focus select-focus select">
+            <mat-select [(value)]="employeeId" class="custom-mat-select floating-mat-select">
+              <mat-option [value]="''">All</mat-option>
+                <mat-option *ngFor="let employee of LoggedCustomerEmployeeDDL" [value]="employee.id">
+                    {{employee.name}}
+                </mat-option>
+            </mat-select>
+            <label for="" class="focus-label">Select Employee</label>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <a class="btn btn-success w-100" (click)="getCustomeremployee()">{{"Search"}}</a>
+    </div>
+</div>
+@if(this.customerlist && customerlist.length > 0){
+<div class="row">
+  <div class="col-lg-12">
+      <div class="table-responsive">
+          <table class="table table-striped custom-table mb-0">
+              <thead>
+                  <tr>
+                      <th>IsWorking</th>
+                      <th>Employee Number</th>
+                      <th>Day </th>
+                      <th>Hours</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Tolerance</th>
+                      <th class="text-end">Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @for (setting of customerlist; track $index) {
+                  <tr>
+                      <td>{{setting.isWorking? 'Yes': 'No'}}</td>
+                      <td>{{setting.employee?.employeeNumber ?? 'All'}}</td>
+                      <td>{{setting.day}}</td>
+                      <td>{{setting.hours}}</td>
+                      <td>{{setting.from}}</td>
+                      <td>{{setting.to}}</td>
+                      <td>{{setting.tolerance}}</td>
+                     
+
+                      <td class="text-end">
+                          <div class="dropdown dropdown-action">
+                            <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" data-bs-toggle="modal"
+                                  data-bs-target="#edit_department"(click)="editdata(setting)"><i class="fa-solid fa-pencil m-r-5"></i>
+                                Edit</a>
+                              </div>
+                            </div>
+                          </td>
+                  </tr>
+              }
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+}@else {
+<div class="row">
+    <div class=""  style="display: inline-flex;flex-direction: column;align-items:center">
+  <img src="https://cdn-icons-png.flaticon.com/128/5871/5871147.png" loading="lazy" alt="Folder " title="Folder " width="64" height="64">
+  <a class="btn add-btn" data-bs-toggle="modal" (click)="submitCustomerEmployee()">
+    <i class="la la-plus-circle"></i> Create</a>
+</div>
+</div>
+
+}
+
+ 
+</div>
+<div class="modal custom-modal fade" id="edit_department" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="!onUpdate" class="modal-title">Create Workday Hours - Employee</h5>
+        <h5 *ngIf="onUpdate" class="modal-title">Edit</h5>
+        <button (click)="closepopup()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]= "Employee">
+          <div class="input-block mb-3">
+            @if(onUpdate){
+              <label class="col-form-label" >IsWorking <span class="text-danger">*</span></label>
+              <input class="form-check-input"style="margin-left:20px" type="checkbox" formControlName="isWorking">
+              <label class="col-form-label d-flex d-none" >CustomerId <span class="text-danger">*</span></label>
+              <input class="form-control  d-none" type="text"  formControlName="customer"readonly>
+              <label class="col-form-label d-none" >EmployeeId <span class="text-danger">*</span></label>
+              <input class="form-control  d-none" type="text"  formControlName="employeeId"readonly>
+              <label class="col-form-label d-flex" >Day <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" formControlName="day"readonly>
+              <label class="col-form-label" for="">Hours <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" formControlName="hours">
+              <label class="col-form-label" >From <span class="text-danger">*</span></label>
+              <input class="form-control" type="time" formControlName="from">
+              <label class="col-form-label" >To <span class="text-danger">*</span></label>
+              <input class="form-control" type="time" formControlName="to">
+              <label class="col-form-label" >Tolerance<span class="text-danger">*</span></label>
+              <input class="form-control" type="text" formControlName="tolerance">
+            }@else {
+                    <div class="input-block mb-3 form-focus select-focus select d-none">
+                        <mat-select [(value)]="customerId" class="custom-mat-select floating-mat-select">
+                            <mat-option *ngFor="let customer of customerDDL" [value]="customer">
+                                {{customer}}
+                            </mat-option>
+                        </mat-select>
+                        <label for="" class="focus-label">Select Customer</label>
+                    </div>
+                    <div class="input-block mb-3 form-focus select-focus select">
+                      <mat-select [(value)]="employeeId" class="custom-mat-select floating-mat-select">
+                        <mat-option [value]="''">All</mat-option>
+                        <mat-option *ngFor="let employee of employeeDDL" [value]="employee.employeeId">
+                          {{employee.name}}
+                        </mat-option>
+                      </mat-select>
+                      <label for="" class="focus-label">Select Employee</label>
+                    </div>
+            }
+             
+          </div>
+          <div class="submit-section">
+            <button *ngIf="!onUpdate" (click)="submitCustomerEmployee()" class="btn btn-primary submit-btn" data-bs-dismiss="modal">Submit</button>
+            <button  *ngIf="onUpdate" (click)="updateCustomerEmployee()" class="btn btn-primary submit-btn" data-bs-dismiss="modal">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

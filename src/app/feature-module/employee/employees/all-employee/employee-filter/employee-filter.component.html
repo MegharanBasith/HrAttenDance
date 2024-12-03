@@ -1,0 +1,35 @@
+<div>
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+
+    <div class="input-block mb-3">
+        <label class="col-form-label" for="">{{ 'employee.employee' | translate }}<span
+                class="text-danger">*</span></label>
+        <mat-select class="custom-mat-select" [class.invalid]="employeeControl.invalid && employeeControl.touched"
+            [formControl]="employeeControl" placeholder="{{'select' | translate}}"
+            (selectionChange)="onSelectionChange($event.value)">
+
+            <!-- Input for search functionality -->
+            <mat-option class="custom-mat-option">
+                <input type="text" [placeholder]="'search' + '...' | translate" [(ngModel)]="searchValue"
+                    (input)="filterEmployees()" class="form-control search-input" [ngModelOptions]="{standalone: true}"
+                    (click)="$event.stopPropagation()" />
+            </mat-option>
+
+            <!-- Display filtered employees -->
+            <mat-option *ngFor="let employee of filteredEmployees" [value]="employee.employeeId">
+                <div class="select-item">
+                    <div class="column1">{{ employee.employeeId }}</div>
+                    <div class="column2">{{ employee.name }}</div>
+                </div>
+            </mat-option>
+        </mat-select>
+
+        <!-- Error message for validation -->
+        <div *ngIf="employeeControl.invalid && employeeControl.touched">
+            <small class="text-danger"> {{'employeeRequired' | translate}} </small>
+        </div>
+    </div>
+</div>

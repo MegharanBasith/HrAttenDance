@@ -1,0 +1,17 @@
+{
+    "data" : [
+        
+        {
+          "id": 2,
+          "name": "John Deo",
+          "otDate": "25-04-2023",
+          "otHrs": "07",
+          "otType": "Normal day OT 1.5x",
+          "status": "New",
+          "approvedBy": "Richard Miles",
+          "description": "Lorem ipsum dollar"
+        }
+       
+      ],
+      "totalData":1
+}

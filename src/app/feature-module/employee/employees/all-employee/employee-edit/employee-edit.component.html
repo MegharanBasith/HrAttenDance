@@ -1,0 +1,353 @@
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{ 'employee.editEmployee' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <mat-tab-group>
+        <mat-tab label="{{'employee.employeeDetails' | translate }}">
+            <form [formGroup]="form" class="form">
+                <div class="card custom-card">
+                    <div class="card-header border-bottom-0 justify-content-between">
+                        <div class="card-title">{{ 'employee.personalDetails' | translate }}</div>
+                        <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#personalDetails"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                            <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                        </a>
+                    </div>
+                    <div class="collapse show border-top" id="personalDetails">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.email' | translate}} <span
+                                                class="text-danger">*</span></label>
+                                        <input class="form-control" type="email"
+                                            [class.invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+                                            formControlName="email">
+                                        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+                                        <div>
+                                            @if (form.get('email')?.invalid && form.get('email')?.touched)
+                                            {
+                                            <small class="text-danger"> {{'employee.emailRequired' | translate
+                                                }}</small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3 date-input1">
+                                        <label class="col-form-label" for="">{{'employee.birthDate' | translate }}
+                                        </label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker
+                                                type="text" container=".date-input1"
+                                                [class.invalid]="form.get('birthDate')?.invalid && form.get('birthDate')?.touched"
+                                                formControlName="birthDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for=""> {{'employee.maritalStatus' | translate}}
+                                            <span class="text-danger">*</span></label>
+                                        <mat-select class="custom-mat-select"
+                                            [class.invalid]="form.get('maritalStatus')?.invalid && form.get('maritalStatus')?.touched"
+                                            formControlName="maritalStatus" placeholder="Select Marital Status">
+                                            <mat-option *ngFor="let option of maritalStatusOptions" [value]="option.id">
+                                                {{ option.name }}
+                                            </mat-option>
+                                        </mat-select>
+                                        @if (form.get('maritalStatus')?.invalid &&
+                                        form.get('maritalStatus')?.touched) {
+                                        <div>
+                                            @if (form.get('maritalStatus')?.invalid &&
+                                            form.get('maritalStatus')?.touched) {
+                                            <small class="text-danger"> {{'employee.maritalStatusRequired' |
+                                                translate}}</small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.iqamaNumber' | translate}}
+                                        </label>
+                                        <input class="form-control" type="number"
+                                            [class.invalid]="form.get('iqamaNumber')?.invalid && form.get('iqamaNumber')?.touched"
+                                            formControlName="iqamaNumber">
+                                        <mat-error
+                                            *ngIf="form.controls['iqamaNumber']?.touched && form.controls['iqamaNumber']?.errors?.['pattern']">
+                                            <small class="text-danger"> {{'employee.iqamaNumberLength' |
+                                                translate}}</small>
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.nationality' |
+                                            translate}}</label>
+                                        <input class="form-control" type="text"
+                                            [class.invalid]="form.get('nationalityArabic')?.invalid && form.get('nationalityArabic')?.touched"
+                                            formControlName="nationalityArabic">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div *ngIf="isNotSaudi" class="col-3">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.borderNumber' |
+                                            translate}}
+                                            <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" formControlName="borderNumber" required>
+                                    </div>
+                                </div>
+                                <div *ngIf="isNotSaudi" class="col-3">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.passportNumber' |
+                                            translate }}
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input class="form-control" type="text" formControlName="passportNumber">
+                                        @if (form.get('passportNumber')?.invalid &&
+                                        form.get('passportNumber')?.touched) {
+                                        <div>
+                                            @if (form.get('passportNumber')?.invalid &&
+                                            form.get('passportNumber')?.touched)
+                                            {
+                                            <small class="text-danger"> {{'employee.passportNumberRequired' |
+                                                translate
+                                                }}
+                                            </small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div *ngIf="isNotSaudi" class="col-3">
+                                    <div class="input-block mb-3 date-input1">
+                                        <label class="col-form-label" for="">{{'employee.passportExpiryDate' |
+                                            translate
+                                            }}
+                                            <span class="text-danger">*</span></label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text" bsDatepicker
+                                                type="text" container=".date-input1"
+                                                [class.invalid]="form.get('passportExpiryDate')?.invalid && form.get('passportExpiryDate')?.touched"
+                                                formControlName="passportExpiryDate">
+                                            @if (form.get('passportExpiryDate')?.invalid &&
+                                            form.get('passportExpiryDate')?.touched) {
+                                            <div>
+                                                @if (form.get('passportExpiryDate')?.invalid &&
+                                                form.get('passportExpiryDate')?.touched) {
+                                                <small class="text-danger">
+                                                    {{'employee.passportExpiryDateRequired' |
+                                                    translate
+                                                    }}</small>
+                                                }
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3 toggle-container">
+                                        <label class="col-form-label" for="activeInModadd">{{'employee.activeInModadd'|
+                                            translate}}</label>
+                                        <mat-slide-toggle class="toggle-button custom-mat-toggle"
+                                            formControlName="activeInModadd" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card custom-card">
+                    <div class="card-header border-bottom-0 justify-content-between">
+                        <div class="card-title">{{'employee.jobDetails'| translate}}</div>
+                        <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#jobDetails"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            <i class="feather icon-chevron-down fs-18 collapse-open"></i>
+                            <i class="feather icon-chevron-up collapse-close fs-18"></i>
+                        </a>
+                    </div>
+                    <div class="collapse show border-top" id="jobDetails">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3 date-input1">
+                                        <label class="col-form-label" for=""> {{'employee.employeeNumber' |
+                                            translate }}
+                                        </label>
+                                        <input class="form-control" type="text"
+                                            [class.invalid]="form.get('employeeNumber')?.invalid && form.get('employeeNumber')?.touched"
+                                            formControlName="employeeNumber">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.profession' |
+                                            translate}}<span class="text-danger">*</span></label>
+                                        <mat-select class="custom-mat-select"
+                                            [class.invalid]="form.get('profession')?.invalid && form.get('profession')?.touched"
+                                            formControlName="profession" placeholder="Select Job Title">
+                                            <mat-option *ngFor="let profession of professions"
+                                                [value]="profession.erbProfessionId">
+                                                {{ profession.name }}
+                                            </mat-option>
+                                        </mat-select>
+                                        @if (form.get('profession')?.invalid &&
+                                        form.get('profession')?.touched) {
+                                        <div>
+                                            @if (form.get('profession')?.invalid &&
+                                            form.get('profession')?.touched)
+                                            {
+                                            <small class="text-danger"> {{'employee.professionRequired' |
+                                                translate}}</small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6">
+                                    <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">{{'employee.department' |
+                                            translate}} <span class="text-danger">*</span></label>
+                                        <mat-select class="custom-mat-select"
+                                            [class.invalid]="form.get('department')?.invalid && form.get('department')?.touched"
+                                            formControlName="department" placeholder="Select Department">
+                                            <mat-option value="select">Select Department</mat-option>
+                                            <mat-option value="development">Web Development</mat-option>
+                                            <mat-option value="it">IT Management</mat-option>
+                                            <mat-option value="marketing">Marketing</mat-option>
+                                        </mat-select>
+                                        @if (form.get('department')?.invalid &&
+                                        form.get('department')?.touched) {
+                                        <div>
+                                            @if (form.get('department')?.invalid &&
+                                            form.get('department')?.touched) {
+                                            <small class="text-danger"> {{'employee.departmentRequired' |
+                                                translate}}</small>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-button-container">
+                    <button class="btn btn-primary submit-button" (click)="updateEmployeeDetails()">{{'submit' |
+                        translate
+                        }}</button>
+                </div>
+            </form>
+        </mat-tab>
+        <mat-tab label="{{'employee.bankDetails' | translate}}">
+            <!-- Page Content -->
+            <!-- Page Header -->
+            <div class="tab-container">
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col-auto float-end ms-auto">
+                            <a class="btn add-btn" [routerLink]="routes.employeeBankAccountCreate"><i
+                                    class="la la-plus-circle"></i>
+                                {{ 'create' | translate }}</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event, dataSource)"
+                        class="table table-striped custom-table mb-0 datatable">
+                        <thead>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="onEdit(row)">
+                                            <mat-icon> edit </mat-icon>
+                                            <span> {{ 'edit' |translate }} </span>
+                                        </button>
+                                        <button *ngIf="row.status === 'Inactive'" mat-menu-item
+                                            (click)="onActivate(row)">
+                                            <mat-icon> play_circle_filled </mat-icon>
+                                            <span> {{ 'employee.activate' |translate }} </span>
+                                        </button>
+                                        <button *ngIf="row.status === 'Active'" mat-menu-item
+                                            (click)="onDeactivate(row)">
+                                            <mat-icon> pause_circle_filled </mat-icon>
+                                            <span> {{ 'employee.deactivate' |translate }} </span>
+                                        </button>
+                                        <button mat-menu-item (click)="confirmDelete(row)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>{{'delete' | translate}}</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+
+                            <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'employee.' + column |
+                                    translate
+                                    }}</th>
+                                <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                            </ng-container>
+
+                        </thead>
+                        <tbody>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <app-delete-modal #deleteDialog (confirm)="onDelete(selectedRow)"></app-delete-modal>
+            </div>
+        </mat-tab>
+        <mat-tab label="{{'employee.documents' | translate}}">
+            <!-- Page Content -->
+            <!-- Page Header -->
+            <div class="tab-container">
+                <!-- /Page Header -->
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="documentDataSource" matSort
+                        (matSortChange)="sortData($event, documentDataSource)"
+                        class="table table-striped custom-table mb-0 datatable">
+                        <thead>
+                            <ng-container *ngFor="let column of documentColumns" [matColumnDef]="column">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'employee.' + column |
+                                    translate
+                                    }}</th>
+                                <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                            </ng-container>
+
+                        </thead>
+                        <tbody>
+                            <tr mat-header-row *matHeaderRowDef="documentColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: documentColumns;"></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <mat-paginator [length]="totalDocumentsCount" [pageSize]="10" [showFirstLastButtons]="true"
+                    (page)="setPage($event)">
+                </mat-paginator>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

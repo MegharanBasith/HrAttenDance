@@ -1,0 +1,218 @@
+ <!-- Page Content -->
+    <div class="content container-fluid">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Inbox</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink] = "routes.adminDashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Inbox</li>
+                    </ul>
+                </div>
+                <div class="col-auto float-end ms-auto">
+                    <a [routerLink] = "routes.compose" class="btn add-btn"><i class="la la-plus-circle"></i> Compose</a>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <div class="email-header">
+                            <div class="row">
+                                <div class="col top-action-left">
+                                    <div class="float-start">
+                                        <div class="btn-group dropdown-action">
+                                            <button type="button" class="btn btn-white dropdown-toggle me-1" data-bs-toggle="dropdown">Select <i class="fa-solid fa-angle-down "></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);">All</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">None</a>
+                                                <div class="dropdown-divider"></div> 
+                                                <a class="dropdown-item" href="javascript:void(0);">Read</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Unread</a>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group dropdown-action">
+                                            <button type="button" class="btn btn-white dropdown-toggle me-1" data-bs-toggle="dropdown">Actions <i class="fa-solid fa-angle-down "></i></button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);">Reply</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Forward</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Archive</a>
+                                                <div class="dropdown-divider"></div> 
+                                                <a class="dropdown-item" href="javascript:void(0);">Mark As Read</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Mark As Unread</a>
+                                                <div class="dropdown-divider"></div> 
+                                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group dropdown-action">
+                                            <button type="button" class="btn btn-white dropdown-toggle me-1" data-bs-toggle="dropdown"><i class="fa-solid fa-folder me-1"></i> <i class="fa-solid fa-angle-down"></i></button>
+                                            <div role="menu" class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);">Social</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Forums</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Updates</a>
+                                                <div class="dropdown-divider"></div> 
+                                                <a class="dropdown-item" href="javascript:void(0);">Spam</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Trash</a>
+                                                <div class="dropdown-divider"></div> 
+                                                <a class="dropdown-item" href="javascript:void(0);">New</a>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group dropdown-action">
+                                            <button type="button" data-bs-toggle="dropdown" class="btn btn-white dropdown-toggle"><i class="fa-solid fa-tags me-1"></i> <i class="fa-solid fa-angle-down"></i></button>
+                                            <div role="menu" class="dropdown-menu">
+                                                <a class="dropdown-item" href="javascript:void(0);">Work</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Family</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Social</a>
+                                                <div class="dropdown-divider"></div> 
+                                                <a class="dropdown-item" href="javascript:void(0);">Primary</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Promotions</a>
+                                                <a class="dropdown-item" href="javascript:void(0);">Forums</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="float-start d-none d-sm-block">
+                                        <input type="text" placeholder="Search Messages" class="form-control search-message">
+                                    </div>
+                                </div>
+                                <div class="col-auto top-action-right">
+                                    <div class="text-end">
+                                        <button type="button" title="Refresh" data-bs-toggle="tooltip" class="btn btn-white d-none d-md-inline-block me-1"><i class="fa-solid fa-rotate"></i></button>
+                                        <div class="btn-group">
+                                            <a class="btn btn-white"><i class="fa-solid fa-angle-left"></i></a>
+                                            <a class="btn btn-white"><i class="fa-solid fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="text-muted d-none d-md-inline-block">Showing 10 of 112 </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="email-content">
+                            <div class="table-responsive">
+                                <table class="table table-inbox table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="6">
+                                                <input type="checkbox" class="checkbox-all">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="unread clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa fa-star starred "></i></span></td>
+                                            <td class="name" (click)="clickMessage()">John Doe</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"><i class="fa-solid fa-paperclip"></i></td>
+                                            <td class="mail-date" (click)="clickMessage()">13:14</td>
+                                        </tr>
+                                        <tr class="unread clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">Envato Account</td>
+                                            <td class="subject" (click)="clickMessage()">Important account security update from Envato</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">8:42</td>
+                                        </tr>
+                                        <tr class="clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">Twitter</td>
+                                            <td class="subject" (click)="clickMessage()">HRMS Bootstrap Admin Template</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">30 Nov</td>
+                                        </tr>
+                                        <tr class="unread clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">Richard Parker</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">18 Sep</td>
+                                        </tr>
+                                        <tr class="clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">John Smith</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">21 Aug</td>
+                                        </tr>
+                                        <tr class="clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">me, Robert Smith (3)</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">1 Aug</td>
+                                        </tr>
+                                        <tr class="unread clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">Codecanyon</td>
+                                            <td class="subject" (click)="clickMessage()">Welcome To Codecanyon</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">Jul 13</td>
+                                        </tr>
+                                        <tr class="clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">Richard Miles</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"><i class="fa-solid fa-paperclip"></i></td>
+                                            <td class="mail-date" (click)="clickMessage()">May 14</td>
+                                        </tr>
+                                        <tr class="unread clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa-regular fa-star"></i></span></td>
+                                            <td class="name" (click)="clickMessage()">John Smith</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">11/11/16</td>
+                                        </tr>
+                                        <tr class="clickable-row">
+                                            <td>
+                                                <input type="checkbox" class="checkmail">
+                                            </td>
+                                            <td><span class="mail-important"><i class="fa fa-star starred "></i></span></td>
+                                            <td class="name" (click)="clickMessage()">Mike Litorus</td>
+                                            <td class="subject" (click)="clickMessage()">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</td>
+                                            <td (click)="clickMessage()"></td>
+                                            <td class="mail-date" (click)="clickMessage()">10/31/16</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    <!-- /Page Content -->
+ 

@@ -1,0 +1,36 @@
+{
+    "data" : [
+        {
+          "jobTitle": "Web Developer",
+          "department": "Development",
+          "startDate": "3 Mar 2023",
+          "expireDate": "31 May 2023",
+          "id": 1,
+          "staff": "1 Candidates",
+          "time": "Full Time",
+          "available": "Open"
+        },
+        {
+          "jobTitle": "Web Designer",
+          "department": "Designing",
+          "startDate": "3 Mar 2023",
+          "expireDate": "31 May 2023",
+          "id": 2,
+          "staff": "2 Candidates",
+          "time": "PartTime",
+          "available": "Closed"
+        },
+        {
+          "jobTitle": "Android Developer",
+          "department": "Android",
+          "startDate": "3 Mar 2023",
+          "expireDate": "31 May 2023",
+          "id": 3,
+          "staff": "3 Candidates",
+          "time": "Internship",
+          "available": "Cancelled"
+        }
+       
+      ],
+      "totalData":3
+}

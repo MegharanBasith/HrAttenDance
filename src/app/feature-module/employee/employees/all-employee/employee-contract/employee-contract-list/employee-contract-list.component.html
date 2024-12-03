@@ -1,0 +1,67 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+    <p-toast></p-toast>
+    <div *ngIf="showSpinner">
+        <app-spinner></app-spinner>
+    </div>
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{ 'employee-contract.employeeContractList' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="table-responsive">
+        <table mat-table [dataSource]="employeeContractDataSource" matSort
+            (matSortChange)="sortData($event, employeeContractDataSource)"
+            class="table table-striped custom-table mb-0 datatable">
+            <thead>
+                <ng-container *ngFor="let column of contractColumns" [matColumnDef]="column">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'employee-contract.' + column | translate
+                        }}</th>
+                    <td mat-cell *matCellDef="let element"> {{ element[column] }} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="updateEmployeeContract(row.contractId)">
+                                <mat-icon> description </mat-icon>
+                                <span>{{ 'employee-contract.updateContract' | translate
+                                    }}</span>
+                            </button>
+                            <button mat-menu-item
+                                (click)="onEdit(row)">
+                                <mat-icon>edit</mat-icon>
+                                <span>{{'edit' | translate}}</span>
+                            </button>
+                            <button *ngIf="isAdmin && row.status !== activeStatus" mat-menu-item
+                                (click)="reativateEmployeeContract(row.contractId)">
+                                <mat-icon>play_circle_filled</mat-icon>
+                                <span>{{'employee-contract.reactivate' | translate}}</span>
+                            </button>
+                            <button *ngIf="row.status === activeStatus" mat-menu-item
+                                (click)="suspendEmployeeContract(row.contractId)">
+                                <mat-icon>pause_circle_filled</mat-icon>
+                                <span>{{'employee-contract.suspend' | translate}}</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+            </thead>
+            <tbody>
+                <tr mat-header-row *matHeaderRowDef="displayedContractColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedContractColumns;"></tr>
+            </tbody>
+        </table>
+    </div>
+    <mat-paginator [length]="totalContractCount" [pageSize]="10" [showFirstLastButtons]="true" (page)="setPage($event)">
+    </mat-paginator>
+
+</div>

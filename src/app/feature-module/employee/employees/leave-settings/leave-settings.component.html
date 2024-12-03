@@ -1,0 +1,692 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Leave Settings</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Leave Settings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- Annual Leave -->
+      <div class="card leave-box" id="leave_annual" >
+        <div class="card-body">
+          <div class="h3 card-title with-switch">
+            Annual
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_annual" [(ngModel)]="isToggleOn1" checked>
+              <label class="onoffswitch-label" for="switch_annual">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+          <div class="leave-item">
+
+            <!-- Annual Days Leave -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Days</label>
+                    <input type="text" class="form-control" [disabled]="!isEditingDays">
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingDays) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn1" (click)="enableEdit('days')">Edit</button>
+                }
+                @if (isEditingDays) {
+                  <button class="btn btn-white leave-cancel-btn"  (click)="cancelEdit('days')">Cancel</button>
+                }
+                @if (isEditingDays) {
+                  <button class="btn btn-primary leave-save-btn"  (click)="saveChanges('days')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Annual Days Leave -->
+
+            <!-- Carry Forward -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <label class="d-block col-form-label" for="">Carry forward</label>
+                  <div class="leave-inline-form">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="carry_no" value="option1" [disabled]="!isEditingCarryForward">
+                      <label class="form-check-label" for="carry_no">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="carry_yes" value="option2" [disabled]="!isEditingCarryForward">
+                      <label class="form-check-label" for="carry_yes">Yes</label>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-text">Max</span>
+                      <input type="text" class="form-control" [disabled]="!isEditingCarryForward">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingCarryForward) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn1" (click)="enableEdit('carryForward')">Edit</button>
+                }
+                @if (isEditingCarryForward) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('carryForward')">Cancel</button>
+                }
+                @if (isEditingCarryForward) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('carryForward')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Carry Forward -->
+
+            <!-- Earned Leave -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <label class="d-block col-form-label" for="">Earned leave</label>
+                  <div class="leave-inline-form">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="earned_no" value="option1" [disabled]="!isEditingEarned">
+                      <label class="form-check-label" for="earned_no">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="earned_yes" value="option2" [disabled]="!isEditingEarned">
+                      <label class="form-check-label" for="earned_yes">Yes</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingEarned) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn1" (click)="enableEdit('earned')">Edit</button>
+                }
+                @if (isEditingEarned) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('earned')">Cancel</button>
+                }
+                @if (isEditingEarned) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('earned')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Earned Leave -->
+
+          </div>
+
+          <!-- Custom Policy -->
+          <div class="custom-policy">
+            <div class="leave-header">
+              <div class="title">Custom policy</div>
+              <div class="leave-action">
+                <button class="btn btn-sm btn-primary" [disabled]="!isToggleOn1" type="button" data-bs-toggle="modal" data-bs-target="#add_custom_policy"><i class="la la-plus-circle"></i> Add custom policy</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-nowrap leave-table mb-0">
+                <thead>
+                  <tr>
+                    <th class="l-name">Name</th>
+                    <th class="l-days">Days</th>
+                    <th class="l-assignee">Assignee</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>5 Year Service </td>
+                    <td>5</td>
+                    <td>
+                      <a href="javascript:void(0);" class="avatar"><img src="assets/img/profiles/avatar-02.jpg" alt="User Image"></a>
+                      <a href="javascript:void(0);">John Doe</a>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown dropdown-action">
+                        <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle" href="javascript:void(0);"><i class="material-icons">more_vert</i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_custom_policy"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                          <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_custom_policy"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /Custom Policy -->
+
+        </div>
+      </div>
+      <!-- /Annual Leave -->
+
+      <!-- Sick Leave -->
+      <div class="card leave-box" id="leave_sick">
+        <div class="card-body">
+          <div class="h3 card-title with-switch">
+            Sick
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_sick" [(ngModel)]="isToggleOn2"  checked>
+              <label class="onoffswitch-label" for="switch_sick">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+          <div class="leave-item">
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Days</label>
+                    <input type="text" class="form-control" [disabled]="!isEditingSick">
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingSick) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn2" (click)="enableEdit('sick')">Edit</button>
+                }
+                @if (isEditingSick) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('sick')">Cancel</button>
+                }
+                @if (isEditingSick) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('sick')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Sick Leave -->
+
+      <!-- Hospitalisation Leave -->
+      <div class="card leave-box" id="leave_hospitalisation">
+        <div class="card-body">
+          <div class="h3 card-title with-switch">
+            Hospitalisation
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_hospitalisation" [(ngModel)]="isToggleOn3">
+              <label class="onoffswitch-label" for="switch_hospitalisation">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+          <div class="leave-item">
+
+            <!-- Annual Days Leave -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Days</label>
+                    <input type="text" class="form-control" [disabled]="!isEditingAnnual">
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingAnnual) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn3" (click)="enableEdit('annual')">Edit</button>
+                }
+                @if (isEditingAnnual) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('annual')">Cancel</button>
+                }
+                @if (isEditingAnnual) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('annual')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Annual Days Leave -->
+
+          </div>
+
+          <!-- Custom Policy -->
+          <div class="custom-policy">
+            <div class="leave-header">
+              <div class="title">Custom policy</div>
+              <div class="leave-action">
+                <button class="btn btn-sm btn-primary" [disabled]="!isToggleOn3" type="button" data-bs-toggle="modal" data-bs-target="#add_custom_policy"><i class="la la-plus-circle"></i> Add custom policy</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-nowrap leave-table mb-0">
+                <thead>
+                  <tr>
+                    <th class="l-name">Name</th>
+                    <th class="l-days">Days</th>
+                    <th class="l-assignee">Assignee</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>5 Year Service </td>
+                    <td>5</td>
+                    <td>
+                      <a href="javascript:void(0);" class="avatar"><img src="assets/img/profiles/avatar-02.jpg" alt="User Image"></a>
+                      <a href="javascript:void(0);">John Doe</a>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown dropdown-action">
+                        <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle" href="javascript:void(0);"><i class="material-icons">more_vert</i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a href="javascript:void(0);" class="dropdown-item"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                          <a href="javascript:void(0);" class="dropdown-item"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /Custom Policy -->
+
+        </div>
+      </div>
+      <!-- /Hospitalisation Leave -->
+
+      <!-- Maternity Leave -->
+      <div class="card leave-box" id="leave_maternity">
+        <div class="card-body">
+          <div class="h3 card-title with-switch">
+            Maternity  <span class="subtitle">Assigned to female only</span>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_maternity" [(ngModel)]="isToggleOn4" checked>
+              <label class="onoffswitch-label" for="switch_maternity">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+          <div class="leave-item">
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Days</label>
+                    <input type="text" class="form-control" [disabled]="!isEditingMaternity">
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingMaternity) {
+                  <button class="leave-edit-btn"  [disabled]="!isToggleOn4" (click)="enableEdit('maternity')">Edit</button>
+                }
+                @if (isEditingMaternity) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('maternity')">Cancel</button>
+                }
+                @if (isEditingMaternity) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('maternity')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Maternity Leave -->
+
+      <!-- Paternity Leave -->
+      <div class="card leave-box" id="leave_paternity">
+        <div class="card-body">
+          <div class="h3 card-title with-switch">
+            Paternity  <span class="subtitle">Assigned to male only</span>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_paternity" [(ngModel)]="isToggleOn5">
+              <label class="onoffswitch-label" for="switch_paternity">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+          </div>
+          <div class="leave-item">
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Days</label>
+                    <input type="text" class="form-control" [disabled]="!isEditingPaternity">
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingPaternity) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn5" (click)="enableEdit('paternity')">Edit</button>
+                }
+                @if (isEditingPaternity) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('paternity')">Cancel</button>
+                }
+                @if (isEditingPaternity) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('paternity')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Paternity Leave -->
+
+      <!-- Custom Create Leave -->
+      <div class="card leave-box mb-0" id="leave_custom01">
+        <div class="card-body">
+          <div class="h3 card-title with-switch">
+            LOP
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch_custom01" checked [(ngModel)]="isToggleOn6">
+              <label class="onoffswitch-label" for="switch_custom01">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+              </label>
+            </div>
+            <button class="btn btn-danger leave-delete-btn" type="button">Delete</button>
+          </div>
+          <div class="leave-item">
+
+            <!-- Annual Days Leave -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Days</label>
+                    <input type="text" class="form-control" [disabled]="!isEditingLop">
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingLop) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn6" (click)="enableEdit('lop')">Edit</button>
+                }
+                @if (isEditingLop) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('lop')">Cancel</button>
+                }
+                @if (isEditingLop) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('lop')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Annual Days Leave -->
+
+            <!-- Carry Forward -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <label class="d-block col-form-label" for="">Carry forward</label>
+                  <div class="leave-inline-form">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="carryForward" id="carry_no_01" value="option1" [disabled]="!isEditingLopCarryForward">
+                      <label class="form-check-label" for="carry_no_01">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="carryForward" id="carry_yes_01" value="option2" [disabled]="!isEditingLopCarryForward">
+                      <label class="form-check-label" for="carry_yes_01">Yes</label>
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-text">Max</span>
+                      <input type="text" class="form-control" [disabled]="!isEditingLopCarryForward">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingLopCarryForward) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn6" (click)="enableEdit('lopCarryForward')">Edit</button>
+                }
+                @if (isEditingLopCarryForward) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('lopCarryForward')">Cancel</button>
+                }
+                @if (isEditingLopCarryForward) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('lopCarryForward')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Carry Forward -->
+
+            <!-- Earned Leave -->
+            <div class="leave-row">
+              <div class="leave-left">
+                <div class="input-box">
+                  <label class="d-block col-form-label" for="">Earned leave</label>
+                  <div class="leave-inline-form">
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" [disabled]="!isEditingLopEarned">
+                      <label class="form-check-label" for="inlineRadio1">No</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" [disabled]="!isEditingLopEarned">
+                      <label class="form-check-label" for="inlineRadio2">Yes</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="leave-right">
+                @if (!isEditingLopEarned) {
+                  <button class="leave-edit-btn" [disabled]="!isToggleOn6" (click)="enableEdit('lopEarned')">Edit</button>
+                }
+                @if (isEditingLopEarned) {
+                  <button class="btn btn-white leave-cancel-btn" (click)="cancelEdit('lopEarned')">Cancel</button>
+                }
+                @if (isEditingLopEarned) {
+                  <button class="btn btn-primary leave-save-btn" (click)="saveChanges('lopEarned')" type="submit">Save</button>
+                }
+              </div>
+            </div>
+            <!-- /Earned Leave -->
+
+          </div>
+
+          <!-- Custom Policy -->
+          <div class="custom-policy">
+            <div class="leave-header">
+              <div class="title">Custom policy</div>
+              <div class="leave-action">
+                <button class="btn btn-sm btn-primary" [disabled]="!isToggleOn6" type="button" data-bs-toggle="modal" data-bs-target="#add_custom_policy"><i class="la la-plus-circle"></i> Add custom policy</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover table-nowrap leave-table mb-0">
+                <thead>
+                  <tr>
+                    <th class="l-name">Name</th>
+                    <th class="l-days">Days</th>
+                    <th class="l-assignee">Assignee</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>5 Year Service </td>
+                    <td>5</td>
+                    <td>
+                      <a href="javascript:void(0);" class="avatar"><img src="assets/img/profiles/avatar-02.jpg" alt="User Image"></a>
+                      <a href="javascript:void(0);">John Doe</a>
+                    </td>
+                    <td class="text-end">
+                      <div class="dropdown dropdown-action">
+                        <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle" href="javascript:void(0);"><i class="material-icons">more_vert</i></a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_custom_policy"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                          <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_custom_policy"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- /Custom Policy -->
+
+        </div>
+      </div>
+      <!-- /Custom Create Leave -->
+
+    </div>
+  </div>
+
+</div>
+<!-- /Page Content -->
+
+<!-- Add Custom Policy Modal -->
+<div id="add_custom_policy" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Custom Policy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="input-block mb-3">
+            <label class="col-form-label" for="">Policy Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="input-block mb-3">
+            <label class="col-form-label" for="">Days <span class="text-danger">*</span></label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="input-block mb-3 leave-duallist">
+            <label class="col-form-label" for="">Add employee</label>
+            <div class="row">
+              <div class="col-lg-5 col-sm-5">
+                <select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedFrom" class="form-control form-select" size="5" multiple>
+                  @for (option of optionsFrom; track option) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              </div>
+              <div class="multiselect-controls col-lg-2 col-sm-2 d-grid gap-2">
+                <button type="button" (click)="moveRightSelected()" class="btn w-100 btn-white">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
+                <button type="button" (click)="moveRightAll()" class="btn w-100 btn-white">
+                  <i class="fa fa-forward"></i>
+                </button>
+                <button type="button" (click)="moveLeftSelected()" class="btn w-100 btn-white">
+                  <i class="fa fa-chevron-left"></i>
+                </button>
+                <button type="button" (click)="moveLeftAll()" class="btn w-100 btn-white">
+                  <i class="fa fa-backward"></i>
+                </button>
+              </div>
+              <div class="col-lg-5 col-sm-5">
+                <select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedTo" class="form-control form-select" size="8" multiple>
+                  @for (option of optionsTo; track option) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Add Custom Policy Modal -->
+
+<!-- Edit Custom Policy Modal -->
+<div id="edit_custom_policy" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Custom Policy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="input-block mb-3">
+            <label class="col-form-label" for="">Policy Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" value="LOP">
+          </div>
+          <div class="input-block mb-3">
+            <label class="col-form-label" for="">Days <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" value="4">
+          </div>
+          <div class="input-block mb-3 leave-duallist">
+            <label class="col-form-label" for="">Add employee</label>
+            <div class="row">
+              <div class="col-lg-5 col-sm-5">
+                <select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedFrom" class="form-control form-select" size="5" multiple>
+                  @for (option of optionsFrom; track option) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              </div>
+              <div class="multiselect-controls col-lg-2 col-sm-2 d-grid gap-2">
+                <button type="button" (click)="moveRightSelected()" class="btn w-100 btn-white">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
+                <button type="button" (click)="moveRightAll()" class="btn w-100 btn-white">
+                  <i class="fa fa-forward"></i>
+                </button>
+                <button type="button" (click)="moveLeftSelected()" class="btn w-100 btn-white">
+                  <i class="fa fa-chevron-left"></i>
+                </button>
+                <button type="button" (click)="moveLeftAll()" class="btn w-100 btn-white">
+                  <i class="fa fa-backward"></i>
+                </button>
+              </div>
+              <div class="col-lg-5 col-sm-5">
+                <select [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedTo" class="form-control form-select" size="8" multiple>
+                  @for (option of optionsTo; track option) {
+                    <option [value]="option.value">{{ option.label }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Edit Custom Policy Modal -->
+
+<!-- Delete Custom Policy Modal -->
+<div class="modal custom-modal fade" id="delete_custom_policy" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Custom Policy</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+            </div>
+            <div class="col-6">
+              <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Custom Policy Modal -->

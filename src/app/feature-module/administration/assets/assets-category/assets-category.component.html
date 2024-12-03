@@ -1,0 +1,448 @@
+
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Category</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink] = "routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Category</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <ul class="split-head">
+          <li>
+            <a href="javascript:void(0);" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_asset"><i class="la la-plus-circle"></i>  Add Category</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-newdatatable">
+        <table matSort (matSortChange)="sortData($event)" class="table table-new custom-table mb-0 datatable">
+          <thead>
+            <tr>
+              <th  mat-sort-header="id">#</th>
+              <th  mat-sort-header="categoryName">Category Name</th>
+              <th  mat-sort-header="createdOn">Created On</th>
+              <th  mat-sort-header="action">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (assets of assetsCategory; track assets; let i = $index) {
+              <tr>
+                <td>{{assets.id}}</td>
+                <td>
+                  <a [routerLink] = "routes.assetsDetails" class="table-imgname">
+                    <img [src]="assets.img" class="me-2" alt="Laptop Image">
+                    <span>{{assets.categoryName}}</span>
+                  </a>
+                </td>
+                <td>{{assets.createdOn}}</td>
+                <td>
+                  <div class="table-actions d-flex">
+                    <a class="delete-table me-2" data-bs-toggle="modal" data-bs-target="#edit-asset" href="javascript:void(0);">
+                      <img src="assets/img/icons/edit.svg" alt="Edit Icon">
+                    </a>
+                    <a class="delete-table confirm-text" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_estimate">
+                      <img src="assets/img/icons/delete.svg" alt="Delete Icon">
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+                                <li class="page-item" [ngClass]="{
+                                  disabled: currentPage === 1
+                                }">
+                <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+
+              @for (item of pageNumberArray; track item; let i = $index) {
+                                    <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                                    (pageNumberArray[currentPage - 2] > item &&
+                                      item !== 1 &&
+                                      pageNumberArray.length > 6) ||
+                                    (pageNumberArray[currentPage] < item &&
+                                      item !== 1 &&
+                                      pageNumberArray.length > 6 &&
+                                      pageNumberArray.length !== item)
+                                      ? 'hide-page-no'
+                                      : 'show-page-no'
+                                  ">
+                  <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                    {{ item }}
+                  </a>
+                </li>
+                @if (
+                  i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                  ) {
+                  <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+                @if (
+                  i === pageNumberArray.length - 2 &&
+                  pageNumberArray.length > 6
+                  ) {
+<li [hidden]="
+                                    currentPage >=
+                                      pageNumberArray[pageNumberArray.length - 2] ||
+                                    totalData < serialNumberArray[serialNumberArray.length - 1]
+                                  " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+              }
+
+                                <li class="page-item" [ngClass]="{
+                                  disabled:
+                                    currentPage ===
+                                      pageNumberArray[pageNumberArray.length - 1] ||
+                                    assetsCategory.length === 0
+                                }">
+                <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
+
+<!-- Edit Asset Modal -->
+<div id="edit_asset" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Asset</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Name</label>
+                <input class="form-control" type="text" value="Dell Laptop">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Id</label>
+                <input class="form-control" type="text" value="#AST-0001" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Purchase Date</label>
+                <input class="form-control datetimepicker" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Purchase From</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Manufacturer</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Model</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Serial Number</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Supplier</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Condition</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Warranty</label>
+                <input class="form-control" type="text" placeholder="In Months">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Value</label>
+                <input placeholder="$1800" class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset User</label>
+                <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class="select"  placeholder="John Doe">
+                  @for (data of selectedList1; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Description</label>
+                <textarea class="form-control"></textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Status</label>
+                <mat-select [(ngModel)]="selectedValue2" [ngModelOptions]="{standalone: true}" class="select"  placeholder="Pending">
+                  @for (data of selectedList2; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Asset Modal -->
+
+<!-- Delete Asset Modal -->
+<div class="modal custom-modal fade" id="delete_asset" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Asset</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+            </div>
+            <div class="col-6">
+              <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Asset Modal -->
+
+
+<!-- add modal -->
+<div id="add_asset" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Category Name</label>
+                <input class="form-control" type="text">
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Upload Category Icon</label>
+                <div class="d-flex align-items-center flex-wrap">
+                  <div class="cat-upload me-3">
+                    <i class="fas fa-plus"></i>
+                    <input class="upload" type="file">
+                  </div>
+                  <div class="cat-upload-view me-2">
+                    <img src="assets/img/img1.jpg" alt="Keyboard Image">
+                    <a href="javascript:void(0);" class="img-close"><i class="fas fa-times"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section mt-2">
+            <button class="btn btn-primary submit-btns w-100">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit modal -->
+<div id="edit-asset" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit  Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Category Name</label>
+                <input class="form-control" type="text" value="laptop">
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Upload Category Icon</label>
+                <div class="d-flex align-items-center flex-wrap">
+                  <div class="cat-upload me-3">
+                    <i class="fas fa-plus"></i>
+                    <input class="upload" type="file">
+                  </div>
+                  <div class="cat-upload-view me-2">
+                    <img src="assets/img/img1.jpg" alt="Keyboard Image">
+                    <a href="javascript:void(0);" class="img-close"><i class="fas fa-times"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section mt-2">
+            <button class="btn btn-primary submit-btns w-100">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Estimate Modal -->
+<div class="modal custom-modal fade" id="delete_estimate" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Category</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+            </div>
+            <div class="col-6">
+              <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Estimate Modal -->
+
+
+<!-- assign  Modal -->
+<div  class="modal custom-modal fade" id="add-assigns"  role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-12 selectnew">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Category Name</label>
+                <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}" class="select"  placeholder="Department 1">
+                  @for (data of selectedList3; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12 selectnew">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Assign to</label>
+                <mat-select [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}" class="select"  placeholder="Customer">
+                  @for (data of selectedList4; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="submit-section mt-3">
+              <button class="btn btn-primary submit-btns w-100">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

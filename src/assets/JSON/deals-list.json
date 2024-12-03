@@ -1,0 +1,115 @@
+{
+    "data" : [
+        {
+            "dealName": "Collins",
+            "stage": "Conversation",
+            "dealValue": "$04,51,000",
+            "tags": "Promotion",
+            "expectedClosedDate": "10 Feb 2024",
+            "owner": "Hendry",
+            "probability": "85%",
+            "status": "Open",
+            "isRating": true
+        },
+        {
+            "dealName": "Konopelski",
+            "stage": "Pipeline",
+            "dealValue": "$03,12,500",
+            "tags": "Rated",
+            "expectedClosedDate": "24 Feb 2024",
+            "owner": "Guillory",
+            "probability": "15%",
+            "status": "Lost",
+            "isRating": false
+        },
+        {
+            "dealName": "Adams",
+            "stage": "Won",
+            "dealValue": "$04,14,400",
+            "tags": "Promotion",
+            "expectedClosedDate": "5 Mar 2024",
+            "owner": "Jami",
+            "probability": "95%",
+            "status": "Won",
+            "isRating": true
+        },
+        {
+            "dealName": "Schumm",
+            "stage": "Lost",
+            "dealValue": "$09,14,400",
+            "tags": "Rated",
+            "expectedClosedDate": "17 Mar 2024",
+            "owner": "Theresa",
+            "probability": "47%",
+            "status": "Won",
+            "isRating": false
+        },
+        {
+            "dealName": "Wisozk",
+            "stage": "Follow Up",
+            "dealValue": "$11,14,400",
+            "tags": "Rejected",
+            "expectedClosedDate": "08 Apr 2024",
+            "owner": "Espinosa",
+            "probability": "98%",
+            "status": "Won",
+            "isRating": false
+        },
+        {
+            "dealName": "Heller",
+            "stage": "Pipeline",
+            "dealValue": "$16,11,400",
+            "tags": "Rated",
+            "expectedClosedDate": "20 Apr 2024",
+            "owner": "Martin",
+            "probability": "14%",
+            "status": "Won",
+            "isRating": false
+        },
+        {
+            "dealName": "Gutkowski",
+            "stage": "Pipeline",
+            "dealValue": "$78,11,800",
+            "tags": "Rejected",
+            "expectedClosedDate": "12 May 2024",
+            "owner": "Newell",
+            "probability": "78%",
+            "status": "Open",
+            "isRating": true
+        },
+        {
+            "dealName": "Walter",
+            "stage": "Pipeline",
+            "dealValue": "$09,05,947",
+            "tags": "Rejected",
+            "expectedClosedDate": "26 May 2024",
+            "owner": "Janet",
+            "probability": "47%",
+            "status": "Lost",
+            "isRating": true
+        },
+        {
+            "dealName": "Hansen",
+            "stage": "Schedule",
+            "dealValue": "$04,51,000",
+            "tags": "Calls",
+            "expectedClosedDate": "13 June 2024",
+            "owner": "Craig",
+            "probability": "25%",
+            "status": "Won",
+            "isRating": false
+        },
+        {
+            "dealName": "Leuschke",
+            "stage": "Conversation",
+            "dealValue": "$72,14,078",
+            "tags": "Calls",
+            "expectedClosedDate": "28 June 2024",
+            "owner": "Daniel",
+            "probability": "69%",
+            "status": "Won",
+            "isRating": false
+        }
+      ],
+      "totalData":10
+}

@@ -1,0 +1,60 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "goalType": "Event Goal",
+          "subject": "Test Goal",
+          "targetAchivement": "Lorem ipsum dollar",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "status": "Active",
+          "progress": "Completed 73%"
+        },
+        {
+          "id": 2,
+          "goalType": "Invoice Goal",
+          "subject": "Employee Goal",
+          "targetAchivement": "Lorem ipsum dollar",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive",
+          "progress": "Completed 100%"
+        },
+        {
+          "id": 3,
+          "goalType": "Employee Goal",
+          "subject": "Invoice Goal",
+          "targetAchivement": "Lorem ipsum dollar",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive",
+          "progress": "Completed 73%"
+        },
+        {
+          "id": 4,
+          "goalType": "Invoice Goal",
+          "subject": "Project Goal",
+          "targetAchivement": "Lorem ipsum dollar",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "status": "Active",
+          "progress": "Completed 73%"
+        },
+        {
+          "id": 4,
+          "goalType": "Project Goal",
+          "subject": "Project Goal",
+          "targetAchivement": "Lorem ipsum dollar",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "status": "Active",
+          "progress": "Completed 73%"
+        }
+      ],
+      "totalData":4
+}

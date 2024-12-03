@@ -1,0 +1,14 @@
+{
+    "data" : [
+        
+        {
+          "employeeName": "John Doe",
+          "providentFundType": "Percentage of Basic Salary",
+          "employeeShare": "2%",
+          "organizationShare": "2%",
+          "id": 2
+        }
+        
+      ],
+      "totalData":6
+}

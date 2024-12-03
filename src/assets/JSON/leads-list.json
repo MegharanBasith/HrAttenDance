@@ -1,0 +1,116 @@
+{
+    "data": [
+      {
+        "leadName": "Collins",
+        "companyName": "NovaWaveLLC",
+        "phone": "+1 875455453",
+        "email": "robertson@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "10 Feb 2024, 09:00 am",
+        "img": "assets/img/icons/company-icon-01.svg",
+        "leadOwner": "Hendry",
+        "isRating": true
+    },
+    {
+        "leadName": "Konopelski",
+        "companyName": "BlueSky Industries",
+        "phone": "+1 989757485",
+        "email": "sharon@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "24 Feb 2024, 12:20 pm",
+        "img": "assets/img/icons/company-icon-02.svg",
+        "leadOwner": "Guillory",
+        "isRating": false
+    },
+    {
+        "leadName": "Adams",
+        "companyName": "SilverHawk",
+        "phone": "+1 546555455",
+        "email": "vaughan12@example.com",
+        "leadStatus": "Not Contacted",
+        "createdDate": "5 Mar 2024, 10:00 am",
+        "img": "assets/img/icons/company-icon-03.svg",
+        "leadOwner": "Jami",
+        "isRating": true
+    },
+    {
+        "leadName": "Schumm",
+        "companyName": "SummitPeak",
+        "phone": "+1 454478787",
+        "email": "jessica13@example.com",
+        "leadStatus": "Contacted",
+        "createdDate": "17 Mar 2024, 02:00 pm",
+        "img": "assets/img/icons/company-icon-04.svg",
+        "leadOwner": "Theresa",
+        "isRating": true
+    },
+    {
+        "leadName": "Wisozk",
+        "companyName": "RiverStone Ventur",
+        "phone": "+1 124547845",
+        "email": "carolTho3@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "8 Apr 2024, 11:00 am",
+        "img": "assets/img/icons/company-icon-05.svg",
+        "leadOwner": "Espinosa",
+        "isRating": false
+    },
+    {
+        "leadName": "Heller",
+        "companyName": "Bright Bridge Grp",
+        "phone": "+1 478845447",
+        "email": "dawnmercha@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "20 Apr 2024, 03:15 pm",
+        "img": "assets/img/icons/company-icon-06.svg",
+        "leadOwner": "Martin",
+        "isRating": false
+    },
+    {
+        "leadName": "Gutkowski",
+        "companyName": "CoastalStar Co.",
+        "phone": "+1 215544845",
+        "email": "rachel@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "12 May 2024, 08:30 am",
+        "img": "assets/img/icons/company-icon-07.svg",
+        "leadOwner": "Newell",
+        "isRating": false
+    },
+    {
+        "leadName": "Walter",
+        "companyName": "HarborView",
+        "phone": "+1 121145471",
+        "email": "jonelle@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "26 May 2024, 04:10 pm",
+        "img": "assets/img/icons/company-icon-08.svg",
+        "leadOwner": "Janet",
+        "isRating": true
+    },
+    {
+        "leadName": "Hansen",
+        "companyName": "Golden Gate Ltd",
+        "phone": "+1 321454789",
+        "email": "jonathan@example.com",
+        "leadStatus": "Closed",
+        "createdDate": "13 June 2024, 10:30 am",
+        "img": "assets/img/icons/company-icon-09.svg",
+        "leadOwner": "Craig",
+        "isRating": false
+    },
+    {
+        "leadName": "Leuschke",
+        "companyName": "Redwood Inc",
+        "phone": "+1 278907145",
+        "email": "brook@example.com",
+        "leadStatus": "Lost",
+        "createdDate": "28 June 2024, 05:40 pm",
+        "img": "assets/img/icons/company-icon-10.svg",
+        "leadOwner": "Daniel",
+        "isRating": false
+    }
+    ],
+    "totalData": 10
+  }
+  

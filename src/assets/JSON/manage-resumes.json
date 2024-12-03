@@ -1,0 +1,44 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "name1": "John Doe",
+          "name2": "Web Designer",
+          "jobtitle": "Web Developer",
+          "department": "Development",
+          "startdate": "3 Mar 2023",
+          "expiredate": "31 May 2023",
+          "jobtype": "Full Time",
+          "status": "Open",
+          "resume": "Download",
+          "img":"assets/img/profiles/avatar-02.jpg"
+        },
+        {
+          "id": 2,
+          "name1": "Richard Miles",
+          "name2": "Web Developer",
+          "jobtitle": "Web Designer",
+          "department": "Designing",
+          "startdate": "3 Mar 2023",
+          "expiredate": "31 May 2023",
+          "jobtype": "Part Time",
+          "status": "Closed",
+          "resume": "Download",
+          "img":"assets/img/profiles/avatar-09.jpg"
+        },
+        {
+          "id": 3,
+          "name1": "John Smith",
+          "name2": "Android Developer",
+          "jobtitle": "Android Developer",
+          "department": "Android",
+          "startdate": "3 Mar 2023",
+          "expiredate": "31 May 2023",
+          "jobtype": "Internship",
+          "status": "Cancelled",
+          "resume": "Download",
+          "img":"assets/img/profiles/avatar-10.jpg"
+        }
+      ],
+      "totalData":3
+}

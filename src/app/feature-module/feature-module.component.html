@@ -1,0 +1,62 @@
+<ng-container>
+    <div class="main-wrapper" [ngClass]="{
+      'expand-menu': expandMenu === true && miniSidebar === true,
+      'mini-sidebar': miniSidebar === true,
+      'slide-nav': mobileSidebar === true,
+
+      'defaultLayout': layoutMode === 'default_mode',
+      'horizontalLayout': layoutMode === 'horizontal_mode',
+      'twocolumnLayout': layoutMode === 'twocolumn', 
+
+      'orangeScheme': colorScheme === 'orange_color_scheme', 
+      'lightScheme': colorScheme === 'light_color_scheme', 
+      'darkScheme': colorScheme === 'dark_color_scheme', 
+      'blueScheme': colorScheme === 'blue_color_scheme', 
+      'maroonScheme': colorScheme === 'maroon_color_scheme', 
+      'purpleScheme': colorScheme === 'purple_color_scheme', 
+
+      'fluidWidth': layoutWidth === 'fluid_width_layout', 
+      'boxedWidth': layoutWidth === 'boxed_width_layout',
+      'sm-hover' : layoutWidth === 'boxed_width_layout',
+
+      'fixedLayout' : layoutPosition === 'fixed_position_layout',
+      'scrollableLayout' : layoutPosition === 'scrollable_position_layout',
+
+      'defaultColorTopbar': topbarColor === 'light_color_topbar',
+      'darkColorTopbar': topbarColor === 'dark_color_topbar',
+
+      'defaultSidebarSize': sidebarSize === 'default_sidebar_size',
+      'compactSidebarSize': sidebarSize === 'compact_sidebar_size',
+      'smallHoverSidebarSize': sidebarSize === 'sm_hover_sidebar_size',
+
+      'defaultSidebarView': sidebarView === 'default_sidebar_view',
+      'detachedSidebarView': sidebarView === 'detached_sidebar_view',
+      
+      'lightSidebarColor': sidebarColor === 'light_sidebar_color',
+      'darkSidebarColor': sidebarColor === 'dark_sidebar_color',
+      'gradientSidebarColor': sidebarColor === 'gradient_sidebar_color',
+    }">
+    @if (loading$ | async) {
+      <div id="loader-wrapper">
+        <div id="loader">
+          <div class="loader-ellips">
+            <span class="loader-ellips__dot"></span>
+            <span class="loader-ellips__dot"></span>
+            <span class="loader-ellips__dot"></span>
+            <span class="loader-ellips__dot"></span>
+          </div>
+        </div>
+      </div>
+    }
+    <app-header-one [ngClass]="{'d-none': page === 'change-password' || page === 'coming-soon' || page === 'under-maintenance' || page === 'job-list' || page === 'job-view'}"></app-header-one>
+    <app-side-menu-one [ngClass]="{'d-none': page === 'coming-soon' || page === 'under-maintenance' || page === 'job-list' || page === 'job-view'}"></app-side-menu-one>
+    @if (layoutMode === 'horizontal_mode') {
+      <app-side-menu-two></app-side-menu-two>
+    }
+    @if (layoutMode === 'twocolumn') {
+      <app-side-menu-three></app-side-menu-three>
+    }
+    <router-outlet></router-outlet>
+    <app-layout [ngClass]="{'d-none': page === 'job-view' ||  page === 'job-list' ||  page === 'coming-soon'}"></app-layout>
+  </div>
+</ng-container>

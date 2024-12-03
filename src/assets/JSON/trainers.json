@@ -1,0 +1,60 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "name": "John Doe",
+          "lname": "Doe",
+          "role": "developer",
+          "contactNumber": "9876543210",
+          "mail": "johndoe@example.com",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive",
+          "img":"assets/img/profiles/avatar-02.jpg"
+        },
+        {
+          "id": 2,
+          "name": "Mike Litorus",
+          "lname": "Litorus",
+          "role": "developer",
+          "contactNumber": "9876543120",
+          "mail": "mikelitorus@example.com",
+          "description": "Lorem ipsum dollar",
+          "status": "Active",
+          "img":"assets/img/profiles/avatar-05.jpg"
+        },
+        {
+          "id": 3,
+          "name": "Wilmer Deluna",
+          "lname": "Deluna",
+          "role": "developer",
+          "contactNumber": "9876543210",
+          "mail": "wilmerdeluna@example.com",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive",
+          "img":"assets/img/profiles/avatar-11.jpg"
+        },
+        {
+          "id": 4,
+          "name": "John Smith",
+          "lname": "Smith",
+          "role": "developer",
+          "contactNumber": "9876543210",
+          "mail": "johnsmith@example.com",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive",
+          "img":"assets/img/profiles/avatar-10.jpg"
+        },
+        {
+          "id": 5,
+          "name": "Richard Milesh",
+          "lname": "Milesh",
+          "role": "developer",
+          "contactNumber": "9876543210",
+          "mail": "richardmiles@example.com",
+          "description": "Lorem ipsum dollar",
+          "status": "Inactive",
+          "img":"assets/img/profiles/avatar-09.jpg"
+        }
+      ],
+      "totalData":5
+}

@@ -1,0 +1,42 @@
+
+{
+    "data" : [
+        {
+          "id": 1,
+          "number": "#INV-0001",
+          "client": "Global Technologies",
+          "project": "Office Management",
+          "email": "barrycuda@texas.com",
+          "tax": "GST",
+          "client_address": "Texas",
+          "billing_address": "Washington",
+          "invoice_date": "11 Mar 2023",
+          "due_date": "17 Mar 2023",
+          "totalamount": "$2099",
+          "discount": 5,
+          "grandTotal": 100,
+          "other_information": "Description",
+          "status": "Paid"
+        },
+        {
+          "id": 2,
+          "number": "#INV-0002",
+          "client": "Delta Technologies",
+          "project": "Office Management",
+          "email": "barrycuda@texas.com",
+          "tax": "VAT",
+          "client_address": "Combodia",
+          "billing_address": "Washington",
+          "invoice_date": "11 Mar 2023",
+          "due_date": "17 Mar 2023",
+          "totalamount": 100,
+          "discount": 5,
+          "grandTotal": 100,
+          "other_information": "Description",
+          "status": "Sent"
+        }
+       
+      ],
+      "totalData":6
+
+}

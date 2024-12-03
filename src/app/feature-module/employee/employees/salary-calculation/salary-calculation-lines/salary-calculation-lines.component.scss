@@ -1,0 +1,40 @@
+.btn-card {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-filter-container {
+    display: flex;
+    align-items: center; /* Aligns items vertically in the center */
+    margin-bottom: 20px;
+  }
+
+  .ml-2 {
+    margin-inline-start: 10px; /* Adds space between the input and the button */
+  }
+
+  .submit-button-container{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 10px;
+  }
+
+  .submit-button{
+    display: flex;
+  }
+
+  .custom-mat-group{
+    margin-top: 30px;
+  }
+
+  .mat-mdc-row:hover {
+    cursor: pointer; /* Change cursor to pointer */
+  }

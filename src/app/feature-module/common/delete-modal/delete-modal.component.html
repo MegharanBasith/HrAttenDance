@@ -1,0 +1,86 @@
+<!-- confirm-dialog.component.html -->
+<!-- <div class="modal custom-modal fade" id="deleteDialog" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-header">
+                    <h3>{{ title | translate }}</h3>
+                    <p>{{ 'confirmdelete' | translate }}</p>
+                </div>
+                <div class="modal-btn delete-action">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="javascript:void(0);" (click)="confirm()" class="btn btn-primary continue-btn">
+                                {{ 'delete' | translate }}
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">
+                                {{ 'cancel' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- <p-confirmDialog #cd>
+    <ng-template pTemplate="headless">
+        <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+            <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                <i class="pi pi-question text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-4">
+                {{ 'confirmdelete' | translate }}
+            </span>
+            <p class="mb-0">{{ 'Please confirm to proceed.' }}</p>
+            <div class="modal-btn delete-action">
+                <div class="row">
+                    <div class="col-6">
+                        <a href="javascript:void(0);" (click)="confirm()" class="btn btn-primary continue-btn">
+                            {{ 'delete' | translate }}
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">
+                            {{ 'cancel' | translate }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog> -->
+
+
+<p-dialog [(visible)]="display" [modal]="true" [closable]="true" [style]="{ width: '25rem'}">
+    <p-header>Confirm Deletion</p-header>
+    <div>
+      <p>Are you sure you want to delete this item?</p>
+    </div>
+    <p-footer>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-btn delete-action">
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="javascript:void(0);" (click)="onConfirm()" class="btn btn-primary continue-btn">
+                                    {{ 'delete' | translate }}
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="javascript:void(0);" (click)="onCancel()" class="btn btn-primary cancel-btn">
+                                    {{ 'cancel' | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-footer>
+  </p-dialog>

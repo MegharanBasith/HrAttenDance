@@ -1,0 +1,176 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Payments Report</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Payments Report</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <!-- Search Filter -->
+  <div class="row filter-row">
+
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus">
+        <div class="cal-icon">
+          <mat-form-field class="example-full-width ">
+            <mat-label>From</mat-label>
+            <input  bsDatepicker matInput class="form-control floating datetimepicker" type="text" matInput>
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus">
+        <div class="cal-icon">
+          <mat-form-field class="example-full-width ">
+            <mat-label>To</mat-label>
+            <input  bsDatepicker  matInput class="form-control floating datetimepicker" type="text" matInput>
+          </mat-form-field>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <a href="javascript:void(0);" class="btn btn-success w-100"> Search </a>
+    </div>
+  </div>
+  <!-- /Search Filter -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_header">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="dataTables_length">
+              <label>
+                Show
+                <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()" class="form-control form-control-sm">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table matSort (matSortChange)="sortData($event)" class="table table-striped custom-table mb-0 datatable">
+          <thead>
+            <tr>
+              <th mat-sort-header="id">#</th>
+              <th mat-sort-header="transactionid">Transaction ID</th>
+              <th mat-sort-header="date">Date</th>
+              <th mat-sort-header="clientname">Client Name</th>
+              <th mat-sort-header="paymentmethod">Payment Method</th>
+              <th mat-sort-header="invoice">Invoice</th>
+              <th mat-sort-header="amount" class="text-center">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (fees of lstFees; track fees; let i = $index) {
+              <tr>
+                <td>{{fees.id}}</td>
+                <td><a href="javascript:void(0);">{{fees.transactionid}}</a></td>
+                <td>{{fees.date}}</td>
+                <td>{{fees.clientname}}</td>
+                <td>{{fees.paymentmethod}}</td>
+                <td><a href="javascript:void(0);">{{fees.invoice}}</a></td>
+                <td class="text-center">{{fees.amount}}</td>
+              </tr>
+            }
+            @if (lstFees.length === 0) {
+              <tr>
+                <td colspan="10">
+                  <h5 style="text-align: center;">No data found</h5>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+              <li class="page-item" [ngClass]="{
+                                          disabled: currentPage === 1
+                                        }">
+                <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+
+              @for (item of pageNumberArray; track item; let i = $index) {
+                <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                                            (pageNumberArray[currentPage - 2] > item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6) ||
+                                            (pageNumberArray[currentPage] < item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6 &&
+                                              pageNumberArray.length !== item)
+                                              ? 'hide-page-no'
+                                              : 'show-page-no'
+                                          ">
+                  <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                    {{ item }}
+                  </a>
+                </li>
+                @if (
+                  i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                  ) {
+                  <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+                @if (
+                  i === pageNumberArray.length - 2 &&
+                  pageNumberArray.length > 6
+                  ) {
+<li [hidden]="
+                                            currentPage >=
+                                              pageNumberArray[pageNumberArray.length - 2] ||
+                                            totalData < serialNumberArray[serialNumberArray.length - 1]
+                                          " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+              }
+
+              <li class="page-item" [ngClass]="{
+                                          disabled:
+                                            currentPage ===
+                                              pageNumberArray[pageNumberArray.length - 1] ||
+                                            lstFees.length === 0
+                                        }">
+                <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->

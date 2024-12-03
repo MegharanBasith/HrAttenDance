@@ -1,0 +1,70 @@
+{
+    "data" : [
+        {
+          "id": 1,
+          "trainingType": "Git Training",
+          "trainer": "John Doe",
+          "employee": "",
+          "timeDuration": "7 May 2023 - 10 May 2023",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "cost": "$400",
+          "status": "Active",
+          "img":"assets/img/profiles/avatar-02.jpg"
+        },
+        {
+          "id": 2,
+          "trainingType": "Swift Training",
+          "trainer": "Richard Miles",
+          "employee": "",
+          "timeDuration": "7 May 2023 - 10 May 2023",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "cost": "$800",
+          "status": "Active",
+          "img":"assets/img/profiles/avatar-09.jpg"
+        },
+        {
+          "id": 3,
+          "trainingType": "Node Training",
+          "trainer": "John Doe",
+          "employee": "",
+          "timeDuration": "7 May 2023 - 10 May 2023",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "cost": "$400",
+          "status": "Inactive",
+          "img":"assets/img/profiles/avatar-09.jpg"
+        },
+        {
+          "id": 4,
+          "trainingType": "Angular Training",
+          "trainer": "Mike Litorus",
+          "employee": "",
+          "timeDuration": "7 May 2023 - 10 May 2023",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "cost": "$400",
+          "status": "Active",
+          "img":"assets/img/profiles/avatar-05.jpg"
+        },
+        {
+          "id": 4,
+          "trainingType": "Git Training",
+          "trainer": "Wilmer Deluna",
+          "employee": "",
+          "timeDuration": "7 May 2023 - 10 May 2023",
+          "startDate": "07-05-2023",
+          "endDate": "10-05-2023",
+          "description": "Lorem ipsum dollar",
+          "cost": "$400",
+          "status": "Active",
+          "img":"assets/img/profiles/avatar-11.jpg"
+        }
+      ],
+      "totalData":4
+}

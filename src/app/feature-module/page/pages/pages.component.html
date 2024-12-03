@@ -1,0 +1,10 @@
+<!-- Page Wrapper -->
+@if (page !== 'coming-soon' && page !== 'under-maintenance') {
+  <div class="page-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+}
+@if (page === 'coming-soon' || page === 'under-maintenance') {
+  <router-outlet></router-outlet>
+}
+<!-- /Page Wrapper -->

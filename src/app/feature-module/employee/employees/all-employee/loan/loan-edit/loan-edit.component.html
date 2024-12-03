@@ -1,0 +1,331 @@
+
+<div class="content container-fluid">
+  <div *ngIf="showSpinner">
+    <app-spinner></app-spinner>
+  </div>
+  <!-- Page Header -->
+  <div class="page-header">
+      <div class="row align-items-center">
+          <div class="col">
+              <h3 class="page-title">{{ 'Loan Details' | translate }}</h3>
+          </div>
+      </div>
+  </div>
+  <mat-tab-group>
+      <mat-tab label="{{'Loan Details' | translate }}">
+        <div class="card custom-card">
+          <div class="card-header border-bottom-0 justify-content-between">
+            <div class="card-title">{{ 'View/Edit Loan' }}</div>
+            <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#loanEdit" aria-expanded="true"
+              aria-controls="collapseExample">
+              <i class="feather icon-chevron-up fs-18 collapse-open"></i>
+              <i class="feather icon-chevron-down collapse-close fs-18"></i>
+            </a>
+          </div>
+          <div class="collapse show border-top" id="loanEdit">
+            <div class="card-body">
+              <form [formGroup]="editForm">
+                <div class="card custom-card">
+                  <div class="card-header border-bottom-0 justify-content-between">
+                    <div class="card-title">{{ 'Edit Loan' }}</div>
+                  </div>
+                  <div class="collapse show border-top">
+                    <div class="card-body">
+
+                      <div class="row">
+                        <!-- Loan ID -->
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Loan Id' }}</label>
+                            <input readonly class="form-control" type="text" formControlName="loanId" placeholder="Enter Loan Id">
+                            <mat-error *ngIf="editForm.get('loanId')?.invalid && editForm.get('loanId')?.touched">
+                              <small class="text-danger">{{ 'Loan Id is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+
+                        <!-- Loan Type -->
+                        <div class="col-md-4">
+                          <label class="col-form-label" for="loanType">Loan Type <span class="text-danger">*</span></label>
+                          <select
+                            class="form-control"
+                            formControlName="loanType"
+                            [class.is-invalid]="editForm.get('loanType')?.invalid && editForm.get('loanType')?.touched"
+                            (change)="onLoanTypeChange($event)">
+                            <option *ngFor="let typeKey of loanTypeKeys" [value]="loanTypes[typeKey]">
+                              {{ loanTypes[typeKey] }}
+                            </option>
+                          </select>
+                          <div *ngIf="editForm.get('loanType')?.invalid && editForm.get('loanType')?.touched" class="text-danger">
+                            Loan Type is required.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <!-- Amount -->
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Amount' }}</label>
+                            <input class="form-control" type="number" formControlName="amount" placeholder="Enter Amount">
+                            <mat-error *ngIf="editForm.get('amount')?.invalid && editForm.get('amount')?.touched">
+                              <small class="text-danger">{{ 'Amount is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+                        <!--Installment Amount-->
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Installment Amount' }}</label>
+                            <input class="form-control" type="number" formControlName="installmentAmount" placeholder="Enter Amount">
+                            <mat-error *ngIf="editForm.get('installmentAmount')?.invalid && editForm.get('installmentAmount')?.touched">
+                              <small class="text-danger">{{ 'Installment Amount is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+                        <!-- Number of Installments -->
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Number of Installments' }}</label>
+                            <input class="form-control" type="number" formControlName="numOfInstallments" placeholder="Enter Number of Installments">
+                            <mat-error *ngIf="editForm.get('numOfInstallments')?.invalid && editForm.get('numOfInstallments')?.touched">
+                              <small class="text-danger">{{ 'Number of Installments is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row">
+                        <!-- remaining Amount -->
+                        <div class="col-sm-6">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Remaining Amount' }}</label>
+                            <input readonly class="form-control" type="number" formControlName="remainingAmount" placeholder="Enter Remaining Amount ">
+                            <mat-error *ngIf="editForm.get('remainingAmount')?.invalid && editForm.get('remainingAmount')?.touched">
+                              <small class="text-danger">{{ 'remainingAmount is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Deducted Amount' }}</label>
+                            <input readonly class="form-control" type="number" formControlName="deductedAmount" placeholder="Enter Deducted Amount ">
+                            <mat-error *ngIf="editForm.get('deductedAmount')?.invalid && editForm.get('deductedAmount')?.touched">
+                              <small class="text-danger">{{ 'deductedAmount is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <!-- Employee Number -->
+                        <div class="col-sm-3">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Employee Number' }}</label>
+                            <input readonly class="form-control" type="text" formControlName="empNum" placeholder="Enter Employee Number">
+                            <mat-error *ngIf="editForm.get('empNum')?.invalid && editForm.get('empNum')?.touched">
+                              <small class="text-danger">{{ 'Employee Number is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+                         <!-- Loan Date -->
+                         <div class="col-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Loan Date' }} <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" bsDatepicker formControlName="loanDate">
+                            <mat-error *ngIf="editForm.get('loanDate')?.invalid && editForm.get('loanDate')?.touched">
+                              <small class="text-danger">{{ 'Loan Date is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+
+                        <!-- Effective Date -->
+                        <div class="col-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">{{ 'Effective Date' }} <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" bsDatepicker formControlName="effectiveDate">
+                            <mat-error *ngIf="editForm.get('effectiveDate')?.invalid && editForm.get('effectiveDate')?.touched">
+                              <small class="text-danger">{{ 'Effective Date is required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+
+                        <!-- Loan Notes -->
+                        <div class="col-sm-4">
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="loanNotes">{{ 'Loan Notes' }} <span class="text-danger">*</span></label>
+                            <textarea class="form-control" formControlName="loanNotes" rows="4"></textarea>
+                            <mat-error *ngIf="editForm.get('loanNotes')?.invalid && editForm.get('loanNotes')?.touched">
+                              <small class="text-danger">{{ 'Loan Notes are required' }}</small>
+                            </mat-error>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="editForm.errors?.['invalidInstallment'] &&
+                              (editForm.get('numOfInstallments')?.touched || editForm.get('installmentAmount')?.touched)">
+                        <span class="text-danger">The total of installments exceeds or smaller than the loan amount.</span>
+                      </div>
+                      <div *ngIf="canEdit" class="submit-button-container">
+                        <button class="btn btn-primary submit-button" [disabled]="editForm.invalid" (click)="updateLoan()">
+                          {{ 'Update' }}
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card custom-card">
+          <div class="card-header border-bottom-0 justify-content-between">
+            <div class="card-title">{{ 'Installments List' }}</div>
+            <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#installmentsList" aria-expanded="false"
+              aria-controls="collapseExample">
+              <i class="feather icon-chevron-up fs-18 collapse-open"></i>
+              <i class="feather icon-chevron-down collapse-close fs-18"></i>
+            </a>
+          </div>
+          <div class="collapse show border-top" id="installmentsList">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table mat-table [dataSource]="installmentDataSource" matSort (matSortChange)="sortData($event)" class="table table-striped custom-table mb-0 datatable">
+                  <thead>
+                    <ng-container *ngFor="let column of installmentColumns" [matColumnDef]="column">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ installmentColumnsHeaders[column]  }} </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element[column] }}
+                      </td>
+                    </ng-container>
+
+                  </thead>
+                  <tbody>
+                    <tr mat-header-row *matHeaderRowDef="installmentDisplayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: installmentDisplayedColumns;"></tr>
+                  </tbody>
+                </table>
+                <mat-paginator [length]="totalInstallmentRecordsCount" [pageSize]="10" [showFirstLastButtons]="true" (page)="setInstallmentPage($event)">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'Loan Stop Period' | translate}}">
+
+        <div class="content container-fluid">
+          <p-toast></p-toast>
+          <div *ngIf="showSpinner">
+            <app-spinner></app-spinner>
+          </div>
+
+          <div class="page-header">
+            <div class="row align-items-center">
+              <div class="col-auto float-end ms-auto">
+                <a class="btn add-btn" (click)="openCreateModal()"><i class="la la-plus-circle"></i> Add Loan Stop Period</a>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="table table-striped custom-table mb-0 datatable">
+              <thead>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let row">
+                    <button *ngIf="row.documentStatus !== 'Success'" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu  #menu="matMenu">
+                      <button mat-menu-item (click)="confirmAction(row, 'delete'); $event.stopPropagation()">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                      </button>
+                      <button [disabled]="!isAdmin" mat-menu-item (click)="confirmAction(row, 'submit'); $event.stopPropagation()">
+                        <mat-icon>send</mat-icon>
+                        <span>Submit</span>
+                      </button>
+
+                    </mat-menu>
+                  </td>
+                </ng-container>
+
+                <ng-container *ngFor="let column of cols" [matColumnDef]="column">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columnHeaders[column]  }} </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ getColumnValue(column, element[column]) }}
+                  </td>
+                </ng-container>
+
+              </thead>
+              <tbody>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </tbody>
+            </table>
+          </div>
+          <mat-paginator [length]="totalRecordsCount" [pageSize]="10" [showFirstLastButtons]="true" (page)="setPage($event)">
+          </mat-paginator>
+        </div>
+        <app-confirm-modal #confirmDialog (confirm)="onConfirmAction()"></app-confirm-modal>
+      </mat-tab>
+  </mat-tab-group>
+</div>
+
+
+<div id="createLoanStopModal" class="modal custom-modal fade" role="dialog" [ngClass]="{'show': isCreateModalOpen}">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Loan Stop Period</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeLoanStopModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="loanStopPeriodForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="deductedFromDate">Deducted From Date <span class="text-danger">*</span></label>
+                <input
+                  class="form-control datetimepicker"
+                  type="text"
+                  bsDatepicker
+                  container=".date-input1"
+                  formControlName="deductedFromDate"
+                  [class.is-invalid]="loanStopPeriodForm.get('deductedFromDate')?.invalid && loanStopPeriodForm.get('deductedFromDate')?.touched"
+                />
+                <div *ngIf="loanStopPeriodForm.get('deductedFromDate')?.invalid && loanStopPeriodForm.get('deductedFromDate')?.touched" class="text-danger">
+                  Deducted From Date is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="deductedToDate">Deducted To Date <span class="text-danger">*</span></label>
+                <input
+                  class="form-control datetimepicker"
+                  type="text"
+                  bsDatepicker
+                  container=".date-input1"
+                  formControlName="deductedToDate"
+                  [class.is-invalid]="loanStopPeriodForm.get('deductedToDate')?.invalid && loanStopPeriodForm.get('deductedToDate')?.touched"
+                />
+                <div *ngIf="loanStopPeriodForm.get('deductedToDate')?.invalid && loanStopPeriodForm.get('deductedToDate')?.touched" class="text-danger">
+                  Deducted To Date is required.
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeLoanStopModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="createLoanStopPeriodMethod()" [disabled]="loanStopPeriodForm.invalid">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

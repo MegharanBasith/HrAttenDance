@@ -1,0 +1,26 @@
+{
+    "data" : [
+        {
+          "item": "Dell Laptop",
+          "purchaseFrom": "Amazon",
+          "purchaseDate": "05-01-2023",
+          "purchasedBy": "Loren Gatlin",
+          "amount": "$1215",
+          "paidby": "Cash",
+          "status": "Pending",
+          "id": 1
+        },
+        {
+          "item": "Mac System",
+          "purchaseFrom": "Amazon",
+          "purchaseDate": "05-01-2023",
+          "purchasedBy": "Tarah Shropshire",
+          "amount": "$1215",
+          "paidby": "Cheque",
+          "status": "Approved",
+          "id": 2
+        }
+       
+      ],
+      "totalData":6
+}

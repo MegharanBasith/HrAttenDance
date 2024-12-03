@@ -1,0 +1,177 @@
+<form [formGroup]="editForm">
+  <div class="card custom-card">
+    <div class="card-header border-bottom-0 justify-content-between">
+      <div class="card-title">{{ 'Edit Worker Document' }}</div>
+    </div>
+    <div class="collapse show border-top">
+      <div class="card-body">
+        <!-- Document Type -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Document Type'}} </label>
+              <mat-select class="custom-mat-select" formControlName="DocumentTypeId" placeholder="Select Document Type">
+                <mat-option *ngFor="let type of documentTypeList" [value]="type.DocumentTypeId">
+                  {{ type.EnglishDescription }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="editForm.get('DocumentTypeId')?.invalid && editForm.get('DocumentTypeId')?.touched">
+                <small class="text-danger">{{ 'Document Type is required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+
+          <!-- Employee Number -->
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Employee Number'}} </label>
+              <input readonly class="form-control" type="text" formControlName="EmpNum" placeholder="Enter Employee Number">
+              <mat-error *ngIf="editForm.get('EmpNum')?.invalid && editForm.get('EmpNum')?.touched">
+                <small class="text-danger">{{ 'Employee Number is required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+        </div>
+
+        <!-- Request Type and Sadad Number -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Request Type'}} </label>
+              <input class="form-control" type="text" formControlName="RequestType" placeholder="Enter Request Type">
+              <mat-error *ngIf="editForm.get('RequestType')?.invalid && editForm.get('RequestType')?.touched">
+                <small class="text-danger">{{ 'Request Type is required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Request Id'}} </label>
+              <input readonly class="form-control" type="text" formControlName="RequestID" placeholder="Enter Request ID">
+              <mat-error *ngIf="editForm.get('RequestID')?.invalid && editForm.get('RequestID')?.touched">
+                <small class="text-danger">{{ 'Request ID is required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- Document Date  and Expiry Date -->
+        <div class="row">
+          <div class="col-4">
+            <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">{{'Document Date' }}<span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                        container=".date-input1"
+                        [class.invalid]="editForm.get('DocumentDate')?.invalid && editForm.get('DocumentDate')?.touched"
+                        formControlName="DocumentDate">
+                    @if (editForm.get('DocumentDate')?.invalid &&
+                    editForm.get('DocumentDate')?.touched) {
+                    <div>
+                        @if (editForm.get('DocumentDate')?.invalid &&
+                        editForm.get('DocumentDate')?.touched) {
+                        <small class="text-danger"> {{'Document Date Required'}}</small>}</div>}
+                </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">{{'Payment Date' }}<span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                        container=".date-input1"
+                        [class.invalid]="editForm.get('PaymentDate')?.invalid && editForm.get('PaymentDate')?.touched"
+                        formControlName="PaymentDate">
+                    @if (editForm.get('PaymentDate')?.invalid &&
+                    editForm.get('PaymentDate')?.touched) {
+                    <div>
+                        @if (editForm.get('PaymentDate')?.invalid &&
+                        editForm.get('PaymentDate')?.touched) {
+                        <small class="text-danger"> {{'Payment Date Required'}}</small>}</div>}
+                </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">{{'Expiry Date' }}<span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                    <input class="form-control datetimepicker" type="text" bsDatepicker
+                        container=".date-input1"
+                        [class.invalid]="editForm.get('ExpiryDate')?.invalid && editForm.get('ExpiryDate')?.touched"
+                        formControlName="ExpiryDate">
+                    @if (editForm.get('ExpiryDate')?.invalid &&
+                    editForm.get('ExpiryDate')?.touched) {
+                    <div>
+                        @if (editForm.get('ExpiryDate')?.invalid &&
+                        editForm.get('ExpiryDate')?.touched) {
+                        <small class="text-danger"> {{'Document Date Required'}}</small>}</div>}
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Date, Line Amount, and Period -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Period'}} </label>
+              <input class="form-control" type="number" formControlName="Period" placeholder="Enter Period">
+              <mat-error *ngIf="editForm.get('Period')?.invalid && editForm.get('Period')?.touched">
+                <small class="text-danger">{{ 'Period is required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Document Number'}} </label>
+              <input class="form-control" type="text" formControlName="DocumentNumber" placeholder="Enter Document Number">
+              <mat-error *ngIf="editForm.get('DocumentNumber')?.invalid && editForm.get('DocumentNumber')?.touched">
+                <small class="text-danger">{{ 'Document Number is required' }}</small>
+              </mat-error>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Sadad Number'}} </label>
+              <!--  -->
+              <input class="form-control" type="text" formControlName="SadadNo" placeholder="Enter Sadad Number">
+              <!-- <mat-error *ngIf="editForm.get('SadadNo')?.invalid && editForm.get('SadadNo')?.touched">
+                <small class="text-danger">{{ 'Sadad Number is required' }}</small>
+              </mat-error> -->
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="input-block mb-3">
+              <label class="col-form-label" for="">{{'Line Amount'}} </label>
+              <input class="form-control" type="number" formControlName="LineAmount" placeholder="Enter Line Amount">
+              <mat-error *ngIf="editForm.get('LineAmount')?.invalid && editForm.get('LineAmount')?.touched">
+                <small class="text-danger">{{ 'Line Amount is required and must be positive' }}</small>
+              </mat-error>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- Request ID -->
+        <div class="row">
+
+        </div>
+      </div>
+
+      <div class="submit-button-container">
+        <button class="btn btn-primary submit-button" [disabled]="editForm.invalid" (click)="updateWorkerDoc()">
+          {{ 'Update' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

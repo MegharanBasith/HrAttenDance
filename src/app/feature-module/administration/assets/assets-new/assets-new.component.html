@@ -1,0 +1,547 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Assets</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink] = "routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Assets</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <ul class="split-head">
+          <li>
+            <div class="bookingrange btn btn-white btn-sm ">
+              <i class="far fa-calendar-alt me-2"></i>
+              <input class="date-range" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue">
+              <i class="fas fa-chevron-down ms-2"></i>
+            </div>
+          </li>
+          <li>
+            <a href="javascript:void(0);" class="btn btn-whiteline"><i class="fa-solid fa-download me-2" aria-hidden="true"></i>CSV</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" class="btn btn-whiteline"><i class="fa-solid fa-filter me-2" aria-hidden="true"></i>Filters</a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_asset"><i class="la la-plus-circle"></i> Add New Asset</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <!-- Search Filter -->
+  <div class="row">
+    <div class="col-lg-2 d-flex">
+      <div class="total-widget flex-fill">
+        <h6>Total Assets</h6>
+        <h4>20</h4>
+      </div>
+    </div>
+    <div class="col-lg-2 d-flex">
+      <div class="total-widget flex-fill">
+        <h6>Allocated</h6>
+        <h4>10</h4>
+      </div>
+    </div>
+    <div class="col-lg-2 d-flex">
+      <div class="total-widget flex-fill">
+        <h6>Damaged</h6>
+        <h4>2</h4>
+      </div>
+    </div>
+    <div class="col-lg-2 d-flex">
+      <div class="total-widget flex-fill">
+        <h6>Repaired</h6>
+        <h4>1</h4>
+      </div>
+    </div>
+    <div class="col-lg-2 d-flex">
+      <div class="total-widget flex-fill">
+        <h6>Not Using</h6>
+        <h4>7</h4>
+      </div>
+    </div>
+    <div class="col-lg-2 d-flex">
+      <div class="total-widget flex-fill">
+        <h6>Lost Items</h6>
+        <h4>2</h4>
+      </div>
+    </div>
+  </div>
+  <!-- /Search Filter -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-newdatatable">
+        <table matSort (matSortChange)="sortData($event)" class="table table-new custom-table mb-0 datatable">
+          <thead>
+            <tr>
+              <th mat-sort-header="id">#</th>
+              <th mat-sort-header="name">Name</th>
+              <th mat-sort-header="assetId">Asset ID</th>
+              <th mat-sort-header="category">Category</th>
+              <th mat-sort-header="department">Department</th>
+              <th mat-sort-header="allocatedTo">Allocated to</th>
+              <th mat-sort-header="status">Status</th>
+              <th mat-sort-header="action">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (data of assetsNew; track data; let i = $index) {
+              <tr >
+                <td>{{data.id}}</td>
+                <td>
+                  <a [routerLink] = "routes.assetsDetails" class="table-imgname">
+                    <img [src]="data.img1" class="me-2" alt="Laptop Image">
+                    <span>{{data.name}}</span>
+                  </a>
+                </td>
+                <td>{{data.assetId}}</td>
+                <td>{{data.category}}</td>
+                <td>{{data.department}}</td>
+                <td class="table-namesplit">
+                  <a href="javascript:void(0);" class="table-profileimage">
+                    <img [src]="data.img2" class="me-2" alt="User Image">
+                  </a>
+                  <a href="javascript:void(0);" class="table-name">
+                    <span>{{data.allocatedTo}}</span>
+                    <p>{{data.emailId}}</p>
+                  </a>
+                </td>
+                @if (data.status !== 'Assign') {
+                  <td>
+                    <div class="dropdown action-label">
+                      <a class="btn btn-white btn-sm btn-rounded dropdown-toggle text-primary" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{data.status}}
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0);"> {{data.status1}}</a>
+                        <a class="dropdown-item" href="javascript:void(0);">{{data.status2}}</a>
+                        <a class="dropdown-item" href="javascript:void(0);">{{data.status3}}</a>
+                      </div>
+                    </div>
+                  </td>
+                }
+                @if (data.status === 'Assign') {
+                  <td>
+                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-assigns" class="btn btn-assign" ><i class="la la-plus-circle"></i> Assign  </a>
+                  </td>
+                }
+                <td>
+                  <div class="table-actions d-flex">
+                    <a class="delete-table me-2" data-bs-toggle="modal" data-bs-target="#edit-asset" href="javascript:void(0);">
+                      <img src="assets/img/icons/edit.svg" alt="Edit Icon">
+                    </a>
+                    <a class="delete-table confirm-text" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_estimate">
+                      <img src="assets/img/icons/delete.svg" alt="Delete Icon">
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+                                <li class="page-item" [ngClass]="{
+                                  disabled: currentPage === 1
+                                }">
+                <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+              </li>
+
+              @for (item of pageNumberArray; track item; let i = $index) {
+                                    <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                                    (pageNumberArray[currentPage - 2] > item &&
+                                      item !== 1 &&
+                                      pageNumberArray.length > 6) ||
+                                    (pageNumberArray[currentPage] < item &&
+                                      item !== 1 &&
+                                      pageNumberArray.length > 6 &&
+                                      pageNumberArray.length !== item)
+                                      ? 'hide-page-no'
+                                      : 'show-page-no'
+                                  ">
+                  <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                    {{ item }}
+                  </a>
+                </li>
+                @if (
+                  i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                  ) {
+                  <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+                @if (
+                  i === pageNumberArray.length - 2 &&
+                  pageNumberArray.length > 6
+                  ) {
+<li [hidden]="
+                                    currentPage >=
+                                      pageNumberArray[pageNumberArray.length - 2] ||
+                                    totalData < serialNumberArray[serialNumberArray.length - 1]
+                                  " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                }
+              }
+
+                                <li class="page-item" [ngClass]="{
+                                  disabled:
+                                    currentPage ===
+                                      pageNumberArray[pageNumberArray.length - 1] ||
+                                    assetsNew.length === 0
+                                }">
+                <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
+
+<!-- add modal -->
+<div id="add_asset" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Asset</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Name</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Id</label>
+                <input class="form-control" type="text" value="AST-235" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3 selectnew">
+                <label class="col-form-label" for="">Category</label>
+                <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class="select custom-mat-select"  placeholder="Category 1">
+                  @for (data of selectedList1; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-block mb-3 date-input1">
+                <label class="col-form-label" for="">Warranty</label>
+                <div class="cal-icon">
+                  <input class="form-control datetimepicker" type="text" placeholder="Start Date" bsDatepicker container=".date-input1">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-block mb-3 date-input2">
+                <label class="col-form-label" for="">&nbsp;</label>
+                <div class="cal-icon">
+                  <input class="form-control datetimepicker" type="text" placeholder="End Date" bsDatepicker container=".date-input2">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Type</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Brand</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Model</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Serial Number</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Vendor</label>
+                <input class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Cost</label>
+                <input class="form-control" type="text" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Location</label>
+                <input  class="form-control" type="text">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Pictures</label>
+                <div class="file-upload-popup">
+                  <input type="text" class="form-control">
+                  <div class="file-upload-popupcontent">
+                    <input type="file">
+                    <span>Browse</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btns">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit modal -->
+<div id="edit-asset" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit  Asset</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Name</label>
+                <input class="form-control" type="text" value="Laptop">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Id</label>
+                <input class="form-control" type="text" value="AST-235" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3 selectnew">
+                <label class="col-form-label" for="">Category</label>
+                <mat-select [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}" class="select custom-mat-select"  placeholder="Laptop">
+                  @for (data of selectedList4; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-block mb-3 date-input3">
+                <label class="col-form-label" for="">Warranty</label>
+                <div class="cal-icon">
+                  <input class="form-control datetimepicker" type="text"  bsDatepicker container=".date-input3" [bsValue]="bsValue">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-block mb-3 date-input4">
+                <label class="col-form-label" for="">&nbsp;</label>
+                <div class="cal-icon">
+                  <input class="form-control datetimepicker" type="text"  bsDatepicker container=".date-input4" [bsValue]="bsValue">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Type</label>
+                <input class="form-control" type="text" value="computer">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Brand</label>
+                <input class="form-control" type="text" value="brand">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Model</label>
+                <input class="form-control" type="text" value="samsung">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Serial Number</label>
+                <input class="form-control" type="text" value="123456789">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Vendor</label>
+                <input class="form-control" type="text" value="name">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Cost</label>
+                <input class="form-control" type="text" value="250">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Location</label>
+                <input  class="form-control" type="text" value="usa">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Asset Pictures</label>
+                <div class="file-upload-popup">
+                  <input type="text" class="form-control">
+                  <div class="file-upload-popupcontent">
+                    <input type="file">
+                    <span>Browse</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btns">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Estimate Modal -->
+<div class="modal custom-modal fade" id="delete_estimate" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-header">
+          <h3>Delete Asset</h3>
+          <p>Are you sure want to delete?</p>
+        </div>
+        <div class="modal-btn delete-action">
+          <div class="row">
+            <div class="col-6">
+              <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+            </div>
+            <div class="col-6">
+              <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Estimate Modal -->
+
+
+<!-- assign  Modal -->
+<div  class="modal custom-modal fade" id="add-assigns"  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign Asset</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-12 selectnew">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Department</label>
+                <mat-select [(ngModel)]="selectedValue2" [ngModelOptions]="{standalone: true}" class="select custom-mat-select"  placeholder="Department 1">
+                  @for (data of selectedList2; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-12 selectnew">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Assign to</label>
+                <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}" class="select custom-mat-select"  placeholder="Customer">
+                  @for (data of selectedList3; track data) {
+                    <mat-option [value]="data.value">
+                      {{data.value}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </div>
+            </div>
+            <div class="submit-section mt-3">
+              <button class="btn btn-primary submit-btns w-100">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

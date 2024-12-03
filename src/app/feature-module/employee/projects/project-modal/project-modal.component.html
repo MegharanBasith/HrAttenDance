@@ -1,0 +1,357 @@
+<!-- Create Project Modal -->
+<div id="create_project" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Project</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addProjectForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Project Name</label>
+                <input class="form-control" type="text"
+                  >
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-block mb-3">
+                  <label class="col-form-label" for="">Client</label>
+                  <mat-select class="custom-mat-select" placeholder="Global Technologies">
+                    <mat-option value="global">Global Technologies</mat-option>
+                    <mat-option value="delta">Delta Infotech</mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="input-block mb-3 date-input1">
+                  <label class="col-form-label" for="">Start Date</label>
+                  <div class="cal-icon">
+                    <input class="form-control datetimepicker" bsDatepicker container=".date-input1" type="text"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="input-block mb-3 date-input2">
+                    <label class="col-form-label" for="">End Date</label>
+                    <div class="cal-icon">
+                      <input class="form-control datetimepicker" bsDatepicker container=".date-input2" type="text"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">Rate</label>
+                      <input placeholder="$50" class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">&nbsp;</label>
+                      <mat-select class="custom-mat-select" placeholder="Hourly">
+                        <mat-option>Hourly</mat-option>
+                        <mat-option>Fixed</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">Priority</label>
+                      <mat-select class="custom-mat-select"
+                        placeholder="High">
+                        <mat-option value="high">High</mat-option>
+                        <mat-option value="medium">Medium</mat-option>
+                        <mat-option value="low">Low</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">Add Project Leader</label>
+                      <input class="form-control" type="text"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Team Leader</label>
+                        <div class="project-members">
+                          <a data-bs-toggle="tooltip" title="Jeffery Lalor" class="avatar">
+                            <img src="assets/img/profiles/avatar-6.jpg" alt="">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Add Team</label>
+                        <input class="form-control" type="text"
+                          >
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Team Members</label>
+                          <div class="project-members">
+                            <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
+                              <img src="assets/img/profiles/avatar-17.jpg" alt="">
+                            </a>
+                            <a data-bs-toggle="tooltip" title="Richard Miles" class="avatar">
+                              <img src="assets/img/profiles/avatar-9.jpg" alt="">
+                            </a>
+                            <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
+                              <img src="assets/img/profiles/avatar-10.jpg" alt="">
+                            </a>
+                            <a data-bs-toggle="tooltip" title="Mike Litorus" class="avatar">
+                              <img src="assets/img/profiles/avatar-5.jpg" alt="">
+                            </a>
+                            <span class="all-team">+2</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">Description</label>
+                      <textarea rows="4" class="form-control summernote" placeholder="Enter your message here"
+                      ></textarea>
+                    </div>
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">Upload Files</label>
+                      <input class="form-control" type="file">
+                    </div>
+                    <div class="submit-section">
+                      <button class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Create Project Modal -->
+
+          <!-- Edit Project Modal -->
+          <div id="edit_project" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit Project</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="editProjectForm">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Project Name</label>
+                          <input class="form-control" value="Project Management" type="text" value="Project Managemnet">
+                          @if (editProjectForm.get('editProjectName')?.invalid && editProjectForm.get('editProjectName')?.touched) {
+                            <div
+                              >
+                              @if (editProjectForm.get('editProjectName')?.invalid && editProjectForm.get('editProjectName')?.touched) {
+                                <small
+                                class="text-danger"> *Name is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Client</label>
+                          <mat-select class="custom-mat-select" placeholder="Global Technologies">
+                            <mat-option value="tech">Global Technologies</mat-option>
+                            <mat-option value="info">Delta Infotech</mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3 date-input3">
+                          <label class="col-form-label" for="">Start Date</label>
+                          <div class="cal-icon">
+                            <input class="form-control datetimepicker" type="text" bsDatepicker container=".date-input3" type="text"
+
+                              [class.invalid]="editProjectForm.get('editProjectStartDate')?.invalid && editProjectForm.get('editProjectStartDate')?.touched"
+                              formControlName="editProjectStartDate">
+                              @if (editProjectForm.get('editProjectStartDate')?.invalid && editProjectForm.get('editProjectStartDate')?.touched) {
+                                <div
+                                  >
+                                  @if (editProjectForm.get('editProjectStartDate')?.invalid && editProjectForm.get('editProjectStartDate')?.touched) {
+                                    <small
+                                    class="text-danger"> *Start date is required</small>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-block mb-3 date-input4">
+                            <label class="col-form-label" for="">End Date</label>
+                            <div class="cal-icon">
+                              <input class="form-control datetimepicker" type="text" bsDatepicker container=".date-input4" type="text"
+
+                                [class.invalid]="editProjectForm.get('editProjectEndDate')?.invalid && editProjectForm.get('editProjectEndDate')?.touched"
+                                formControlName="editProjectEndDate">
+                                @if (editProjectForm.get('editProjectEndDate')?.invalid && editProjectForm.get('editProjectEndDate')?.touched) {
+                                  <div
+                                    >
+                                    @if (editProjectForm.get('editProjectEndDate')?.invalid && editProjectForm.get('editProjectEndDate')?.touched) {
+                                      <small
+                                      class="text-danger"> *End date is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Rate</label>
+                              <input placeholder="$50" class="form-control" value="$5000" type="text">
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">&nbsp;</label>
+                              <mat-select class="custom-mat-select" placeholder="Hourly">
+                                <mat-option value="hourly">Hourly</mat-option>
+                                <mat-option value="fixed" selected>Fixed</mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Priority</label>
+                              <mat-select class="custom-mat-select"
+                                [class.invalid]="editProjectForm.get('editProjectPriority')?.invalid && editProjectForm.get('editProjectPriority')?.touched"
+                                formControlName="editProjectPriority" placeholder="High">
+                                <mat-option selected>High</mat-option>
+                                <mat-option>Medium</mat-option>
+                                <mat-option>Low</mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Add Project Leader</label>
+                              <input class="form-control" type="text">
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Team Leader</label>
+                              <div class="project-members">
+                                <a data-bs-toggle="tooltip" title="Jeffery Lalor" class="avatar">
+                                  <img src="assets/img/profiles/avatar-16.jpg" alt="">
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Add Team</label>
+                              <input class="form-control" type="text"
+                                [class.invalid]="editProjectForm.get('editaddTeamMembers')?.invalid && editProjectForm.get('editaddTeamMembers')?.touched"
+                                formControlName="editaddTeamMembers">
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Team Members</label>
+                                <div class="project-members">
+                                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
+                                    <img src="assets/img/profiles/avatar-17.jpg" alt="">
+                                  </a>
+                                  <a data-bs-toggle="tooltip" title="Richard Miles" class="avatar">
+                                    <img src="assets/img/profiles/avatar-9.jpg" alt="">
+                                  </a>
+                                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
+                                    <img src="assets/img/profiles/avatar-10.jpg" alt="">
+                                  </a>
+                                  <a data-bs-toggle="tooltip" title="Mike Litorus" class="avatar">
+                                    <img src="assets/img/profiles/avatar-5.jpg" alt="">
+                                  </a>
+                                  <span class="all-team">+2</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Description</label>
+                            <textarea rows="4" class="form-control summernote" placeholder="Enter your message here"
+                              [class.invalid]="editProjectForm.get('editProjectDescription')?.invalid && editProjectForm.get('editProjectDescription')?.touched"
+                            formControlName="editProjectDescription"></textarea>
+                            @if (editProjectForm.get('editProjectDescription')?.invalid && editProjectForm.get('editProjectDescription')?.touched) {
+                              <div
+                                >
+                                @if (editProjectForm.get('editProjectDescription')?.invalid && editProjectForm.get('editProjectDescription')?.touched) {
+                                  <small
+                                  class="text-danger"> *Description is required</small>
+                                }
+                              </div>
+                            }
+                          </div>
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Upload Files</label>
+                            <input class="form-control" type="file">
+                          </div>
+                          <div class="submit-section">
+                            <button class="btn btn-primary submit-btn" >Save</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Edit Project Modal -->
+
+                <!-- Delete Project Modal -->
+                <div class="modal custom-modal fade" id="delete_project" role="dialog">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <div class="form-header">
+                          <h3>Delete Project</h3>
+                          <p>Are you sure want to delete?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                          <div class="row">
+                            <div class="col-6">
+                              <a  class="btn btn-primary continue-btn"
+                              >Delete</a>
+                            </div>
+                            <div class="col-6">
+                              <a  data-bs-dismiss="modal"
+                              class="btn btn-primary cancel-btn">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Delete Project Modal -->

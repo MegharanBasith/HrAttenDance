@@ -1,0 +1,235 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col">
+        <h3 class="page-title">Daily Report</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Daily Report</li>
+        </ul>
+      </div>
+      <div class="col-auto">
+        <a href="javascript:void(0);" class="btn btn-primary">PDF</a>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <!-- Content Starts -->
+  <div class="row justify-content-center">
+    <div class="col-md-3 col-sm-6">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3><b>101</b></h3>
+          <p>Total Employees</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="text-success"><b>84</b></h3>
+          <p>Today Present</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3 class="text-danger"><b>12</b></h3>
+          <p>Today Absent</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="card">
+        <div class="card-body text-center">
+          <h3><b>5</b></h3>
+          <p>Today Left</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Search Filter -->
+  <div class="row filter-row mb-4">
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus inputs">
+        <mat-form-field class="example-full-width">
+          <mat-label>Employee ID</mat-label>
+          <input type="text" matInput class="form-control floating">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus select-focus select">
+        <mat-select [(value)]="selected1" class="custom-mat-select floating-mat-select">
+          <mat-option value="option1"> Select Department </mat-option>
+          <mat-option value="option2">Designing</mat-option>
+          <mat-option value="option3">Development</mat-option>
+          <mat-option value="option4">Finance</mat-option>
+        </mat-select>
+        <label class="focus-label">Department</label>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus inputs">
+        <mat-form-field class="example-full-width cal-icon">
+          <mat-label>From</mat-label>
+          <input type="text" matInput class="form-control floating datetimepicker" bsDatepicker />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <div class="input-block mb-3 form-focus inputs">
+        <mat-form-field class="example-full-width cal-icon">
+          <mat-label>From</mat-label>
+          <input type="text" matInput class="form-control floating datetimepicker" bsDatepicker />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <a href="javascript:void(0);" class="btn btn-success w-100"> Search </a>
+    </div>
+  </div>
+  <!-- /Search Filter -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_header">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="dataTables_length">
+              <label>
+                Show
+                <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()"
+                  class="form-control form-control-sm">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table matSort (matSortChange)="sortData($event)"
+          class="table table-striped custom-table datatable mb-0">
+          <thead>
+            <tr>
+              <th mat-sort-header="name1">Employee</th>
+              <th mat-sort-header="date">Date</th>
+              <th mat-sort-header="department">Department</th>
+              <th mat-sort-header="status" class="text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of lstDailyreport; track item) {
+              <tr>
+                <td>
+                  <h2 class="table-avatar">
+                    <a [routerLink] = "routes.employeeProfile" class="avatar"><img alt=""
+                    [src]="item.img"></a>
+                    <a [routerLink] = "routes.employeeProfile">{{item.name1}}
+                      <span>{{item.name2}}</span></a>
+                    </h2>
+                  </td>
+                  <td>{{item.date}}</td>
+                  <td>{{item.department}}</td>
+                  <td class="text-center">
+                    <button class="btn btn-sm" [ngClass]="{'btn-outline-danger': item.status === 'Absent', 'btn-outline-info': item.status === 'Week off'}">{{item.status}}</button>
+                  </td>
+                </tr>
+              }
+              @if (lstDailyreport.length === 0) {
+                <tr>
+                  <td colspan="10">
+                    <h5 style="text-align: center;">No data found</h5>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="table_footer">
+          <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info">
+              Showing {{ serialNumberArray[0] }} to
+              {{ serialNumberArray[serialNumberArray.length - 1] }} of
+              {{ totalData }} entries
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-7">
+            <div class="pagination_section">
+              <ul class="pagination">
+							<li class="page-item" [ngClass]="{
+										  disabled: currentPage === 1
+										}">
+                  <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                  tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+                </li>
+
+                @for (item of pageNumberArray; track item; let i = $index) {
+								<li class="page-item" [class.active]="item === currentPage" [ngClass]="
+											(pageNumberArray[currentPage - 2] > item &&
+											  item !== 1 &&
+											  pageNumberArray.length > 6) ||
+											(pageNumberArray[currentPage] < item &&
+											  item !== 1 &&
+											  pageNumberArray.length > 6 &&
+											  pageNumberArray.length !== item)
+											  ? 'hide-page-no'
+											  : 'show-page-no'
+										  ">
+                    <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                      {{ item }}
+                    </a>
+                  </li>
+                  @if (
+                    i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                    ) {
+                    <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                      <a class="page-link" href="javascript:void(0);"> ... </a>
+                    </li>
+                  }
+                  @if (
+                    i === pageNumberArray.length - 2 &&
+                    pageNumberArray.length > 6
+                    ) {
+<li [hidden]="
+											currentPage >=
+											  pageNumberArray[pageNumberArray.length - 2] ||
+											totalData < serialNumberArray[serialNumberArray.length - 1]
+										  " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                      <a class="page-link" href="javascript:void(0);"> ... </a>
+                    </li>
+                  }
+                }
+
+							<li class="page-item" [ngClass]="{
+										  disabled:
+											currentPage ===
+											  pageNumberArray[pageNumberArray.length - 1] ||
+											lstDailyreport.length === 0
+										}">
+                  <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- /Content End -->
+
+  </div>
+  <!-- /Page Content -->

@@ -1,0 +1,109 @@
+// .form-container {
+//     padding: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     background-color: #f9f9f9;
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//     margin: 40px auto;
+//     max-width: 1200px;
+// }
+
+.vacation-form {
+    padding: 10px;
+    max-width: 120%;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    flex: 0 0 48%;
+}
+
+mat-form-field,
+mat-checkbox {
+    width: 100%;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+}
+
+.checkmark {
+    border: 2px solid orange;
+    background-color: inherit;
+}
+
+.checkbox-container {
+    padding: 10px;
+}
+
+.custom-header {
+    margin-bottom: 20px;
+}
+
+.col-3 {
+    width: 33%;
+}
+
+.custom-mat-option {
+    background-color: inherit !important;
+    padding: 10px;
+}
+
+.search-input {
+    padding: 20px;
+    width: 300px;
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    padding: 20px;
+}
+
+.form-card{
+    width: 120%;
+}
+
+.submit-button {
+    width: 200px;
+}
+
+.add-btn-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.add-dialog-btn-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.custom-mat-icon{
+    position: relative;
+    top: 6px;
+}
+
+.icon-btn{
+    margin: 0px !important;
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-mat-toggle {
+    margin-top: 10px;
+}

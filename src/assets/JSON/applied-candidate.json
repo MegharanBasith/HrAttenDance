@@ -1,0 +1,23 @@
+{
+    "data" : [
+        {
+          "name": "John Doe",
+          "email": "johndoe@example.com",
+          "phone": "9876543210",
+          "applyDate": "9 Feb 2023",
+          "id": 1,
+          "status":"New"
+        },
+        {
+          "name": "Maria Sam",
+          "email": "mariasam@example.com",
+          "phone": "9872543210",
+          "applyDate": "21 Feb 2023",
+          "id": 2,
+          "status":"Hired"
+        }
+       
+       
+      ],
+      "totalData":2
+}

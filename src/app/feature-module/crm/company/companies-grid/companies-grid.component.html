@@ -1,0 +1,2228 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <h3 class="page-title">Companies</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Companies</li>
+        </ul>
+      </div>
+      <div class="col-md-8 float-end ms-auto">
+        <div class="d-flex title-head">
+          <div class="view-icons">
+            <a href="javascript:void(0);" class="grid-view btn btn-link"><i class="las la-redo-alt"></i></a>
+            <a href="javascript:void(0);" class="list-view btn btn-link" id="collapse-header" (click)="fullscreen()"><i
+                class="las la-expand-arrows-alt"></i></a>
+            <a href="javascript:void(0);" class="list-view btn btn-link" id="filter_search" (click)="openFilter()"><i
+                class="las la-filter"></i></a>
+          </div>
+          <div class="form-sort">
+            <a href="javascript:void(0);" class="list-view btn btn-link" data-bs-toggle="modal"
+              data-bs-target="#export"><i class="las la-file-export"></i>Export</a>
+          </div>
+          <a href="javascript:void(0);" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_company"><i
+              class="la la-plus-circle"></i> Add Companies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+  <!-- Search Filter -->
+  <div class="filter-filelds" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+    <div class="row filter-row">
+      <div class="col-xl-2">
+        <div class="input-block mb-3 form-focus">
+          <mat-form-field class="example-full-width">
+            <mat-label>Company Name</mat-label>
+            <input type="text" matInput class="form-control floating">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <div class="input-block mb-3 form-focus">
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput class="form-control floating">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <div class="input-block mb-3 form-focus">
+          <mat-form-field class="example-full-width">
+            <mat-label>Phone Number</mat-label>
+            <input type="text" matInput class="form-control floating">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <div class="input-block mb-3 form-focus focused">
+          <input type="text" class="form-control  date-range bookingrange" #drp="bsDaterangepicker" bsDaterangepicker
+            [(ngModel)]="bsRangeValue">
+          <label class="focus-label">From - To Date</label>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <div class="input-block mb-3 form-focus select-focus">
+          <mat-select class="select custom-mat-select floating-mat-select" placeholder="--Select--">
+            <mat-option>--Select--</mat-option>
+            <mat-option value="Germany">Germany</mat-option>
+            <mat-option value="USA">USA</mat-option>
+            <mat-option value="Canada">Canada</mat-option>
+            <mat-option value="India">India</mat-option>
+            <mat-option value="China">China</mat-option>
+          </mat-select>
+          <label class="focus-label">Location</label>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <a href="javascript:void(0);" class="btn btn-success w-100"> Search </a>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- /Search Filter -->
+  <div class="filter-section">
+    <ul>
+      <li>
+        <div class="view-icons">
+          <a [routerLink]="routes.companies" class="list-view btn btn-link"><i class="las la-list"></i></a>
+          <a [routerLink]="routes.companiesGrid" class="grid-view btn btn-link active"><i class="las la-th"></i></a>
+        </div>
+      </li>
+      <li>
+        <div class="form-sort">
+          <i class="las la-sort-alpha-up-alt"></i>
+          <mat-select class="select space-select" placeholder="Sort By Alphabet">
+            <mat-option value="sortByAlphabet">Sort By Alphabet</mat-option>
+            <mat-option value="ascending">Ascending</mat-option>
+            <mat-option value="descending">Descending</mat-option>
+            <mat-option value="recentlyViewed">Recently Viewed</mat-option>
+            <mat-option value="recentlyAdded">Recently Added</mat-option>
+          </mat-select>
+        </div>
+      </li>
+      <li>
+        <div class="form-sorts dropdown" [ngClass]="{'table-filter-show': rating === true}">
+          <a href="javascript:void(0);" class="dropdown-toggle" id="table-filter" (click)="openRating()"><i
+              class="las la-filter me-2"></i>Filter</a>
+          <div class="filter-dropdown-menu">
+            <div class="filter-set-view">
+              <div class="filter-set-head">
+                <h4>Filter</h4>
+              </div>
+              <div class="accordion" id="accordionExample">
+                <div class="filter-set-content">
+                  <div class="filter-set-content-head">
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">Rating<i class="las la-angle-right"></i></a>
+                  </div>
+                  <div class="filter-set-contents accordion-collapse collapse show" id="collapseOne"
+                    data-bs-parent="#accordionExample">
+                    <ul>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox" checked>
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="rating">
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <span>5.0</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="rating">
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star"></i>
+                          <span>4.0</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="rating">
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <span>3.0</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="rating">
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <span>2.0</span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="rating">
+                          <i class="fa fa-star filled"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <span>1.0</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="filter-set-content">
+                  <div class="filter-set-content-head">
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                      aria-expanded="false" aria-controls="collapseTwo">Owner<i class="las la-angle-right"></i></a>
+                  </div>
+                  <div class="filter-set-contents accordion-collapse collapse" id="collapseTwo"
+                    data-bs-parent="#accordionExample">
+                    <ul>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox" checked>
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Hendry</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Guillory</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Jami</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Theresa</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Espinosa</h5>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="filter-set-content">
+                  <div class="filter-set-content-head">
+                    <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                      aria-expanded="false" aria-controls="collapseThree">Tags<i class="las la-angle-right"></i></a>
+                  </div>
+                  <div class="filter-set-contents accordion-collapse collapse" id="collapseThree"
+                    data-bs-parent="#accordionExample">
+                    <ul>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox" checked>
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Promotion</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Rated</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Rejected</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Collab</h5>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="filter-checks">
+                          <label class="checkboxs">
+                            <input type="checkbox">
+                            <span class="checkmarks"></span>
+                          </label>
+                        </div>
+                        <div class="collapse-inside-text">
+                          <h5>Calls</h5>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="filter-reset-btns">
+                <a href="javascript:void(0);" class="btn btn-light">Reset</a>
+                <a href="javascript:void(0);" class="btn btn-primary">Filter</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="search-set">
+          <div class="search-input">
+            <a href="javascript:void(0);" class="btn btn-searchset"><i class="las la-search"></i></a>
+            <div class="dataTables_filter">
+              <label> <input type="search" class="form-control form-control-sm" placeholder="Search"></label>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-01.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">NovaWaveLLC</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>5.0
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>robertson&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 12445-47878</span>
+            <span><i class="la la-map-marker"></i>United States</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-info">Promotion</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-02.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">BlueSky Industries</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.0
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>sharon&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 19026-83921</span>
+            <span><i class="la la-map-marker"></i>Germany</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-warning">Rated</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-03.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">SilverHawk</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.2
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>vaughan&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 17240-61041</span>
+            <span><i class="la la-map-marker"></i>Canada</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-info">Promotion</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-04.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">SummitPeak</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.5
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>jessica&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 16027-49102</span>
+            <span><i class="la la-map-marker"></i>India</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-warning">Rated</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-05.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">RiverStone V entur</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>3.9
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>carol&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 18454-01578</span>
+            <span><i class="la la-map-marker"></i>China</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-info">Promotion</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-06.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">Bright Bridge Grp</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.7
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>dawn&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 13816-03649</span>
+            <span><i class="la la-map-marker"></i>Japan</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-danger">Rejected</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-07.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">CoastalStar Co.</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.8
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>rachel&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 18914-51047</span>
+            <span><i class="la la-map-marker"></i>Indonesia</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-warning">Rated</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-08.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">HarborView</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.2
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>jonelle&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 18314-01527</span>
+            <span><i class="la la-map-marker"></i>Cuba</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-danger">Rejected</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a [routerLink]="routes.companyDetails" class="company-icon">
+              <img src="assets/img/icons/company-icon-09.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">Golden Gate Ltd</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>3.5
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>jonelle&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 18314-01527</span>
+            <span><i class="la la-map-marker"></i>Cuba</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-info">Promotion</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-md-6">
+      <div class="contact-grid">
+        <div class="grid-head">
+          <div class="users-profile">
+            <a href="javascript:void(0);" class="company-icon">
+              <img src="assets/img/icons/company-icon-10.svg" alt="Img">
+            </a>
+            <h5 class="name-user">
+              <a [routerLink]="routes.companyDetails">Redwood Inc</a>
+              <span class="set-star mt-1">
+                <i class="fa fa-star filled me-2"></i>4.4
+              </span>
+            </h5>
+          </div>
+          <div class="dropdown">
+            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+              aria-expanded="false"><i class="material-icons">more_vert</i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#edit_company"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                data-bs-target="#delete_company"><i class="fa-regular fa-trash-can m-r-5"></i>
+                Delete</a>
+              <a class="dropdown-item" [routerLink]="routes.companyDetails"><i class="fa-regular fa-eye"></i>
+                Preview</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add_notes"><i
+                  class="la la-file-prescription"></i> Notes</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-body">
+          <div class="address-info">
+            <span><i class="la la-envelope-open"></i>jonelle&#64;example.com</span>
+            <span><i class="la la-phone-volume"></i>+1 18314-01527</span>
+            <span><i class="la la-map-marker"></i>Cuba</span>
+          </div>
+          <div class="grid-badges">
+            <span class="badge badge-soft-danger">Rejected</span>
+          </div>
+        </div>
+        <div class="grid-footer d-flex justify-content-between">
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="javascript:void(0);"><i class="la la-envelope"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-phone-volume"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="lab la-facebook-messenger"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-skype"></i></a>
+            </li>
+            <li>
+              <a href="javascript:void(0);"><i class="la la-facebook "></i></a>
+            </li>
+          </ul>
+          <div class="users-group">
+            <ul>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-19.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-20.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-21.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-22.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);"><img src="assets/img/avatar/avatar-23.jpg" alt="Img"></a>
+              </li>
+              <li><a href="javascript:void(0);" class="total-group-member">+16</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="load-more-btn text-center">
+        <a href="javascript:void(0);" class="btn btn-primary">Load More Companies<i class="spinner-border"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Company -->
+<div class="modal custom-modal fade custom-modal-two modal-padding" id="add_company" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header header-border justify-content-between p-0">
+        <h5 class="modal-title">Add New Company</h5>
+        <button type="button" class="btn-close position-static" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="add-details-wizard">
+          <ul id="progressbar" class="progress-bar-wizard">
+            <li [ngClass]="{
+                            active: currentStep === 0,
+                            activated: currentStep > 0
+                          }">
+              <span><i class="la la-user-tie"></i></span>
+              <div class="multi-step-info">
+                <h6>Basic Info</h6>
+              </div>
+            </li>
+            <li [ngClass]="{
+                            active: currentStep === 1,
+                            activated: currentStep > 1
+                          }" [class.active]="currentStep === 1">
+              <span><i class="la la-map-marker"></i></span>
+              <div class="multi-step-info">
+                <h6>Address</h6>
+              </div>
+            </li>
+            <li [ngClass]="{
+                            active: currentStep === 2,
+                            activated: currentStep > 2
+                          }" [class.active]="currentStep === 2">
+              <div class="multi-step-icon">
+                <span><i class="la la-icons"></i></span>
+              </div>
+              <div class="multi-step-info">
+                <h6>Social Profiles</h6>
+              </div>
+            </li>
+            <li [ngClass]="{
+                            active: currentStep === 3,
+                            activated: currentStep > 3
+                          }" [class.active]="currentStep === 3">
+              <div class="multi-step-icon">
+                <span><i class="la la-images"></i></span>
+              </div>
+              <div class="multi-step-info">
+                <h6>Access</h6>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="add-info-fieldset">
+          <fieldset [class.d-block]="selectedFieldSet[0] === 0">
+            <form>
+              <div class="form-upload-profile">
+                <h6 class="">Profile Image <span> *</span></h6>
+                <div class="profile-pic-upload">
+                  <div class="profile-pic">
+                    <span><img src="assets/img/icons/profile-upload-img.svg" alt="Img"></span>
+                  </div>
+                  <div class="employee-field">
+                    <div class="mb-0">
+                      <div class="image-upload mb-0">
+                        <input type="file">
+                        <div class="image-uploads">
+                          <h4>Upload</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="img-reset-btn">
+                      <a href="javascript:void(0);">Reset</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-input-set">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label class="col-form-label">Email <span class="text-danger">
+                            *</span></label>
+                        <div class="status-toggle small-toggle-btn d-flex align-items-center">
+                          <span class="me-2 label-text">Option</span>
+                          <input type="checkbox" id="user2" class="check" checked="">
+                          <label for="user2" class="checktoggle"></label>
+                        </div>
+                      </div>
+                      <input class="form-control" type="email">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Phone Number 1<span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Phone Number 2 <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Fax <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Website</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Reviews <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Lowest">
+                        <mat-option value="lowest">Lowest</mat-option>
+                        <mat-option value="highest">Highest</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Owner <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Hendry">
+                        <mat-option value="Hendry">Hendry</mat-option>
+                        <mat-option value="Guillory">Guillory</mat-option>
+                        <mat-option value="Jami">Jami</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Tags <span class="text-danger">*</span></label>
+                      <mat-form-field class="example-chip-list">
+                        <mat-chip-grid #chipGrid1>
+                          @for (fruit of data1; track trackByFn(i, fruit); let i = $index) {
+                          <mat-chip-row (removed)="remove(data1, i)" [editable]="true" (edited)="edit(data1, i, $event)"
+                            [aria-description]="'press enter to edit ' + fruit.name">
+                            {{ fruit.name }}
+                            <button matChipRemove [attr.aria-label]="'remove ' + fruit.name">
+                              <mat-icon>cancel</mat-icon>
+                            </button>
+                          </mat-chip-row>
+                          }
+                          <input [matChipInputFor]="chipGrid1" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, data1)" />
+                        </mat-chip-grid>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label class="col-form-label">Deals <span class="text-danger">*</span></label>
+                        <a href="javascript:void(0);" class="add-new"><i class="la la-plus-circle me-2"></i>Add New</a>
+                      </div>
+                      <mat-select class="select custom-mat-select" placeholder="Collins">
+                        <mat-option value="Collins">Collins</mat-option>
+                        <mat-option value="Konopelski">Konopelski</mat-option>
+                        <mat-option value="Adams">Adams</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Industry <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Barry Cuda">
+                        <mat-option value="Barry Cuda">Barry Cuda</mat-option>
+                        <mat-option value="Tressa Wexler">Tressa Wexler</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Source <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Barry Cuda">
+                        <mat-option value="Barry Cuda">Barry Cuda</mat-option>
+                        <mat-option value="Tressa Wexler">Tressa Wexler</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Contact <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Email">
+                        <mat-option value="Email">Email</mat-option>
+                        <mat-option value="Call">Call</mat-option>
+                        <mat-option value="Skype">Skype</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Currency <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="$">
+                        <mat-option value="$">$</mat-option>
+                        <mat-option value="€">€</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Language <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="English">
+                        <mat-option value="English">English</mat-option>
+                        <mat-option value="French">French</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">About Company<span class="text-danger">*</span></label>
+                      <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 text-end form-wizard-button">
+                    <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                    <button class="btn btn-primary wizard-next-btn" type="button" (click)="nextStep()"
+                      (click)="selectedFieldSet[0] = 1">Save &
+                      Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <fieldset [class.d-block]="selectedFieldSet[0] === 1">
+            <form>
+              <div class="contact-input-set">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Street Address<span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">City <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">State / Province <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Country <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Germany">
+                        <mat-option value="Germany">Germany</mat-option>
+                        <mat-option value="USA">USA</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Zipcode <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 text-end form-wizard-button">
+                    <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                    <button class="btn btn-primary wizard-next-btn" type="button" (click)="nextStep()"
+                      (click)="selectedFieldSet[0] = 2">Save &
+                      Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <fieldset [class.d-block]="selectedFieldSet[0] === 2">
+            <form>
+              <div class="contact-input-set">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Facebook</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Twitter</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Linkedin</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Skype</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Whatsapp</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Instagram</label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <a href="javascript:void(0);" class="add-new"><i class="la la-plus-circle me-2"></i>Add New</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 text-end form-wizard-button">
+                    <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                    <button class="btn btn-primary wizard-next-btn" type="button" (click)="nextStep()"
+                      (click)="selectedFieldSet[0] = 3">Save &
+                      Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <fieldset [class.d-block]="selectedFieldSet[0] === 3">
+            <form>
+              <div class="contact-input-set">
+                <div class="input-blocks add-products">
+                  <label class="mb-3">Visibility</label>
+                  <div class="access-info-tab">
+                    <ul class="nav nav-pills" id="pills-tab1" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <span class="custom_radio mb-0" id="pills-public-tab" data-bs-toggle="pill"
+                          data-bs-target="#pills-public" role="tab" aria-controls="pills-public" aria-selected="true">
+                          <input type="radio" class="form-control" name="public" checked>
+                          <span class="checkmark"></span> Public</span>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <span class="custom_radio mb-0" id="pills-private-tab" data-bs-toggle="pill"
+                          data-bs-target="#pills-private" role="tab" aria-controls="pills-private"
+                          aria-selected="false">
+                          <input type="radio" class="form-control" name="private">
+                          <span class="checkmark"></span> Private</span>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <span class="custom_radio mb-0 active" id="pills-select-people-tab" data-bs-toggle="pill"
+                          data-bs-target="#pills-select-people" role="tab" aria-controls="pills-select-people"
+                          aria-selected="false">
+                          <input type="radio" class="form-control" name="select-people">
+                          <span class="checkmark"></span> Select People</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade" id="pills-public" role="tabpanel" aria-labelledby="pills-public-tab">
+
+                  </div>
+                  <div class="tab-pane fade" id="pills-private" role="tabpanel" aria-labelledby="pills-private-tab">
+                  </div>
+                  <div class="tab-pane fade show active" id="pills-select-people" role="tabpanel"
+                    aria-labelledby="pills-select-people-tab">
+                    <div class="people-select-tab">
+                      <h3>Select People</h3>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-19.jpg" alt="Img">
+                            <a href="javascript:void(0);">Darlee Robertson</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-20.jpg" alt="Img">
+                            <a href="javascript:void(0);">Sharon Roy</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-21.jpg" alt="Img">
+                            <a href="javascript:void(0);">Vaughan</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-1.jpg" alt="Img">
+                            <a href="javascript:void(0);">Jessica</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-confirm-btn">
+                        <a href="javascript:void(0);" class="btn danger-btn">Confirm</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h5 class="mb-3">Status</h5>
+                <div class="status-radio-btns d-flex mb-3">
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="test1" name="radio-group" checked>
+                    <label for="test1">Active</label>
+                  </div>
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="test2" name="radio-group">
+                    <label for="test2">Private</label>
+                  </div>
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="test3" name="radio-group">
+                    <label for="test3">Inactive</label>
+                  </div>
+                </div>
+                <div class="col-lg-12 text-end form-wizard-button">
+                  <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                  <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#success_msg">Save & Next</button>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Add Company -->
+
+<!-- Edit Company -->
+<div class="modal custom-modal fade custom-modal-two modal-padding" id="edit_company" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header header-border justify-content-between p-0">
+        <h5 class="modal-title">Edit Company</h5>
+        <button type="button" class="btn-close position-static" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="add-details-wizard">
+          <ul id="progressbar" class="progress-bar-wizard">
+            <li [ngClass]="{
+                            active: currentStep === 0,
+                            activated: currentStep > 0
+                          }">
+              <span><i class="la la-user-tie"></i></span>
+              <div class="multi-step-info">
+                <h6>Basic Info</h6>
+              </div>
+            </li>
+            <li [ngClass]="{
+                            active: currentStep === 1,
+                            activated: currentStep > 1
+                          }" [class.active]="currentStep === 1">
+              <span><i class="la la-map-marker"></i></span>
+              <div class="multi-step-info">
+                <h6>Address</h6>
+              </div>
+            </li>
+            <li [ngClass]="{
+                            active: currentStep === 2,
+                            activated: currentStep > 2
+                          }" [class.active]="currentStep === 2">
+              <div class="multi-step-icon">
+                <span><i class="la la-icons"></i></span>
+              </div>
+              <div class="multi-step-info">
+                <h6>Social Profiles</h6>
+              </div>
+            </li>
+            <li [ngClass]="{
+                            active: currentStep === 3,
+                            activated: currentStep > 3
+                          }" [class.active]="currentStep === 3">
+              <div class="multi-step-icon">
+                <span><i class="la la-images"></i></span>
+              </div>
+              <div class="multi-step-info">
+                <h6>Access</h6>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="add-info-fieldset">
+          <fieldset [class.d-block]="selectedFieldSet[0] === 0">
+            <form>
+              <div class="form-upload-profile">
+                <h6 class="">Profile Image <span> *</span></h6>
+                <div class="profile-pic-upload">
+                  <div class="profile-pic">
+                    <span><img src="assets/img/icons/company-icon-01.svg" alt="Img"></span>
+                  </div>
+                  <div class="employee-field">
+                    <div class="mb-0">
+                      <div class="image-upload mb-0">
+                        <input type="file">
+                        <div class="image-uploads">
+                          <h4>Upload</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="img-reset-btn">
+                      <a href="javascript:void(0);">Reset</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-input-set">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
+                      <input class="form-control" type="text" value="NovaWaveLLC">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label class="col-form-label">Email <span class="text-danger">
+                            *</span></label>
+                        <div class="status-toggle small-toggle-btn d-flex align-items-center">
+                          <span class="me-2 label-text">Option</span>
+                          <input type="checkbox" id="user2" class="check" checked="">
+                          <label for="user2" class="checktoggle"></label>
+                        </div>
+                      </div>
+                      <input class="form-control" type="email" value="robertson@example.com">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Phone Number 1<span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" value="+1 875455453">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Phone Number 2 <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" value="+1 895455450">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Fax <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Website</label>
+                      <input class="form-control" type="text" value="Admin Website">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Reviews <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Lowest">
+                        <mat-option value="lowest">Lowest</mat-option>
+                        <mat-option value="highest">Highest</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Owner <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Hendry">
+                        <mat-option value="Hendry">Hendry</mat-option>
+                        <mat-option value="Guillory">Guillory</mat-option>
+                        <mat-option value="Jami">Jami</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Tags <span class="text-danger">*</span></label>
+                      <mat-form-field class="example-chip-list">
+                        <mat-chip-grid #chipGrid2>
+                          @for (fruit of data2; track trackByFn(i, fruit); let i = $index) {
+                          <mat-chip-row (removed)="remove(data2, i)" [editable]="true" (edited)="edit(data2, i, $event)"
+                            [aria-description]="'press enter to edit ' + fruit.name">
+                            {{ fruit.name }}
+                            <button matChipRemove [attr.aria-label]="'remove ' + fruit.name">
+                              <mat-icon>cancel</mat-icon>
+                            </button>
+                          </mat-chip-row>
+                          }
+                          <input [matChipInputFor]="chipGrid2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, data2)" />
+                        </mat-chip-grid>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <label class="col-form-label">Deals <span class="text-danger">*</span></label>
+                        <a href="javascript:void(0);" class="add-new"><i class="la la-plus-circle me-2"></i>Add New</a>
+                      </div>
+                      <mat-select class="select custom-mat-select" placeholder="Collins">
+                        <mat-option value="Collins">Collins</mat-option>
+                        <mat-option value="Konopelski">Konopelski</mat-option>
+                        <mat-option value="Adams">Adams</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Industry <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Barry Cuda">
+                        <mat-option value="Barry Cuda">Barry Cuda</mat-option>
+                        <mat-option value="Tressa Wexler">Tressa Wexler</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Source <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Barry Cuda">
+                        <mat-option value="Barry Cuda">Barry Cuda</mat-option>
+                        <mat-option value="Tressa Wexler">Tressa Wexler</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Contact <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Email">
+                        <mat-option value="Email">Email</mat-option>
+                        <mat-option value="Call">Call</mat-option>
+                        <mat-option value="Skype">Skype</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Currency <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="$">
+                        <mat-option value="$">$</mat-option>
+                        <mat-option value="€">€</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Language <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="English">
+                        <mat-option value="English">English</mat-option>
+                        <mat-option value="French">French</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">About Company<span class="text-danger">*</span></label>
+                      <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 text-end form-wizard-button">
+                    <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                    <button class="btn btn-primary wizard-next-btn" type="button" (click)="nextStep()"
+                      (click)="selectedFieldSet[0] = 1">Save &
+                      Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <fieldset [class.d-block]="selectedFieldSet[0] === 1">
+            <form>
+              <div class="contact-input-set">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Street Address<span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" value="38 Simpson Street">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">City <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" value="Rock Island">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">State / Province <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" value="USA">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Country <span class="text-danger">*</span></label>
+                      <mat-select class="select custom-mat-select" placeholder="Germany">
+                        <mat-option value="Germany">Germany</mat-option>
+                        <mat-option value="USA">USA</mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Zipcode <span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" value="65">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 text-end form-wizard-button">
+                    <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                    <button class="btn btn-primary wizard-next-btn" type="button" (click)="nextStep()"
+                      (click)="selectedFieldSet[0] = 2">Save &
+                      Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <fieldset [class.d-block]="selectedFieldSet[0] === 2">
+            <form>
+              <div class="contact-input-set">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Facebook</label>
+                      <input class="form-control" type="text" value="Darlee Robertson">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Twitter</label>
+                      <input class="form-control" type="text" value="Darlee Robertson">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Linkedin</label>
+                      <input class="form-control" type="text" value="Darlee Robertson">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Skype</label>
+                      <input class="form-control" type="text" value="Darlee Robertson">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Whatsapp</label>
+                      <input class="form-control" type="text" value="Darlee Robertson">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <label class="col-form-label">Instagram</label>
+                      <input class="form-control" type="text" value="Darlee Robertson">
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="input-block mb-3">
+                      <a href="javascript:void(0);" class="add-new"><i class="la la-plus-circle me-2"></i>Add New</a>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 text-end form-wizard-button">
+                    <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                    <button class="btn btn-primary wizard-next-btn" type="button" (click)="nextStep()"
+                      (click)="selectedFieldSet[0] = 3">Save &
+                      Next</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <fieldset [class.d-block]="selectedFieldSet[0] === 3">
+            <form>
+              <div class="contact-input-set">
+                <div class="input-blocks add-products">
+                  <label class="mb-3">Visibility</label>
+                  <div class="access-info-tab">
+                    <ul class="nav nav-pills" id="pills-tab1" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <span class="custom_radio mb-0" id="pills-public-tab" data-bs-toggle="pill"
+                          data-bs-target="#pills-public" role="tab" aria-controls="pills-public" aria-selected="true">
+                          <input type="radio" class="form-control" name="public" checked>
+                          <span class="checkmark"></span> Public</span>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <span class="custom_radio mb-0" id="pills-private-tab" data-bs-toggle="pill"
+                          data-bs-target="#pills-private" role="tab" aria-controls="pills-private"
+                          aria-selected="false">
+                          <input type="radio" class="form-control" name="private">
+                          <span class="checkmark"></span> Private</span>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <span class="custom_radio mb-0 active" id="pills-select-people-tab" data-bs-toggle="pill"
+                          data-bs-target="#pills-select-people" role="tab" aria-controls="pills-select-people"
+                          aria-selected="false">
+                          <input type="radio" class="form-control" name="select-people">
+                          <span class="checkmark"></span> Select People</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade" id="pills-public" role="tabpanel" aria-labelledby="pills-public-tab">
+
+                  </div>
+                  <div class="tab-pane fade" id="pills-private" role="tabpanel" aria-labelledby="pills-private-tab">
+                  </div>
+                  <div class="tab-pane fade show active" id="pills-select-people" role="tabpanel"
+                    aria-labelledby="pills-select-people-tab">
+                    <div class="people-select-tab">
+                      <h3>Select People</h3>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-19.jpg" alt="Img">
+                            <a href="javascript:void(0);">Darlee Robertson</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-20.jpg" alt="Img">
+                            <a href="javascript:void(0);">Sharon Roy</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-21.jpg" alt="Img">
+                            <a href="javascript:void(0);">Vaughan</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-people-checkbox">
+                        <label class="custom_check">
+                          <input type="checkbox">
+                          <span class="checkmark"></span>
+                          <span class="people-profile">
+                            <img src="assets/img/avatar/avatar-1.jpg" alt="Img">
+                            <a href="javascript:void(0);">Jessica</a>
+                          </span>
+                        </label>
+                      </div>
+                      <div class="select-confirm-btn">
+                        <a href="javascript:void(0);" class="btn danger-btn">Confirm</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h5 class="mb-3">Status</h5>
+                <div class="status-radio-btns d-flex mb-3">
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="test1" name="radio-group" checked>
+                    <label for="test1">Active</label>
+                  </div>
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="test2" name="radio-group">
+                    <label for="test2">Private</label>
+                  </div>
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="test3" name="radio-group">
+                    <label for="test3">Inactive</label>
+                  </div>
+                </div>
+                <div class="col-lg-12 text-end form-wizard-button">
+                  <button class="button btn-lights reset-btn" type="reset">Reset</button>
+                  <button class="btn btn-primary" type="button">Submit</button>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Edit Company -->
+
+<!-- Success Company -->
+<div class="modal custom-modal fade" id="success_msg" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="success-message text-center">
+          <div class="success-popup-icon">
+            <i class="la la-building"></i>
+          </div>
+          <h3>Company Created Successfully!!!</h3>
+          <p>View the details of Company</p>
+          <div class="col-lg-12 text-center form-wizard-button">
+            <a href="javascript:void(0);" class="button btn-lights" data-bs-dismiss="modal">Close</a>
+            <a [routerLink]="routes.companyDetails" class="btn btn-primary">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Success Company -->
+
+<!-- Delete Company -->
+<div class="modal custom-modal fade" id="delete_company" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="success-message text-center">
+          <div class="success-popup-icon bg-danger">
+            <i class="la la-trash-restore"></i>
+          </div>
+          <h3>Are you sure, You want to delete</h3>
+          <p>Company ”NovaWaveLLC” from your Account</p>
+          <div class="col-lg-12 text-center form-wizard-button">
+            <a href="javascript:void(0);" class="button btn-lights" data-bs-dismiss="modal">Not Now</a>
+            <a [routerLink]="routes.companies" class="btn btn-primary" data-bs-dismiss="modal">Okay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Company -->
+
+<!-- Export -->
+<div class="modal custom-modal fade modal-padding" id="export" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header header-border justify-content-between p-0">
+        <h5 class="modal-title">Export</h5>
+        <button type="button" class="btn-close position-static" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-block mb-3">
+                <h5 class="mb-3">Export</h5>
+                <div class="status-radio-btns d-flex">
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="pdf" name="export-type" checked>
+                    <label for="pdf">Person</label>
+                  </div>
+                  <div class="people-status-radio">
+                    <input type="radio" class="status-radio" id="excel" name="export-type">
+                    <label for="excel">Organization</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <h4 class="mb-3">Filters</h4>
+              <div class="input-block mb-3">
+                <label class="col-form-label">Fields <span class="text-danger">*</span></label>
+                <mat-select class="select custom-mat-select" placeholder="All Fields">
+                  <mat-option value="All Fields">All Fields</mat-option>
+                  <mat-option value="contact">Contact</mat-option>
+                  <mat-option value="Company">Company</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label">From Date <span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                  <input class="form-control floating datetimepicker" bsDatepicker type="text">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label">To Date <span class="text-danger">*</span></label>
+                <div class="cal-icon">
+                  <input class="form-control floating datetimepicker" bsDatepicker type="text">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 text-end form-wizard-button">
+              <button class="button btn-lights reset-btn" type="reset" data-bs-dismiss="modal">Reset</button>
+              <button class="btn btn-primary" type="submit">Export Now</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Export -->
+<!-- Add Note -->
+<div class="modal custom-modal fade modal-padding" id="add_notes" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header header-border align-items-center justify-content-between p-0">
+        <h5 class="modal-title">Add Note</h5>
+        <button type="button" class="btn-close position-static" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <form action="company-details.html">
+          <div class="input-block mb-3">
+            <label class="col-form-label">Title <span class="text-danger"> *</span></label>
+            <input class="form-control" type="text">
+          </div>
+          <div class="input-block mb-3">
+            <label class="col-form-label">Note <span class="text-danger"> *</span></label>
+            <textarea class="form-control" rows="4" placeholder="Add text"></textarea>
+          </div>
+          <div class="input-block mb-3">
+            <label class="col-form-label">Attachment <span class="text-danger"> *</span></label>
+            <div class="drag-upload">
+              <input type="file">
+              <div class="img-upload">
+                <i class="las la-file-import"></i>
+                <p>Drag & Drop your files</p>
+              </div>
+            </div>
+          </div>
+          <div class="input-block mb-3">
+            <label class="col-form-label">Uploaded Files</label>
+            <div class="upload-file">
+              <h6>Projectneonals teyys.xls</h6>
+              <p>4.25 MB</p>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25"
+                  aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <p>45%</p>
+            </div>
+            <div class="upload-file upload-list">
+              <div>
+                <h6>Projectneonals teyys.xls</h6>
+                <p>4.25 MB</p>
+              </div>
+              <a href="javascript:void(0);" class="text-danger"><i class="las la-trash"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-12 text-end form-wizard-button">
+            <button class="button btn-lights reset-btn" type="reset">Reset</button>
+            <button class="btn btn-primary" type="submit">Save Notes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Add Note -->

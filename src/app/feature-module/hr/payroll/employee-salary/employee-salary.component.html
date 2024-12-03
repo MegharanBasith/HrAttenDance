@@ -1,0 +1,807 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Employee Salary</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Salary</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_salary"><i class="la la-plus-circle"></i>
+      Add Salary</a>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+
+<!-- Search Filter -->
+<div class="row filter-row">
+  <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+    <div class="input-block mb-3 form-focus inputs">
+      <mat-form-field class="example-full-width">
+        <mat-label>Employee Name</mat-label>
+        <input type="text" matInput class="form-control floating">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+    <div class="input-block mb-3 form-focus select-focus select">
+
+      <mat-select class="select custom-mat-select floating-mat-select" placeholder="--Select--">
+        <mat-option>--Select--</mat-option>
+        <mat-option value="Germany">Employee</mat-option>
+        <mat-option value="USA">Manager</mat-option>
+      </mat-select>
+      <label class="focus-label">Role</label>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+    <div class="input-block mb-3 form-focus select-focus select">
+
+      <mat-select class="select custom-mat-select floating-mat-select" placeholder="--Select--">
+        <mat-option>--Select--</mat-option>
+        <mat-option value="Germany">Pending</mat-option>
+        <mat-option value="USA">Approved</mat-option>
+      </mat-select>
+      <label class="focus-label">Rejected</label>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+    <div class="input-block mb-3 form-focus inputs date-input1">
+      <mat-form-field class="example-full-width cal-icon">
+        <mat-label>From</mat-label>
+        <input  bsDatepicker container=".date-input1" type="text" matInput class="form-control floating datetimepicker">
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+    <div class="input-block mb-3 form-focus inputs date-input2">
+      <mat-form-field class="example-full-width cal-icon">
+        <mat-label>To</mat-label>
+        <input  bsDatepicker container=".date-input2" type="text" matInput class="form-control floating datetimepicker">
+      </mat-form-field>
+    </div>
+
+  </div>
+  <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+    <a class="btn btn-success w-100"> Search </a>
+  </div>
+</div>
+<!-- /Search Filter -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table_header">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label class="col-form-label" for="">
+              Show
+              <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()"
+                class="form-control form-control-sm">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              Entries
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table matSort (matSortChange)="sortData($event)" class="table table-striped custom-table datatable"
+        id=datatable>
+        <thead>
+          <tr>
+            <th mat-sort-header="employee">Employee</th>
+            <th mat-sort-header="employeeId">Employee ID</th>
+            <th mat-sort-header="email">Email</th>
+            <th mat-sort-header="joinDate">Join Date</th>
+            <th mat-sort-header="role">Role</th>
+            <th mat-sort-header="salary">Salary</th>
+            <th>Payslip</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (salary of allSalary; track salary; let i = $index) {
+            <tr>
+              <td>
+                <h2 class="table-avatar">
+                  <a [routerLink] = "routes.employeeProfile" class="avatar"><img alt=""
+                  src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
+                  <a
+                    [routerLink] = "routes.employeeProfile">{{salary.employee}}<span>{{salary.role}}</span></a>
+                  </h2>
+                </td>
+                <td>{{salary.employeeId}}</td>
+                <td>{{salary.email}}</td>
+                <td>{{salary.joinDate }}</td>
+                <td>
+                  <div class="dropdown">
+                    <a href="javascript:void(0);" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown" aria-expanded="false">{{salary.role || statusValue}}
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" (click)="getStatus('Software Engineer')" (keydown.enter)="getStatus('Software Engineer')" tabindex="0">Software
+                      Engineer</a>
+                      <a class="dropdown-item" (click)="getStatus('Software Tester')" (keydown.enter)="getStatus('Software Tester')" tabindex="0">Software
+                      Tester</a>
+                      <a class="dropdown-item" (click)="getStatus('Frontend Developer')" (keydown.enter)="getStatus('Frontend Developer')" tabindex="0">Frontend
+                      Developer</a>
+                      <a class="dropdown-item" (click)="getStatus('UI/UX Developer')" (keydown.enter)="getStatus('UI/UX Developer')" tabindex="0">UI/UX
+                      Developer</a>
+                    </div>
+                  </div>
+                </td>
+                <td>${{salary.salary}}</td>
+                <td><a class="btn btn-sm btn-primary" [routerLink]="'/payroll/salary-view'">Generate
+                Slip</a></td>
+                <td class="text-end">
+                  <div class="dropdown dropdown-action">
+                    <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_salary"><i
+                        class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                        <a class="dropdown-item" data-bs-toggle="modal"
+                          data-bs-target="#delete_salary"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                }
+                @if (allSalary.length === 0) {
+                  <tr>
+                    <td colspan="10">
+                      <h5 style="text-align: center;">No data found</h5>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class="table_footer">
+            <div class="col-sm-12 col-md-5">
+              <div class="dataTables_info">
+                Showing {{ serialNumberArray[0] }} to
+                {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                {{ totalData }} entries
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-7">
+              <div class="pagination_section">
+                <ul class="pagination">
+                          <li class="page-item" [ngClass]="{
+                        disabled: currentPage === 1
+                      }">
+                    <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+                    tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+                  </li>
+
+                  @for (item of pageNumberArray; track item; let i = $index) {
+                              <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                          (pageNumberArray[currentPage - 2] > item &&
+                            item !== 1 &&
+                            pageNumberArray.length > 6) ||
+                          (pageNumberArray[currentPage] < item &&
+                            item !== 1 &&
+                            pageNumberArray.length > 6 &&
+                            pageNumberArray.length !== item)
+                            ? 'hide-page-no'
+                            : 'show-page-no'
+                        ">
+                      <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                        {{ item }}
+                      </a>
+                    </li>
+                    @if (
+                      i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                      ) {
+                      <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                        <a class="page-link" href="javascript:void(0);"> ... </a>
+                      </li>
+                    }
+                    @if (
+                      i === pageNumberArray.length - 2 &&
+                      pageNumberArray.length > 6
+                      ) {
+<li [hidden]="
+                          currentPage >=
+                            pageNumberArray[pageNumberArray.length - 2] ||
+                          totalData < serialNumberArray[serialNumberArray.length - 1]
+                        " class="page-item" (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                        <a class="page-link" href="javascript:void(0);"> ... </a>
+                      </li>
+                    }
+                  }
+
+                          <li class="page-item" [ngClass]="{
+                        disabled:
+                          currentPage ===
+                            pageNumberArray[pageNumberArray.length - 1] ||
+                          allSalary.length === 0
+                      }">
+                    <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Page Content -->
+    <!-- Add Salary Modal -->
+    <div id="add_salary" class="modal custom-modal fade" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Staff Salary</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="addSalary">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Select Staff</label>
+                    <mat-select class="custom-mat-select"
+                      [class.invalid]="addSalary.get('selectStaff')?.invalid && addSalary.get('selectStaff')?.touched"
+                      formControlName="selectStaff" placeholder="john">
+                      <mat-option value="john">John Doe</mat-option>
+                      <mat-option value="miles">Richard Miles</mat-option>
+                    </mat-select>
+                    @if (addSalary.get('selectStaff')?.invalid && addSalary.get('selectStaff')?.touched) {
+                      <div
+                        >
+                        @if (addSalary.get('selectStaff')?.invalid && addSalary.get('selectStaff')?.touched) {
+                          <small
+                          class="text-danger"> *Staff name is required</small>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <label class="col-form-label" for="">Net Salary</label>
+                  <input class="form-control" type="text" readonly
+                    [class.invalid]="addSalary.get('netSalary')?.invalid && addSalary.get('netSalary')?.touched"
+                    formControlName="netSalary">
+                    @if (addSalary.get('netSalary')?.invalid && addSalary.get('netSalary')?.touched) {
+                      <div>
+                        @if (addSalary.get('netSalary')?.invalid && addSalary.get('netSalary')?.touched) {
+                          <small
+                          class="text-danger"> *Salary is required</small>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h4 class="text-primary">Earnings</h4>
+                    <div class="input-block mb-3">
+                      <label class="col-form-label" for="">Basic</label>
+                      <input class="form-control" type="text"
+                        [class.invalid]="addSalary.get('basic')?.invalid && addSalary.get('basic')?.touched"
+                        >
+                        @if (addSalary.get('basic')?.invalid && addSalary.get('basic')?.touched) {
+                          <div>
+                            @if (addSalary.get('basic')?.invalid && addSalary.get('basic')?.touched) {
+                              <small
+                              class="text-danger"> *Basic is required</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">DA(40%)</label>
+                        <input class="form-control" type="text"
+                          [class.invalid]="addSalary.get('da')?.invalid && addSalary.get('da')?.touched"
+                          >
+                          @if (addSalary.get('da')?.invalid && addSalary.get('da')?.touched) {
+                            <div>
+                              @if (addSalary.get('da')?.invalid && addSalary.get('da')?.touched) {
+                                <small
+                                class="text-danger"> *DA is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">HRA(15%)</label>
+                          <input class="form-control" type="text"
+                            [class.invalid]="addSalary.get('hra')?.invalid && addSalary.get('hra')?.touched"
+                            >
+                            @if (addSalary.get('hra')?.invalid && addSalary.get('hra')?.touched) {
+                              <div>
+                                @if (addSalary.get('hra')?.invalid && addSalary.get('hra')?.touched) {
+                                  <small
+                                  class="text-danger"> *HRA is required</small>
+                                }
+                              </div>
+                            }
+                          </div>
+                          <div class="input-block mb-3">
+                            <label class="col-form-label" for="">Conveyance</label>
+                            <input class="form-control" type="text"
+                              [class.invalid]="addSalary.get('conveyance')?.invalid && addSalary.get('conveyance')?.touched"
+                              >
+                              @if (addSalary.get('conveyance')?.invalid && addSalary.get('conveyance')?.touched) {
+                                <div>
+                                  @if (addSalary.get('conveyance')?.invalid && addSalary.get('conveyance')?.touched) {
+                                    <small
+                                    class="text-danger"> *Conveyance is required</small>
+                                  }
+                                </div>
+                              }
+                            </div>
+                            <div class="input-block mb-3">
+                              <label class="col-form-label" for="">Allowance</label>
+                              <input class="form-control" type="text"
+                                [class.invalid]="addSalary.get('allowance')?.invalid && addSalary.get('allowance')?.touched"
+                                >
+                                @if (addSalary.get('allowance')?.invalid && addSalary.get('allowance')?.touched) {
+                                  <div>
+                                    @if (addSalary.get('allowance')?.invalid && addSalary.get('allowance')?.touched) {
+                                      <small
+                                      class="text-danger"> *Allowance is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Medical Allowance</label>
+                                <input class="form-control" type="text"
+                                  [class.invalid]="addSalary.get('medicalAllowance')?.invalid && addSalary.get('medicalAllowance')?.touched"
+                                  >
+                                  @if (addSalary.get('medicalAllowance')?.invalid && addSalary.get('medicalAllowance')?.touched) {
+                                    <div
+                                      >
+                                      @if (addSalary.get('medicalAllowance')?.invalid && addSalary.get('medicalAllowance')?.touched) {
+                                        <small
+                                        class="text-danger"> *Medical allowance is required</small>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                                <div class="input-block mb-3">
+                                  <label class="col-form-label" for="">Others</label>
+                                  <input class="form-control" type="text"
+                                    [class.invalid]="addSalary.get('othersAdd')?.invalid && addSalary.get('othersAdd')?.touched"
+                                    >
+                                    @if (addSalary.get('othersAdd')?.invalid && addSalary.get('othersAdd')?.touched) {
+                                      <div>
+                                        @if (addSalary.get('othersAdd')?.invalid && addSalary.get('othersAdd')?.touched) {
+                                          <small
+                                          class="text-danger"> *Others is required</small>
+                                        }
+                                      </div>
+                                    }
+                                  </div>
+                                  <div class="add-more">
+                                    <a href="javascript:void(0);"><i class="fa-solid fa-plus-circle"></i> Add More</a>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <h4 class="text-primary">Deductions</h4>
+                                  <div class="input-block mb-3">
+                                    <label class="col-form-label" for="">TDS</label>
+                                    <input class="form-control" type="text"
+                                      [class.invalid]="addSalary.get('tds')?.invalid && addSalary.get('tds')?.touched"
+                                      >
+                                      @if (addSalary.get('tds')?.invalid && addSalary.get('tds')?.touched) {
+                                        <div>
+                                          @if (addSalary.get('tds')?.invalid && addSalary.get('tds')?.touched) {
+                                            <small
+                                            class="text-danger"> *TDS is required</small>
+                                          }
+                                        </div>
+                                      }
+                                    </div>
+                                    <div class="input-block mb-3">
+                                      <label class="col-form-label" for="">ESI</label>
+                                      <input class="form-control" type="text"
+                                        [class.invalid]="addSalary.get('esi')?.invalid && addSalary.get('esi')?.touched"
+                                        >
+                                        @if (addSalary.get('esi')?.invalid && addSalary.get('esi')?.touched) {
+                                          <div>
+                                            @if (addSalary.get('esi')?.invalid && addSalary.get('esi')?.touched) {
+                                              <small
+                                              class="text-danger"> *ESI is required</small>
+                                            }
+                                          </div>
+                                        }
+                                      </div>
+                                      <div class="input-block mb-3">
+                                        <label class="col-form-label" for="">PF</label>
+                                        <input class="form-control" type="text"
+                                          [class.invalid]="addSalary.get('pf')?.invalid && addSalary.get('pf')?.touched"
+                                          >
+                                          @if (addSalary.get('pf')?.invalid && addSalary.get('pf')?.touched) {
+                                            <div>
+                                              @if (addSalary.get('pf')?.invalid && addSalary.get('pf')?.touched) {
+                                                <small
+                                                class="text-danger"> *PF is required</small>
+                                              }
+                                            </div>
+                                          }
+                                        </div>
+                                        <div class="input-block mb-3">
+                                          <label class="col-form-label" for="">Leave</label>
+                                          <input class="form-control" type="text"
+                                            [class.invalid]="addSalary.get('leave')?.invalid && addSalary.get('leave')?.touched"
+                                            >
+                                            @if (addSalary.get('leave')?.invalid && addSalary.get('leave')?.touched) {
+                                              <div>
+                                                @if (addSalary.get('leave')?.invalid && addSalary.get('leave')?.touched) {
+                                                  <small
+                                                  class="text-danger"> *Leave is required</small>
+                                                }
+                                              </div>
+                                            }
+                                          </div>
+                                          <div class="input-block mb-3">
+                                            <label class="col-form-label" for="">Prof. Tax</label>
+                                            <input class="form-control" type="text"
+                                              [class.invalid]="addSalary.get('profTax')?.invalid && addSalary.get('profTax')?.touched"
+                                              >
+                                              @if (addSalary.get('profTax')?.invalid && addSalary.get('profTax')?.touched) {
+                                                <div>
+                                                  @if (addSalary.get('profTax')?.invalid && addSalary.get('profTax')?.touched) {
+                                                    <small
+                                                    class="text-danger"> *Proffesional tax is required</small>
+                                                  }
+                                                </div>
+                                              }
+                                            </div>
+                                            <div class="input-block mb-3">
+                                              <label class="col-form-label" for="">Labour Welfare</label>
+                                              <input class="form-control" type="text"
+                                                [class.invalid]="addSalary.get('labour')?.invalid && addSalary.get('labour')?.touched"
+                                                >
+                                                @if (addSalary.get('labour')?.invalid && addSalary.get('labour')?.touched) {
+                                                  <div>
+                                                    @if (addSalary.get('labour')?.invalid && addSalary.get('labour')?.touched) {
+                                                      <small
+                                                      class="text-danger"> *Labour Welfare is required</small>
+                                                    }
+                                                  </div>
+                                                }
+                                              </div>
+                                              <div class="input-block mb-3">
+                                                <label class="col-form-label" for="">Others</label>
+                                                <input class="form-control" type="text"
+                                                  [class.invalid]="addSalary.get('othersDed')?.invalid && addSalary.get('othersDed')?.touched"
+                                                  >
+                                                  @if (addSalary.get('othersDed')?.invalid && addSalary.get('othersDed')?.touched) {
+                                                    <div>
+                                                      @if (addSalary.get('othersDed')?.invalid && addSalary.get('othersDed')?.touched) {
+                                                        <small
+                                                        class="text-danger"> *Others is required</small>
+                                                      }
+                                                    </div>
+                                                  }
+                                                </div>
+                                                <div class="add-more">
+                                                  <a href="javascript:void(0);"><i class="fa-solid fa-plus-circle"></i> Add More</a>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="submit-section">
+                                              <button class="btn btn-primary submit-btn">Submit</button>
+                                            </div>
+                                          </form>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- /Add Salary Modal -->
+
+                                  <!-- Edit Salary Modal -->
+                                  <div id="edit_salary" class="modal custom-modal fade" role="dialog">
+                                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title">Edit Staff Salary</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form  [formGroup]="editSalary">
+                                            <div class="row">
+                                              <div class="col-sm-6">
+                                                <div class="input-block mb-3">
+                                                  <label class="col-form-label" for="">Select Staff</label>
+                                                  <mat-select class="custom-mat-select"
+                                                    [class.invalid]="editSalary.get('editSelectStaff')?.invalid && editSalary.get('editSelectStaff')?.touched"
+                                                    formControlName="editSelectStaff" placeholder="John Doe">
+                                                    <mat-option value="doe">John Doe</mat-option>
+                                                    <mat-option value="miles">Richard Miles</mat-option>
+                                                  </mat-select>
+                                                  @if (editSalary.get('editSelectStaff')?.invalid && editSalary.get('editSelectStaff')?.touched) {
+                                                    <div
+                                                      >
+                                                      @if (editSalary.get('editSelectStaff')?.invalid && editSalary.get('editSelectStaff')?.touched) {
+                                                        <small
+                                                        class="text-danger"> *Staff name is required</small>
+                                                      }
+                                                    </div>
+                                                  }
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-6">
+                                                <label class="col-form-label" for="">Net Salary</label>
+                                                <input class="form-control" type="text" readonly
+                                                  [class.invalid]="editSalary.get('editNetSalary')?.invalid && editSalary.get('editNetSalary')?.touched"
+                                                  formControlName="editNetSalary">
+                                                  @if (editSalary.get('editNetSalary')?.invalid && editSalary.get('editNetSalary')?.touched) {
+                                                    <div
+                                                      >
+                                                      @if (editSalary.get('editNetSalary')?.invalid && editSalary.get('editNetSalary')?.touched) {
+                                                        <small
+                                                        class="text-danger"> *Salary is required</small>
+                                                      }
+                                                    </div>
+                                                  }
+                                                </div>
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-sm-6">
+                                                  <h4 class="text-primary">Earnings</h4>
+                                                  <div class="input-block mb-3">
+                                                    <label class="col-form-label" for="">Basic</label>
+                                                    <input class="form-control" type="text"
+                                                      [class.invalid]="editSalary.get('editBasic')?.invalid && editSalary.get('editBasic')?.touched"
+                                                      >
+                                                      @if (editSalary.get('editBasic')?.invalid && editSalary.get('editBasic')?.touched) {
+                                                        <div>
+                                                          @if (editSalary.get('editBasic')?.invalid && editSalary.get('editBasic')?.touched) {
+                                                            <small
+                                                            class="text-danger"> *Basic is required</small>
+                                                          }
+                                                        </div>
+                                                      }
+                                                    </div>
+                                                    <div class="input-block mb-3">
+                                                      <label class="col-form-label" for="">DA(40%)</label>
+                                                      <input class="form-control" type="text"
+                                                        [class.invalid]="editSalary.get('editDa')?.invalid && editSalary.get('editDa')?.touched"
+                                                        >
+                                                        @if (editSalary.get('editDa')?.invalid && editSalary.get('editDa')?.touched) {
+                                                          <div>
+                                                            @if (editSalary.get('editDa')?.invalid && editSalary.get('editDa')?.touched) {
+                                                              <small
+                                                              class="text-danger"> *DA is required</small>
+                                                            }
+                                                          </div>
+                                                        }
+                                                      </div>
+                                                      <div class="input-block mb-3">
+                                                        <label class="col-form-label" for="">HRA(15%)</label>
+                                                        <input class="form-control" type="text"
+                                                          [class.invalid]="editSalary.get('editHra')?.invalid && editSalary.get('editHra')?.touched"
+                                                          >
+                                                          @if (editSalary.get('editHra')?.invalid && editSalary.get('editHra')?.touched) {
+                                                            <div>
+                                                              @if (editSalary.get('editHra')?.invalid && editSalary.get('editHra')?.touched) {
+                                                                <small
+                                                                class="text-danger"> *HRA is required</small>
+                                                              }
+                                                            </div>
+                                                          }
+                                                        </div>
+                                                        <div class="input-block mb-3">
+                                                          <label class="col-form-label" for="">Conveyance</label>
+                                                          <input class="form-control" type="text"
+                                                            [class.invalid]="editSalary.get('editConveyance')?.invalid && editSalary.get('editConveyance')?.touched"
+                                                            >
+                                                            @if (editSalary.get('editConveyance')?.invalid && editSalary.get('editConveyance')?.touched) {
+                                                              <div
+                                                                >
+                                                                @if (editSalary.get('editConveyance')?.invalid && editSalary.get('editConveyance')?.touched) {
+                                                                  <small
+                                                                  class="text-danger"> *Conveyance is required</small>
+                                                                }
+                                                              </div>
+                                                            }
+                                                          </div>
+                                                          <div class="input-block mb-3">
+                                                            <label class="col-form-label" for="">Allowance</label>
+                                                            <input class="form-control" type="text"
+                                                              [class.invalid]="editSalary.get('editAllowance')?.invalid && editSalary.get('editAllowance')?.touched"
+                                                              >
+                                                              @if (editSalary.get('editAllowance')?.invalid && editSalary.get('editAllowance')?.touched) {
+                                                                <div
+                                                                  >
+                                                                  @if (editSalary.get('editAllowance')?.invalid && editSalary.get('editAllowance')?.touched) {
+                                                                    <small
+                                                                    class="text-danger"> *Allowance is required</small>
+                                                                  }
+                                                                </div>
+                                                              }
+                                                            </div>
+                                                            <div class="input-block mb-3">
+                                                              <label class="col-form-label" for="">Medical Allowance</label>
+                                                              <input class="form-control" type="text"
+                                                                [class.invalid]="editSalary.get('editMedAllowance')?.invalid && editSalary.get('editMedAllowance')?.touched"
+                                                                >
+                                                                @if (editSalary.get('editMedAllowance')?.invalid && editSalary.get('editMedAllowance')?.touched) {
+                                                                  <div
+                                                                    >
+                                                                    @if (editSalary.get('editMedAllowance')?.invalid && editSalary.get('editMedAllowance')?.touched) {
+                                                                      <small
+                                                                      class="text-danger"> *Medical allowance is required</small>
+                                                                    }
+                                                                  </div>
+                                                                }
+                                                              </div>
+                                                              <div class="input-block mb-3">
+                                                                <label class="col-form-label" for="">Others</label>
+                                                                <input class="form-control" type="text"
+                                                                  [class.invalid]="editSalary.get('editAddOthers')?.invalid && editSalary.get('editAddOthers')?.touched"
+                                                                  >
+                                                                  @if (editSalary.get('editAddOthers')?.invalid && editSalary.get('editAddOthers')?.touched) {
+                                                                    <div
+                                                                      >
+                                                                      @if (editSalary.get('editAddOthers')?.invalid && editSalary.get('editAddOthers')?.touched) {
+                                                                        <small
+                                                                        class="text-danger"> *Others is required</small>
+                                                                      }
+                                                                    </div>
+                                                                  }
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-sm-6">
+                                                                <h4 class="text-primary">Deductions</h4>
+                                                                <div class="input-block mb-3">
+                                                                  <label class="col-form-label" for="">TDS</label>
+                                                                  <input class="form-control" type="text"
+                                                                    [class.invalid]="editSalary.get('editTds')?.invalid && editSalary.get('editTds')?.touched"
+                                                                    >
+                                                                    @if (editSalary.get('editTds')?.invalid && editSalary.get('editTds')?.touched) {
+                                                                      <div>
+                                                                        @if (editSalary.get('editTds')?.invalid && editSalary.get('editTds')?.touched) {
+                                                                          <small
+                                                                          class="text-danger"> *TDS is required</small>
+                                                                        }
+                                                                      </div>
+                                                                    }
+                                                                  </div>
+                                                                  <div class="input-block mb-3">
+                                                                    <label class="col-form-label" for="">ESI</label>
+                                                                    <input class="form-control" type="text"
+                                                                      [class.invalid]="editSalary.get('editEsi')?.invalid && editSalary.get('editEsi')?.touched"
+                                                                      >
+                                                                      @if (editSalary.get('editEsi')?.invalid && editSalary.get('editEsi')?.touched) {
+                                                                        <div>
+                                                                          @if (editSalary.get('editEsi')?.invalid && editSalary.get('editEsi')?.touched) {
+                                                                            <small
+                                                                            class="text-danger"> *ESI is required</small>
+                                                                          }
+                                                                        </div>
+                                                                      }
+                                                                    </div>
+                                                                    <div class="input-block mb-3">
+                                                                      <label class="col-form-label" for="">PF</label>
+                                                                      <input class="form-control" type="text"
+                                                                        [class.invalid]="editSalary.get('editPf')?.invalid && editSalary.get('editPf')?.touched"
+                                                                        >
+                                                                        @if (editSalary.get('editPf')?.invalid && editSalary.get('editPf')?.touched) {
+                                                                          <div>
+                                                                            @if (editSalary.get('editPf')?.invalid && editSalary.get('editPf')?.touched) {
+                                                                              <small
+                                                                              class="text-danger"> *PF is required</small>
+                                                                            }
+                                                                          </div>
+                                                                        }
+                                                                      </div>
+                                                                      <div class="input-block mb-3">
+                                                                        <label class="col-form-label" for="">Leave</label>
+                                                                        <input class="form-control" type="text"
+                                                                          [class.invalid]="editSalary.get('editleave')?.invalid && editSalary.get('editleave')?.touched"
+                                                                          >
+                                                                          @if (editSalary.get('editleave')?.invalid && editSalary.get('editleave')?.touched) {
+                                                                            <div>
+                                                                              @if (editSalary.get('editleave')?.invalid && editSalary.get('editleave')?.touched) {
+                                                                                <small
+                                                                                class="text-danger"> *Leave is required</small>
+                                                                              }
+                                                                            </div>
+                                                                          }
+                                                                        </div>
+                                                                        <div class="input-block mb-3">
+                                                                          <label class="col-form-label" for="">Prof. Tax</label>
+                                                                          <input class="form-control" type="text"
+                                                                            [class.invalid]="editSalary.get('editProfTax')?.invalid && editSalary.get('editProfTax')?.touched"
+                                                                            >
+                                                                            @if (editSalary.get('editProfTax')?.invalid && editSalary.get('editProfTax')?.touched) {
+                                                                              <div
+                                                                                >
+                                                                                @if (editSalary.get('editProfTax')?.invalid && editSalary.get('editProfTax')?.touched) {
+                                                                                  <small
+                                                                                  class="text-danger"> *Professional tax is required</small>
+                                                                                }
+                                                                              </div>
+                                                                            }
+                                                                          </div>
+                                                                          <div class="input-block mb-3">
+                                                                            <label class="col-form-label" for="">Labour Welfare</label>
+                                                                            <input class="form-control" type="text"
+                                                                              [class.invalid]="editSalary.get('editLabour')?.invalid && editSalary.get('editLabour')?.touched"
+                                                                              >
+                                                                              @if (editSalary.get('editLabour')?.invalid && editSalary.get('editLabour')?.touched) {
+                                                                                <div
+                                                                                  >
+                                                                                  @if (editSalary.get('editLabour')?.invalid && editSalary.get('editLabour')?.touched) {
+                                                                                    <small
+                                                                                    class="text-danger"> *Labour welfare is required</small>
+                                                                                  }
+                                                                                </div>
+                                                                              }
+                                                                            </div>
+                                                                            <div class="input-block mb-3">
+                                                                              <label class="col-form-label" for="">Others</label>
+                                                                              <input class="form-control" type="text"
+                                                                                [class.invalid]="editSalary.get('editDedOthers')?.invalid && editSalary.get('editDedOthers')?.touched"
+                                                                                formControlName="editDedOthers" >
+                                                                                @if (editSalary.get('editDedOthers')?.invalid && editSalary.get('editDedOthers')?.touched) {
+                                                                                  <div
+                                                                                    >
+                                                                                    @if (editSalary.get('editDedOthers')?.invalid && editSalary.get('editDedOthers')?.touched) {
+                                                                                      <small
+                                                                                      class="text-danger"> *Others is required</small>
+                                                                                    }
+                                                                                  </div>
+                                                                                }
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                          <div class="submit-section">
+                                                                            <button class="btn btn-primary submit-btn">Save</button>
+                                                                          </div>
+                                                                        </form>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                                <!-- /Edit Salary Modal -->
+
+                                                                <!-- Delete Salary Modal -->
+                                                                <div class="modal custom-modal fade" id="delete_salary" role="dialog">
+                                                                  <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                      <div class="modal-body">
+                                                                        <div class="form-header">
+                                                                          <h3>Delete Salary</h3>
+                                                                          <p>Are you sure want to delete?</p>
+                                                                        </div>
+                                                                        <div class="modal-btn delete-action">
+                                                                          <div class="row">
+                                                                            <div class="col-6">
+                                                                              <a class="btn btn-primary continue-btn" >Delete</a>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                              <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                                <!-- /Delete Salary Modal -->

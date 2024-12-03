@@ -1,0 +1,83 @@
+<div class="content container-fluid">
+ 
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="page-title">All Attendance</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">All Attendance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+ 
+ 
+    <div class="row filter-row">
+        <div class="col-sm-3">
+            <div class="input-block mb-3 form-focus select-focus select">
+                <mat-select [(value)]="selectedEmployee" class="custom-mat-select floating-mat-select">
+                    <mat-option [value]="''">All</mat-option>
+                    <mat-option *ngFor="let employee of employeeDDL" [value]="employee.employeeId">
+                        {{employee.name}}
+                    </mat-option>
+                </mat-select>
+                <label for="" class="focus-label">Select Employee</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="input-block mb-3 form-focus select-focus select">
+                <mat-select [(value)]="selectedmonth" class="custom-mat-select floating-mat-select">
+                    <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
+                </mat-select>
+                <label for="" class="focus-label">Select Month</label>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="input-block mb-3 form-focus select-focus select">
+                <mat-select [(value)]="selectedyear" class="custom-mat-select floating-mat-select">
+                    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                </mat-select>
+                <label for="" class="focus-label">Select Year</label>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <a class="btn btn-success w-100" (click)="getAttendList()">{{"Search"}}</a>
+        </div>
+    </div>
+ 
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-striped custom-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Employee Number </th>
+                            <th>Date </th>
+                            <th>Punch In</th>
+                            <th>Punch Out</th>
+                            <th>Production</th>
+                            <th>Overtime</th>
+                            <th>Total Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (attendance of attendanceList; track $index) {
+                        <tr>
+                            <td>{{attendance.id}}</td>
+                            <td>{{attendance.employeeNumber}}</td>
+                            <td>{{attendance.date|date:"M/d/yy"}}</td>
+                            <td>{{attendance.inTime|date:"h:mm a"}}</td>
+                            <td>{{attendance.outTime|date:"h:mm a"}}</td>
+                            <td>{{attendance.workingHours}}</td>
+                            <td>{{attendance.overTime}}</td>
+                            <td>{{attendance.totalHours}}</td>
+                        </tr>
+                        }
+ 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

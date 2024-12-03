@@ -1,0 +1,322 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+
+    <div class="row">
+      <div class="col">
+        <h3 class="page-title">Subscribed Companies</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Subscriptions</li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="stats-info">
+        <h6>Joining</h6>
+        <h4>12 <span>This Month</span></h4>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stats-info">
+        <h6>Renewal</h6>
+        <h4>3 <span>This Month</span></h4>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stats-info">
+        <h6>Renewal</h6>
+        <h4>0 <span>Next Month</span></h4>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="stats-info">
+        <h6>Total Companies</h6>
+        <h4>312</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company List -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table_header">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="dataTables_length">
+              <label class="col-form-label" for="">
+                Show
+                <select
+                  [(ngModel)]="pageSize"
+                  (ngModelChange)="changePageSize()"
+                  class="form-control form-control-sm"
+                  >
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                Entries
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table matSort
+          (matSortChange)="sortData($event)" class="table table-hover custom-table datatable mb-0">
+          <thead>
+            <tr>
+              <th mat-sort-header="id">#</th>
+              <th mat-sort-header="company">Client</th>
+              <th mat-sort-header="trainer">Plan</th>
+              <th mat-sort-header="client">Users</th>
+              <th mat-sort-header="plan">Plan Duration</th>
+              <th mat-sort-header="startdate">Start Date</th>
+              <th mat-sort-header="enddate">End Date</th>
+              <th mat-sort-header="amount">Amount</th>
+              <th>Plan Status</th>
+              <th>Update Plan</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of lstSubCompanies; track item; let i = $index) {
+              <tr>
+                <td>{{item.id}}</td>
+                <td>
+                  <h2 class="table-avatar">
+                    <a [routerLink]="routes.clientProfile" class="avatar"><img [src]="item.image" alt=""></a>
+                    <a [routerLink]="routes.clientProfile">{{item.company}}</a>
+                  </h2>
+                </td>
+                <td>{{item.trainer}}</td>
+                <td>{{item.client}}</td>
+                <td>{{item.plan}}</td>
+                <td>{{item.startdate}}</td>
+                <td>{{item.enddate}}</td>
+                <td>{{item.amount}}</td>
+                @if (item.availability === 'Active') {
+                  <td >
+                    <span class="badge bg-inverse-success">{{item.availability}}</span>
+                  </td>
+                }
+                @if (item.availability === 'Expired') {
+                  <td>
+                    <span class="badge bg-inverse-danger">{{item.availability}}</span>
+                  </td>
+                }
+                <td><a class="btn btn-primary btn-sm" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#upgrade_plan">Change Plan</a></td>
+                <td>
+                  <div class="status-toggle">
+                    <input type="checkbox" id="{{ 'item.Phone' + i }}"  class="check" [(ngModel)]="item.isSelected">
+                    <label for="{{ 'item.Phone' + i }}"  class="checktoggle">checkbox</label>
+                  </div>
+                </td>
+              </tr>
+            }
+            @if (lstSubCompanies.length === 0) {
+              <tr>
+                <td colspan="10">
+                  <h5 style="text-align: center;">No data found</h5>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table_footer">
+        <div class="col-sm-12 col-md-5">
+          <div class="dataTables_info">
+            Showing {{ serialNumberArray[0] }} to
+            {{ serialNumberArray[serialNumberArray.length - 1] }} of
+            {{ totalData }} entries
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-7">
+          <div class="pagination_section">
+            <ul class="pagination">
+              <li
+                class="page-item"
+										[ngClass]="{
+										  disabled: currentPage === 1
+										}"
+                >
+                <a
+                  (click)="getMoreData('previous')"
+                  class="page-link"
+                  href="javascript:void(0);"
+                  tabindex="-1"
+                  ><i class="fa fa-angle-double-left"></i></a
+                  >
+                </li>
+
+                @for (item of pageNumberArray; track item; let i = $index) {
+                  <li
+                    class="page-item"
+                    [class.active]="item === currentPage"
+										  [ngClass]="
+											(pageNumberArray[currentPage - 2] > item &&
+											  item !== 1 &&
+											  pageNumberArray.length > 6) ||
+											(pageNumberArray[currentPage] < item &&
+											  item !== 1 &&
+											  pageNumberArray.length > 6 &&
+											  pageNumberArray.length !== item)
+											  ? 'hide-page-no'
+											  : 'show-page-no'
+										  "
+                    >
+                    <a
+                      (click)="moveToPage(item)"
+                      class="page-link"
+                      href="javascript:void(0);"
+                      >
+                      {{ item }}
+                    </a>
+                  </li>
+                  @if (
+                    i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                    ) {
+                    <li
+                      class="page-item"
+                      [hidden]="currentPage === 1"
+                      (click)="moveToPage(currentPage - 2)" (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0"
+                      >
+                      <a class="page-link" href="javascript:void(0);"> ... </a>
+                    </li>
+                  }
+                  @if (
+                    i === pageNumberArray.length - 2 &&
+                    pageNumberArray.length > 6
+                    ) {
+                    <li
+										  [hidden]="
+											currentPage >=
+											  pageNumberArray[pageNumberArray.length - 2] ||
+											totalData < serialNumberArray[serialNumberArray.length - 1]
+										  "
+                      class="page-item"
+                      (click)="moveToPage(currentPage + 2)" (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0"
+                      >
+                      <a class="page-link" href="javascript:void(0);"> ... </a>
+                    </li>
+                  }
+                }
+
+                <li
+                  class="page-item"
+										[ngClass]="{
+										  disabled:
+											currentPage ===
+											  pageNumberArray[pageNumberArray.length - 1] ||
+											lstSubCompanies.length === 0
+										}"
+                  >
+                  <a
+                    (click)="getMoreData('next')"
+                    class="page-link"
+                    href="javascript:void(0);"
+                    ><i class=" fa fa-angle-double-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Company List -->
+
+    <!-- Upgrade Plan Modal -->
+    <div class="modal custom-modal fade" id="upgrade_plan" role="dialog">
+      <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"><i class="fa fa-close"></i></button>
+          <div class="modal-body">
+            <h5 class="modal-title text-center mb-3">Upgrade Plan</h5>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Plan Name</label>
+                    <input type="text" placeholder="Free Trial" class="form-control" value="Free Trial">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Amount</label>
+                    <input type="text" class="form-control" value="$500">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">Plan Type</label>
+                    <mat-select  class="custom-mat-select"placeholder=" Monthly">
+                      <mat-option value="monthly"> Monthly </mat-option>
+                      <mat-option value="yearly"> Yearly </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">No of Users</label>
+                    <mat-select  class="custom-mat-select"placeholder="5 Users ">
+                      <mat-option value="5"> 5 Users </mat-option>
+                      <mat-option value="6"> 50 Users </mat-option>
+                      <mat-option value="7"> Unlimited </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">No of Projects</label>
+                    <mat-select  class="custom-mat-select"placeholder="5 Projects">
+                      <mat-option value="8"> 5 Projects </mat-option>
+                      <mat-option value="9"> 50 Projects </mat-option>
+                      <mat-option value="10"> Unlimited </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-block mb-3">
+                    <label class="col-form-label" for="">No of Storage Space</label>
+                    <mat-select  class="custom-mat-select"placeholder=" 5 GB ">
+                      <mat-option value="5"> 5 GB </mat-option>
+                      <mat-option value="100"> 100 GB </mat-option>
+                      <mat-option value="500"> 500 GB </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Plan Description</label>
+                <textarea class="form-control" rows="4" cols="30"></textarea>
+              </div>
+              <div class="input-block mb-3">
+                <label class="d-block" for="">Status</label>
+                <div class="status-toggle">
+                  <input type="checkbox" id="upgrade_plan_status" class="check">
+                  <label for="upgrade_plan_status" class="checktoggle">checkbox</label>
+                </div>
+              </div>
+              <div class="m-t-20 text-center">
+                <button class="btn btn-primary submit-btn">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Upgrade Plan Modal -->
+  </div>
+  <!-- /Page Content -->

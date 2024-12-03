@@ -1,0 +1,545 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Goal Tracking</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active">Goal Tracking</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_goal"><i
+        class="la la-plus-circle"></i>
+      Add New</a>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table_header">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="dataTables_length">
+            <label>
+              Show
+              <select [(ngModel)]="pageSize" (ngModelChange)="changePageSize()"
+                class="form-control form-control-sm">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              Entries
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table matSort (matSortChange)="sortData($event)"
+        class="table table-striped custom-table mb-0 datatable">
+        <thead>
+          <tr>
+            <th mat-sort-header="id" style="width: 30px;">#</th>
+            <th mat-sort-header="goalType">Goal Type</th>
+            <th mat-sort-header="subject">Subject</th>
+            <th mat-sort-header="targetAchivement">Target Achievement</th>
+            <th mat-sort-header="startDate">Start Date</th>
+            <th mat-sort-header="endDate">End Date</th>
+            <th mat-sort-header="description">Description </th>
+            <th mat-sort-header="status">Status </th>
+            <th mat-sort-header="progress">Progress </th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of lstGoal; track item; let i = $index) {
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.goalType}}</td>
+              <td>{{item.subject}}</td>
+              <td>{{item.targetAchivement}}</td>
+              <td>
+                {{item.startDate}}
+              </td>
+              <td>{{item.endDate }}</td>
+              <td>{{item.description}}</td>
+              <td>
+                <div class="dropdown action-label">
+                  <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-regular fa-circle-dot text-success"
+                    [ngClass]="{'text-danger': item.status === 'Inactive'}"></i> {{item.status
+                    }}
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" (click)="getStatus('Active')"
+                      (keydown.enter)="getStatus('Active')" tabindex="0"><i
+                    class="fa-regular fa-circle-dot text-success me-1"></i> Active</a>
+                    <a class="dropdown-item" (click)="getStatus('Inactive')"
+                      (keydown.enter)="getStatus('Inactive')" tabindex="0"><i
+                    class="fa-regular fa-circle-dot text-danger me-1"></i>
+                  Inactive</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <p class="mb-1">{{item.progress}}</p>
+              @if (item.progress === 'Completed 73%') {
+                <div class="progress height-5">
+                  <div class="progress-bar bg-primary progress-sm w-73 height-10">
+                  </div>
+                </div>
+              }
+              @if (item.progress === 'Completed 100%') {
+                <div class="progress height-5">
+                  <div class="progress-bar bg-primary progress-sm w-100 height-10">
+                  </div>
+                </div>
+              }
+            </td>
+            <td class="text-end">
+              <div class="dropdown dropdown-action">
+                <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                  aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_goal"><i
+                    class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_goal"><i
+                    class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          }
+          @if (lstGoal.length === 0) {
+            <tr>
+              <td colspan="10">
+                <h5 style="text-align: center;">No data found</h5>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="table_footer">
+      <div class="col-sm-12 col-md-5">
+        <div class="dataTables_info">
+          Showing {{ serialNumberArray[0] }} to
+          {{ serialNumberArray[serialNumberArray.length - 1] }} of
+          {{ totalData }} entries
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-7">
+        <div class="pagination_section">
+          <ul class="pagination">
+                            <li class="page-item" [ngClass]="{
+                          disabled: currentPage === 1
+                        }">
+              <a (click)="getMoreData('previous')" class="page-link" href="javascript:void(0);"
+              tabindex="-1"><i class="fa fa-angle-double-left"></i></a>
+            </li>
+
+            @for (item of pageNumberArray; track item; let i = $index) {
+                                <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                            (pageNumberArray[currentPage - 2] > item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6) ||
+                            (pageNumberArray[currentPage] < item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6 &&
+                              pageNumberArray.length !== item)
+                              ? 'hide-page-no'
+                              : 'show-page-no'
+                          ">
+                <a (click)="moveToPage(item)" class="page-link" href="javascript:void(0);">
+                  {{ item }}
+                </a>
+              </li>
+              @if (
+                i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                ) {
+                <li class="page-item" [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)"
+                  (keydown.enter)="moveToPage(currentPage - 2)" tabindex="0">
+                  <a class="page-link" href="javascript:void(0);"> ... </a>
+                </li>
+              }
+              @if (
+                i === pageNumberArray.length - 2 &&
+                pageNumberArray.length > 6
+                ) {
+<li [hidden]="
+                            currentPage >=
+                              pageNumberArray[pageNumberArray.length - 2] ||
+                            totalData < serialNumberArray[serialNumberArray.length - 1]
+                          " class="page-item" (click)="moveToPage(currentPage + 2)"
+                  (keydown.enter)="moveToPage(currentPage + 2)" tabindex="0">
+                  <a class="page-link" href="javascript:void(0);"> ... </a>
+                </li>
+              }
+            }
+
+                            <li class="page-item" [ngClass]="{
+                          disabled:
+                            currentPage ===
+                              pageNumberArray[pageNumberArray.length - 1] ||
+                            lstGoal.length === 0
+                        }">
+              <a (click)="getMoreData('next')" class="page-link" href="javascript:void(0);"><i class=" fa fa-angle-double-right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- /Page Content -->
+<!-- Add Goal Modal -->
+<div id="add_goal" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Goal Tracking</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addGoalForm">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Goal Type</label>
+                <mat-select class="custom-mat-select"
+                  [class.invalid]="addGoalForm.get('GoalType')?.invalid && addGoalForm.get('GoalType')?.touched"
+                  formControlName="GoalType" placeholder="Invoice Goal">
+                  <mat-option value="1">Invoice Goal</mat-option>
+                  <mat-option value="2">Event Goal</mat-option>
+                </mat-select>
+                @if (addGoalForm.get('GoalType')?.invalid && addGoalForm.get('GoalType')?.touched) {
+                  <div
+                    >
+                    @if (addGoalForm.get('GoalType')?.invalid && addGoalForm.get('GoalType')?.touched) {
+                      <small
+                      class="text-danger"> *Goal Type is required</small>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="input-block mb-3">
+                <label class="col-form-label" for="">Subject</label>
+                <input class="form-control" type="text"
+                  [class.invalid]="addGoalForm.get('Subject')?.invalid && addGoalForm.get('Subject')?.touched"
+                  formControlName="Subject">
+                  @if (addGoalForm.get('Subject')?.invalid && addGoalForm.get('Subject')?.touched) {
+                    <div>
+                      @if (addGoalForm.get('Subject')?.invalid && addGoalForm.get('Subject')?.touched) {
+                        <small
+                        class="text-danger"> *Subject is required</small>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-block mb-3">
+                  <label class="col-form-label" for="">Target Achievement</label>
+                  <input class="form-control" type="text"
+                    [class.invalid]="addGoalForm.get('TargetAchivement')?.invalid && addGoalForm.get('TargetAchivement')?.touched"
+                    formControlName="TargetAchivement">
+                    @if (addGoalForm.get('TargetAchivement')?.invalid && addGoalForm.get('TargetAchivement')?.touched) {
+                      <div
+                        >
+                        @if (addGoalForm.get('TargetAchivement')?.invalid && addGoalForm.get('TargetAchivement')?.touched) {
+                          <small
+                          class="text-danger"> *Target Achievement is required</small>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="input-block mb-3 date-input1">
+                    <label class="col-form-label" for="">Start Date <span
+                    class="text-danger">*</span></label>
+                    <div class="cal-icon">
+                      <input class="form-control datetimepicker" type="text" bsDatepicker
+                        container=".date-input1" type="text"
+                        [class.invalid]="addGoalForm.get('StartDate')?.invalid && addGoalForm.get('StartDate')?.touched"
+                        formControlName="StartDate">
+                        @if (addGoalForm.get('TargetAchivement')?.invalid && addGoalForm.get('TargetAchivement')?.touched) {
+                          <div
+                            >
+                            @if (addGoalForm.get('TargetAchivement')?.invalid && addGoalForm.get('TargetAchivement')?.touched) {
+                              <small
+                              class="text-danger"> *Start Date is required</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-block mb-3 date-input2">
+                      <label class="col-form-label" for="">End Date <span class="text-danger">*</span></label>
+                      <div class="cal-icon">
+                        <input class="form-control datetimepicker" type="text" bsDatepicker
+                          container=".date-input2" type="text"
+                          [class.invalid]="addGoalForm.get('EndDate')?.invalid && addGoalForm.get('EndDate')?.touched"
+                          formControlName="EndDate">
+                          @if (addGoalForm.get('EndDate')?.invalid && addGoalForm.get('EndDate')?.touched) {
+                            <div
+                              >
+                              @if (addGoalForm.get('EndDate')?.invalid && addGoalForm.get('EndDate')?.touched) {
+                                <small
+                                class="text-danger"> *End Date is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Description <span
+                        class="text-danger">*</span></label>
+                        <textarea class="form-control" rows="4"
+                          [class.invalid]="addGoalForm.get('Description')?.invalid && addGoalForm.get('Description')?.touched"
+                          formControlName="Description">
+                        </textarea>
+                        @if (addGoalForm.get('Description')?.invalid && addGoalForm.get('Description')?.touched) {
+                          <div
+                            >
+                            @if (addGoalForm.get('Description')?.invalid && addGoalForm.get('Description')?.touched) {
+                              <small
+                              class="text-danger"> *Description is required</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Status</label>
+                        <mat-select class="custom-mat-select"
+                          [class.invalid]="addGoalForm.get('Status')?.invalid && addGoalForm.get('Status')?.touched"
+                          formControlName="Status" placeholder="Active">
+                          <mat-option value="1">Active</mat-option>
+                          <mat-option value="2">Inactive</mat-option>
+                        </mat-select>
+                        @if (addGoalForm.get('Status')?.invalid && addGoalForm.get('Status')?.touched) {
+                          <div>
+                            @if (addGoalForm.get('Status')?.invalid && addGoalForm.get('Status')?.touched) {
+                              <small
+                              class="text-danger"> *End Date is required</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div class="submit-section">
+                    <button class="btn btn-primary submit-btn">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Add Goal Modal -->
+
+        <!-- Edit Goal Modal -->
+        <div id="edit_goal" class="modal custom-modal fade" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Goal Tracking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="editGoalForm">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Goal Type</label>
+                        <mat-select class="custom-mat-select"
+                          [class.invalid]="editGoalForm.get('GoalType')?.invalid && editGoalForm.get('GoalType')?.touched"
+                          formControlName="GoalType" placeholder="Invoice Goal">
+                          <mat-option value="1">Invoice Goal</mat-option>
+                          <mat-option value="2">Event Goal</mat-option>
+                        </mat-select>
+                        @if (editGoalForm.get('GoalType')?.invalid && editGoalForm.get('GoalType')?.touched) {
+                          <div
+                            >
+                            @if (editGoalForm.get('GoalType')?.invalid && editGoalForm.get('GoalType')?.touched) {
+                              <small
+                              class="text-danger"> *Goal Type is required</small>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="input-block mb-3">
+                        <label class="col-form-label" for="">Subject</label>
+                        <input class="form-control" type="text"
+                          [class.invalid]="editGoalForm.get('Subject')?.invalid && editGoalForm.get('Subject')?.touched"
+                          formControlName="Subject">
+                          @if (editGoalForm.get('Subject')?.invalid && editGoalForm.get('Subject')?.touched) {
+                            <div
+                              >
+                              @if (editGoalForm.get('Subject')?.invalid && editGoalForm.get('Subject')?.touched) {
+                                <small
+                                class="text-danger"> *Subject is required</small>
+                              }
+                            </div>
+                          }
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-block mb-3">
+                          <label class="col-form-label" for="">Target Achievement</label>
+                          <input class="form-control" type="text"
+                            [class.invalid]="editGoalForm.get('TargetAchivement')?.invalid && editGoalForm.get('TargetAchivement')?.touched"
+                            formControlName="TargetAchivement">
+                            @if (editGoalForm.get('TargetAchivement')?.invalid && editGoalForm.get('TargetAchivement')?.touched) {
+                              <div
+                                >
+                                @if (editGoalForm.get('TargetAchivement')?.invalid && editGoalForm.get('TargetAchivement')?.touched) {
+                                  <small
+                                  class="text-danger"> *Target Achievement is required</small>
+                                }
+                              </div>
+                            }
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <div class="input-block mb-3 date-input3">
+                            <label for="">Start Date <span class="text-danger">*</span></label>
+                            <div class="cal-icon">
+                              <input class="form-control datetimepicker" type="text" bsDatepicker
+                                container=".date-input3" type="text"
+                                [class.invalid]="editGoalForm.get('StartDate')?.invalid && editGoalForm.get('StartDate')?.touched"
+                                formControlName="StartDate">
+                                @if (editGoalForm.get('TargetAchivement')?.invalid && editGoalForm.get('TargetAchivement')?.touched) {
+                                  <div
+                                    >
+                                    @if (editGoalForm.get('TargetAchivement')?.invalid && editGoalForm.get('TargetAchivement')?.touched) {
+                                      <small
+                                      class="text-danger"> *Start Date is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="input-block mb-3 date-input4">
+                              <label for="">End Date <span class="text-danger">*</span></label>
+                              <div class="cal-icon">
+                                <input class="form-control datetimepicker" type="text" bsDatepicker
+                                  container=".date-input4" type="text"
+                                  [class.invalid]="editGoalForm.get('EndDate')?.invalid && editGoalForm.get('EndDate')?.touched"
+                                  formControlName="EndDate">
+                                  @if (editGoalForm.get('EndDate')?.invalid && editGoalForm.get('EndDate')?.touched) {
+                                    <div
+                                      >
+                                      @if (editGoalForm.get('EndDate')?.invalid && editGoalForm.get('EndDate')?.touched) {
+                                        <small
+                                        class="text-danger"> *End Date is required</small>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                              <div class="input-block mb-3">
+                                <label for="">Description <span class="text-danger">*</span></label>
+                                <textarea class="form-control" rows="4"
+                                  [class.invalid]="editGoalForm.get('Description')?.invalid && editGoalForm.get('Description')?.touched"
+                                  formControlName="Description">
+
+                                </textarea>
+                                @if (editGoalForm.get('Description')?.invalid && editGoalForm.get('Description')?.touched) {
+                                  <div
+                                    >
+                                    @if (editGoalForm.get('Description')?.invalid && editGoalForm.get('Description')?.touched) {
+                                      <small
+                                      class="text-danger"> *End Date is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                            <div class="col-sm-12">
+                              <div class="input-block mb-3">
+                                <label class="col-form-label" for="">Status</label>
+                                <mat-select class="custom-mat-select"
+                                  [class.invalid]="editGoalForm.get('Status')?.invalid && editGoalForm.get('Status')?.touched"
+                                  formControlName="Status" placeholder="Active">
+                                  <mat-option value="1">Active</mat-option>
+                                  <mat-option value="2">Inactive</mat-option>
+                                </mat-select>
+                                @if (editGoalForm.get('Status')?.invalid && editGoalForm.get('Status')?.touched) {
+                                  <div>
+                                    @if (editGoalForm.get('Status')?.invalid && editGoalForm.get('Status')?.touched) {
+                                      <small
+                                      class="text-danger"> *End Date is required</small>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                          <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Submit</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Edit Goal Modal -->
+
+                <!-- Delete Goal Modal -->
+                <div class="modal custom-modal fade" id="delete_goal" role="dialog">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <div class="form-header">
+                          <h3>Delete Goal Tracking List</h3>
+                          <p>Are you sure want to delete?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                          <div class="row">
+                            <div class="col-6">
+                              <a class="btn btn-primary continue-btn">Delete</a>
+                            </div>
+                            <div class="col-6">
+                              <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Delete Goal Modal -->

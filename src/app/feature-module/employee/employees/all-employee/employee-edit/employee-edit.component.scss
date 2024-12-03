@@ -1,0 +1,38 @@
+:host ::ng-deep .mat-mdc-tab-body-content {
+    overflow: hidden !important;
+}
+
+.tab-container {
+    margin-top: 20px;
+}
+
+.custom-mat-toggle {
+    margin-top: 10px;
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-3 {
+    width: 33%;
+}
+
+.custom-mat-toggle {
+    margin-top: 10px;
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-button-container{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.submit-button{
+    width: 15%;
+}

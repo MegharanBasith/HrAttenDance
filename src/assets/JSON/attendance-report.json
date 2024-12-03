@@ -1,0 +1,47 @@
+{
+  "data": [
+    {
+      "sNo": "1",
+      "date": "1 Jan 2020",
+      "clockIn": "-",
+      "clockOut": "-",
+      "workStatus": "-"
+    },
+    {
+      "sNo": "2",
+      "date": "2 Jan 2020",
+      "clockIn": "-",
+      "clockOut": "-",
+      "workStatus": "-"
+    },
+    {
+      "sNo": "3",
+      "date": "3 Jan 2020",
+      "clockIn": "-",
+      "clockOut": "-",
+      "workStatus": "-"
+    },
+    {
+      "sNo": "4",
+      "date": "4 Jan 2020",
+      "clockIn": "-",
+      "clockOut": "Week Off",
+      "workStatus": "-"
+    },
+    {
+      "sNo": "5",
+      "date": "5 Jan 2020",
+      "clockIn": "-",
+      "clockOut": "Week Off",
+      "workStatus": "-"
+    },
+    {
+      "sNo": "6",
+      "date": "6 Jan 2020",
+      "clockIn": "-",
+      "clockOut": "-",
+      "workStatus": "-"
+    }
+  ],
+  "totalData": 6
+}
